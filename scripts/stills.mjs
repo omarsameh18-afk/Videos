@@ -8,7 +8,7 @@ const [out, ...times] = process.argv.slice(2);
 const browserExecutable = '/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell';
 const serveUrl = fs.existsSync('build/index.html') && process.env.REBUNDLE !== '1' ? 'build' :
   await bundle({entryPoint: path.resolve('src/index.ts'), outDir: path.resolve('build')});
-const composition = await selectComposition({serveUrl, id: 'Woodpecker', browserExecutable});
+const composition = await selectComposition({serveUrl, id: process.env.COMP || 'Woodpecker', browserExecutable});
 const files = [];
 for (const t of times) {
   const frame = Math.min(composition.durationInFrames - 1, Math.round(parseFloat(t) * 60));
