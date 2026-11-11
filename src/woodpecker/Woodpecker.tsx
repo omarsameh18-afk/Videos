@@ -2,21 +2,25 @@ import React from 'react';
 import {AbsoluteFill, Audio, Img, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {FPS, INK, clamp, easeIn, easeInOut, easeOut, lerp, popIn, popOut, rand, seg, wobble} from './lib';
 
-export const DURATION_S = 25.0;
+export const DURATION_S = 20.1;
 const f = (p: string) => staticFile(`woodpecker/${p}`);
 
 // ---------------------------------------------------------------- beats (comp seconds; voice placed at 0.1 s)
 const VO_AT = 0.1;
+// word times (voice take2, aligned with PocketSphinx) + 0.1 s: so 0.1, tree 2.61, why 3.46, brain 4.17, hurt 4.68,
+// you'd 5.35, shock 6.42, absorber 6.82, right 7.6, nope 8.33, stops 9.54, one 10.1, stiff 10.42, piece 10.82,
+// like 11.52, hammer 11.75, cushion 12.76, pecks 13.84, weaker 14.16, trick 15.1, size 15.51, tiny 16.38,
+// pressure 17.93, same 18.59, hit 18.92, voice end 19.33
 const T = {
-  turn1: 4.3, bubble: 4.95, qmark: 5.45, turn2: 6.35, spring: 7.95, bust: 9.6,
-  rec: 9.75, xray: 9.85, leanBack0: 9.95, leanBack1: 11.2, slowHit: 11.8, unit: 12.45, release: 13.25,
-  hammerIn: 13.7, hammerHit: 14.25, recOff: 14.6,
-  pillow: 14.85, pillowPecks: [15.55, 16.05, 16.55, 17.05], sweat: 17.15, pillowOff: 17.9,
-  zoom0: 17.92, zoom1: 19.2, xray2: 18.85, size: 19.3,
-  cut: 20.05, back0: 21.9, go: 22.45, impact: 23.3, smug: 23.75,
+  treeEyes: 2.61, turn1: 3.38, bubble: 4.17, qmark: 4.68, turn2: 5.28, spring: 6.42, right: 7.6, bust: 8.33,
+  rec: 8.45, xray: 8.5, leanBack0: 8.55, leanBack1: 9.05, slowHit: 9.54, unit: 10.1, release: 10.95,
+  hammerIn: 11.2, hammerHit: 11.9, recOff: 12.3,
+  pillow: 12.76, pillowPecks: [13.3, 13.84, 14.3], sweat: 14.16, pillowOff: 14.85,
+  zoom0: 14.9, zoom1: 15.95, xray2: 15.3, size: 15.51,
+  cut: 16.25, blink: 17.2, back0: 17.6, go: 18.1, impact: 18.92, smug: 19.3, loop: 19.75,
 };
 const FAST_HITS: number[] = [];
-for (const [start, n] of [[0.3, 8], [1.75, 8], [3.0, 6]] as const) for (let k = 0; k < n; k++) FAST_HITS.push(start + k * 0.13);
+for (const [start, n] of [[0.3, 6], [1.4, 6], [2.75, 3]] as const) for (let k = 0; k < n; k++) FAST_HITS.push(start + k * 0.13);
 
 // ---------------------------------------------------------------- sprite geometry (trimmed sprite px, from prep.py)
 const SPR = {w: 1447, h: 2450};
@@ -71,11 +75,11 @@ const REAL_HITS = [...FAST_HITS, T.slowHit, T.hammerHit];
 type Cam = {x: number; y: number; z: number};
 const CAM_KEYS: [number, number, Cam][] = [
   // [t0, t1, target]  glide from previous value to target during [t0, t1]
-  [0, 3.9, {x: 535, y: 1000, z: 150}],
-  [4.35, 5.2, {x: 500, y: 860, z: 0}],
-  [9.7, 10.6, {x: 480, y: 830, z: 230}],
-  [13.45, 13.95, {x: 470, y: 800, z: 60}],
-  [14.7, 15.25, {x: 500, y: 880, z: 210}],
+  [0, 3.0, {x: 535, y: 1000, z: 150}],
+  [3.3, 4.3, {x: 500, y: 860, z: 0}],
+  [8.4, 9.4, {x: 480, y: 830, z: 230}],
+  [10.95, 11.45, {x: 470, y: 800, z: 60}],
+  [12.3, 12.8, {x: 500, y: 880, z: 210}],
   [T.zoom0, T.zoom1, {x: 330, y: 790, z: 580}],
 ];
 const CAM0: Cam = {x: 530, y: 1000, z: 90};
@@ -256,7 +260,7 @@ const ThoughtBubble: React.FC<{t: number}> = ({t}) => {
   const qs = t < T.spring ? popIn(t - T.qmark) : popOut(t - T.spring, 0.14);
   const springOn = t >= T.spring;
   const lift = springOn ? easeOut(seg(t, T.spring, T.spring + 0.2)) * 60 : 0;
-  const bob = springOn ? -46 * wobble(t - T.spring - 0.1, 1.9, 1.3) - 30 * wobble(t - 8.7, 2.2, 2.5) : 0;
+  const bob = springOn ? -46 * wobble(t - T.spring - 0.1, 1.9, 1.3) - 30 * wobble(t - T.right, 2.2, 2.5) : 0;
   const brainY = cy + 10 - lift + bob;
   const springS = popIn(t - T.spring, 0.2);
   return (
@@ -328,6 +332,39 @@ const Sweat: React.FC<{t: number}> = ({t}) => {
       <path d="M 0 -60 C 25 -20 42 5 42 28 C 42 54 22 70 0 70 C -22 70 -42 54 -42 28 C -42 5 -25 -20 0 -60 Z" fill="#8fd6ff" stroke={INK} strokeWidth={9} />
       <ellipse cx={-14} cy={30} rx={9} ry={15} fill="#ffffff" />
     </g>
+  );
+};
+
+// the trunk comes alive on "tree": eyes pop open, then wince at every hit
+const TreeFace: React.FC<{t: number}> = ({t}) => {
+  if (t < T.treeEyes) return null;
+  const sc = popIn(t - T.treeEyes, 0.25);
+  const hitNear = REAL_HITS.some((h) => t >= h - 0.03 && t < h + (h === T.slowHit ? 1.3 : 0.12));
+  const annoyed = t > T.treeEyes + 0.6;
+  const relieved = t > T.pillow && t < T.pillowOff + 0.3;
+  const eyes = [[765, 1010], [870, 1010]];
+  const look = {x: -0.45, y: -0.55};
+  return (
+    <svg width={10} height={10} style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}}>
+      {eyes.map(([x, y], i) => (
+        <g key={i} transform={`translate(${x} ${y}) scale(${sc})`}>
+          {hitNear ? (
+            <path d={i === 0 ? 'M -30 -26 L 22 0 L -30 26' : 'M 30 -26 L -22 0 L 30 26'} fill="none" stroke={INK} strokeWidth={10} strokeLinecap="round" strokeLinejoin="round" />
+          ) : (
+            <g>
+              <ellipse rx={34} ry={40} fill="#fff" stroke={INK} strokeWidth={8} />
+              <circle cx={look.x * 16} cy={look.y * 18} r={15} fill={INK} />
+              <circle cx={look.x * 16 - 5} cy={look.y * 18 - 5} r={4.5} fill="#fff" />
+              {annoyed && !relieved && (
+                <path d={i === 0 ? 'M -38 -42 L 38 -18 L 38 -48 L -38 -48 Z' : 'M 38 -42 L -38 -18 L -38 -48 L 38 -48 Z'} fill="#87592f" stroke={INK} strokeWidth={7} strokeLinejoin="round" />
+              )}
+            </g>
+          )}
+          <path d={hitNear ? (i === 0 ? 'M -36 -58 L 30 -42' : 'M 36 -58 L -30 -42') : annoyed && !relieved ? (i === 0 ? 'M -40 -60 L 38 -36' : 'M 40 -60 L -38 -36') : 'M -32 -62 Q 0 -76 32 -62'}
+            fill="none" stroke={INK} strokeWidth={12} strokeLinecap="round" />
+        </g>
+      ))}
+    </svg>
   );
 };
 
@@ -414,7 +451,7 @@ const BrainChar: React.FC<{t: number; cx: number; cy: number; w: number; big: bo
   const dt = t - T.impact;
   const sq = hit ? (big ? 0.3 : 0.07) * Math.exp(-4.5 * dt) * Math.cos(2 * Math.PI * 2.4 * dt) : 0;
   const right = cx + w / 2;
-  const blinkU = Math.abs(t - 21.0) < 0.07 ? 1 - Math.abs(t - 21.0) / 0.07 : 0;
+  const blinkU = Math.abs(t - T.blink) < 0.07 ? 1 - Math.abs(t - T.blink) / 0.07 : 0;
   const ey = cy - h * 0.05, er = w * 0.085, ex = [cx - w * 0.12, cx + w * 0.1];
   const look = hit ? 0 : 1;
   const squeezed = big && hit && dt < 1.6;
@@ -489,7 +526,7 @@ type Cue = {f: string; at: number; db: number; rate?: number};
 const CUES: Cue[] = [
   ...FAST_HITS.map((h, i) => ({f: 'tok', at: h - 0.005, db: -17 - 3 * rand(i + 3), rate: 0.94 + 0.12 * rand(i + 9)})),
   {f: 'whoosh', at: T.turn1 - 0.25, db: -29}, {f: 'pop', at: T.bubble, db: -19}, {f: 'pop', at: T.qmark, db: -21, rate: 1.3},
-  {f: 'whoosh', at: T.turn2 - 0.25, db: -29}, {f: 'boing', at: T.spring, db: -16}, {f: 'boing', at: 8.7, db: -22, rate: 1.15},
+  {f: 'whoosh', at: T.turn2 - 0.25, db: -29}, {f: 'boing', at: T.spring, db: -16}, {f: 'boing', at: T.right, db: -22, rate: 1.15},
   {f: 'pop', at: T.bust, db: -15, rate: 0.85}, {f: 'beep', at: T.rec, db: -24}, {f: 'pop', at: T.xray, db: -22},
   {f: 'whoosh', at: T.leanBack1, db: -27, rate: 0.6}, {f: 'tok', at: T.slowHit, db: -11, rate: 0.5}, {f: 'thud', at: T.slowHit, db: -15},
   {f: 'ding', at: T.unit, db: -27},
@@ -505,7 +542,7 @@ const CUES: Cue[] = [
 // ---------------------------------------------------------------- composition
 export const Woodpecker: React.FC = () => {
   const frame = useCurrentFrame();
-  const t = frame / FPS;
+  const t = frame / FPS >= T.loop ? 0 : frame / FPS; // the tail is frame 0, so the Short loops
   const hits = REAL_HITS.filter((h) => t >= h).length;
   const hole = hits === 0 ? 0 : clamp(0.35 + hits * 0.05, 0, 1);
   const cam0 = camAt(t), sh = shake(t);
@@ -513,7 +550,7 @@ export const Woodpecker: React.FC = () => {
   const dof = 3.2 * clamp((cam.z - 120) / 300);
   const audio = (
     <>
-      <Sequence from={Math.round(VO_AT * FPS)} layout="none"><Audio src={f('vo/take1.mp3')} /></Sequence>
+      <Sequence from={Math.round(VO_AT * FPS)} layout="none"><Audio src={f('vo/take2.mp3')} /></Sequence>
       {CUES.map((c, i) => (
         <Sequence key={i} from={Math.max(0, Math.round(c.at * FPS))} layout="none">
           <Audio src={f(`sfx/${c.f}.wav`)} volume={10 ** (c.db / 20)} playbackRate={c.rate ?? 1} />
@@ -521,7 +558,7 @@ export const Woodpecker: React.FC = () => {
       ))}
     </>
   );
-  if (t >= T.cut) {
+  if (t >= T.cut && frame / FPS < T.loop) {
     const ct = t;
     const s2 = shake(ct);
     return (
@@ -538,6 +575,7 @@ export const Woodpecker: React.FC = () => {
       <Layer cam={cam} z={1800} blur={dof * 0.6}><MidTrees /></Layer>
       <Layer cam={cam} z={1000}>
         <Trunk x0={TRUNK_L} x1={TRUNK_R} y0={-1600} y1={3600} hole={hole} />
+        <TreeFace t={t} />
         <ThoughtBubble t={t} />
         <Hammer t={t} />
         <Bird t={t} />

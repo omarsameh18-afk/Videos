@@ -1,7 +1,7 @@
 # Woodpecker Short: picture prompts (Higgsfield)
 
 The account is on the free plan, so GPT Image 2.5/2.6 were refused ("Requires basic plan or higher").
-Credits used: voice 1.2, Seedream 5.5 hero 3.5, Nano Banana 2 edit 1.5, Z Image x3 0.45. ~3.35 left of 10.
+Credits used: voice take1 1.2 + take2 1.2, Seedream 5.5 hero 3.5, Nano Banana 2 edit 1.5, Z Image x3 0.45 = 7.85 of 10.
 
 | sprite | model | settings | job id |
 |---|---|---|---|
@@ -9,7 +9,8 @@ Credits used: voice 1.2, Seedream 5.5 hero 3.5, Nano Banana 2 edit 1.5, Z Image 
 | bird_front (edit of hero) | nano_banana_2 | 2:3, 1k, opaque light-blue, keyed with key.py, ECC-aligned to hero | 4ab87dee-3b71-4b2b-a37f-266f6a348633 |
 | brain | z_image | 1:1, opaque light-blue, keyed | 1d06aeda-ea4c-477d-8b9b-37efb75e01c7 |
 | hammer | z_image | 1:1, opaque light-blue, keyed (first try drew two hammers) | 23d84723-53ec-47bf-a4b9-457c8e9378ed |
-| voice | text2speech_v2, variant elevenlabs, preset "Mark" | | 7dc68945-fbde-4017-89a3-faf32f2878b4 |
+| voice take1 (old script) | text2speech_v2, variant elevenlabs, preset "Mark" | | 7dc68945-fbde-4017-89a3-faf32f2878b4 |
+| voice take2 (final) | text2speech_v2, variant elevenlabs, preset "Mark" | word times: align.py (PocketSphinx) | c8e838c9-f19e-4812-b42d-980e3287b985 |
 
 ## bird_side
 A cute cartoon woodpecker, full body, side view facing to the right of the image, in a clinging-to-a-tree-trunk pose:
