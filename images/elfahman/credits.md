@@ -36,7 +36,20 @@ price). Check your ElevenLabs usage page for the final charged amount.
 | Sound effects: 16 synthesized in code | | – | 0 |
 | **Video 01 total** | | | **1,593** |
 
-## Grand total (library + video 01): 5,450 credits
+## Video 02: mummies in Europe (مومياوات في أوروبا)
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Prop: scared mummy | GPT Image 2.5 Sunburst, 1K, high, 1:1 | IAMJnwuRure0aL5ZAv73 | 337 |
+| Prop: "mummy brown" paint tube | same | 0nCMZwz0BWpQDZ2oYyW2 | 337 |
+| Prop: shocked Victorian painter | same | pQwamb7c76pF7KgCOrip | 337 |
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 40.4 s | | np7cLaSiRSI0nEsMOdSa | 584 |
+| Word timing: Scribe v1 | | 6wcY6fGZhybHIFkcl24i | 0 |
+| Drawn in code: mortar and pestle, powder jar, medicine bottle, spoon, cough face, plaster, palette, brush, paint stroke, framed paintings, flag, garden, house, headstone, flowers, shop shelf, price tag, clock tower, year counter, pyramids, hanging frame, star badge, question mark, comment bubble | | – | 0 |
+| Sound effects: reused from the library | | – | 0 |
+| **Video 02 total** | | | **1,595** |
+
+## Grand total (library + videos 01–02): 7,045 credits
 
 No picture or voice was regenerated.
 

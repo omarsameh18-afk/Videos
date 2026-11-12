@@ -53,9 +53,10 @@ Work on a branch, in the repo root. Budget: ~580 credits per 40 s of voice + ~33
    `T.fahman`, `T.kasban` in `Rabies.tsx`).
 4. **Props (≤ 3–4 pictures).** Only what code can't draw well. Prompt = style block + object + flat `#FF00FF`
    background (see `images/elfahman/prompts.md`), GPT Image 2.5 Sunburst, **1K high, 1 generation**.
-   Key with the magenta keyer in `series/elfahman/tools/prep_library.py` (`key_magenta`). Log each item in
+   Save the originals as `images/elfahman/raw/<name>.png`, then key them with
+   `python3 series/elfahman/tools/prep_props.py <episode> <name> ...` (writes `public/elfahman/<episode>/`). Log each item in
    `images/elfahman/credits.md`.
-5. **Episode code.** Copy `src/elfahman/videos/Rabies.tsx` to `src/elfahman/videos/<Topic>.tsx` and change only:
+5. **Episode code.** Copy `src/elfahman/videos/Rabies.tsx` (or `Mummies.tsx`, episode 02) to `src/elfahman/videos/<Topic>.tsx` and change only:
    - the `T` beat table (word → time via `at('word', nth)`),
    - `POSES` (pose per beat; talkable poses lip-flap automatically),
    - `CAM_KEYS` / `SHAKES`,
