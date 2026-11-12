@@ -33,7 +33,7 @@ const T = {
   bet7ebbo: at('بتحبه'), fahman: at('الفهمان'), kasban: at('كسبان'),
 };
 // signature moments pinned to the measured audio onsets (voice level envelope), not just the transcript
-T.estanna = 17.41 + VO; T.fahman = 37.9 + VO; T.kasban = 38.72 + VO;
+T.estanna = 17.38 + VO; T.fahman = 37.9 + VO; T.kasban = 38.72 + VO;
 const END = RABIES_DURATION_S;
 
 // ============================================================ character
@@ -361,7 +361,10 @@ const Board: React.FC<{t: number}> = ({t}) => {
   void firstOn;
   if (bs <= 0.001) return null;
   const content = shown ? scene : prev;
-  const cs = shown ? (prev !== null && since < 0.3 ? popIn(since, 0.26) : 1) : 1;
+  // content swaps never cut: the old drawing pops out during the 0.12 s before the next one pops in
+  const next = SCENES.find((s) => s[0] > t);
+  const leaving = shown && next && next[1] !== null && next[0] - t < 0.12 ? popOut(0.12 - (next[0] - t), 0.12) : 1;
+  const cs = (shown && prev !== null && since < 0.3 ? popIn(since, 0.26) : 1) * leaving;
   return (
     <svg width={10} height={10} style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}}>
       <g transform={`translate(${BX + BW / 2} ${BY + BH}) scale(${bs}) translate(${-BW / 2} ${-BH})`}>
