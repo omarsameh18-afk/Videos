@@ -470,8 +470,8 @@ export const Rabies: React.FC = () => {
       {/* vignette, deeper during the signature line, red pulse on "قاتل" */}
       <AbsoluteFill style={{background: `radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,${0.28 + dim}) 100%)`}} />
       {redPulse > 0 && <AbsoluteFill style={{background: `radial-gradient(ellipse at 50% 45%, rgba(255,60,40,0) 45%, rgba(255,60,40,${redPulse}) 100%)`}} />}
-      {/* captions sit on the desk area so chest-height gestures stay visible; shifted right while the hook glass is on screen */}
-      <Captions t={t} groups={groups} colors={COLORS} y={1600} x={t < T.kollena ? 590 : 460} />
+      {/* captions at ~65% of the frame height: clear of the Shorts/TikTok channel name, title and buttons */}
+      <Captions t={t} groups={groups} colors={COLORS} y={1250} x={460} />
       <Sequence from={Math.round(VO * FPS)}><Audio src={staticFile('elfahman/rabies/vo/take1.mp3')} volume={1} /></Sequence>
       {[...SFX, ...POSE_SWAP_SFX].map(([tt, n, v], i) => (
         <Sequence key={i} from={Math.max(0, Math.round(tt * FPS))} durationInFrames={Math.round(1.6 * FPS)}>

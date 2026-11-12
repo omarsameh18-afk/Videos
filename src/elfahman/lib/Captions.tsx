@@ -34,7 +34,7 @@ export const groupWords = (words: Word[], offset: number, opts: {gold?: string[]
   return out;
 };
 
-export const Captions: React.FC<{t: number; groups: Group[]; colors: Record<string, string>; y?: number; x?: number}> = ({t, groups, colors, y = 1600, x = 460}) => {
+export const Captions: React.FC<{t: number; groups: Group[]; colors: Record<string, string>; y?: number; x?: number}> = ({t, groups, colors, y = 1250, x = 460}) => {
   const g = groups.find((x) => t >= x.s - 0.03 && t < x.e);
   if (!g) return null;
   const dt = t - g.s + 0.03;

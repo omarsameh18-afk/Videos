@@ -35,7 +35,7 @@ Pictures were made on ElevenLabs flow "Elfahman series library" (`WjuQnuJf71KyVe
 - Every pose swap lands on its word (the squash starts 0.07 s before, the swap happens on the word).
 - Reactions stay natural. Health/safety topics carry the accurate safety message.
 - Captions: 2–3 words, Cairo Black, white with thick black outline, key words yellow `#FFD23F` / red `#FF5A4E`,
-  lower-middle (y ≈ 1330), never in the right 15% of the frame.
+  at ~65% of the frame height (y ≈ 1250: clear of the Shorts/TikTok channel name, title and buttons), never in the right 15% of the frame.
 
 ## Making the next video (only a new script)
 
