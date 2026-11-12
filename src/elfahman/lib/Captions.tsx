@@ -34,7 +34,7 @@ export const groupWords = (words: Word[], offset: number, opts: {gold?: string[]
   return out;
 };
 
-export const Captions: React.FC<{t: number; groups: Group[]; colors: Record<string, string>; y?: number}> = ({t, groups, colors, y = 1300}) => {
+export const Captions: React.FC<{t: number; groups: Group[]; colors: Record<string, string>; y?: number; x?: number}> = ({t, groups, colors, y = 1600, x = 460}) => {
   const g = groups.find((x) => t >= x.s - 0.03 && t < x.e);
   if (!g) return null;
   const dt = t - g.s + 0.03;
@@ -43,8 +43,9 @@ export const Captions: React.FC<{t: number; groups: Group[]; colors: Record<stri
   let fs = style === 'big' ? 132 : style === 'gold' ? 116 : 96;
   const len = g.words.reduce((a, w) => a + norm(w.w).length + 1, 0);
   const estW = len * fs * 0.52;
-  if (estW > 760) fs *= 760 / estW; // stay inside x 80..840 (right 15% kept clear)
-  const cx = 460;
+  const maxW = 2 * Math.min(x - 70, 900 - x);
+  if (estW > maxW) fs *= maxW / estW; // stays inside the frame and out of the right 15%
+  const cx = x; // keep x + half width <= 918 (right 15% clear)
   return (
     <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>
       <defs>
