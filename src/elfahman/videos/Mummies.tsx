@@ -13,7 +13,8 @@ import ENV from './mummies.env.json';
 // Episode 02: mummies in Europe ("mumia" medicine and the "mummy brown" paint)
 
 // ============================================================ timing
-// voice (ElevenLabs eleven_v4, voice "Fodoly", 1 take) placed at VO seconds; word times from ElevenLabs Scribe
+// voice (ElevenLabs eleven_v4, voice "Fodoly": the hook line take + the main take joined into vo.mp3) placed at VO seconds;
+// word times from ElevenLabs Scribe
 const VO = 0.15;
 const words = WORDS as Word[];
 const nq = (w: string) => norm(w).replace(/"/g, '');
@@ -26,7 +27,8 @@ const VOICE_END = words[words.length - 1].e + VO;
 export const MUMMIES_DURATION_S = Math.round((VOICE_END + 0.8) * FPS) / FPS;
 
 const T = {
-  seneen: at('السنين'), tahn: at('بيطحنوا'), ye3melo: at('ويعملوها'), bodra: at('بودرة'), mumia: at('موميا'),
+  ayeet: at('عييت'), europa1: at('أوروبا'), zaman: at('زمان'), hayeddook: at('هيدوك'), mumya: at('مومياء'), masreya: at('مصرية'),
+  takolha: at('تاكلها'), lemodda: at('لمدة'), tahn: at('بيطحنوا'), ye3melo: at('ويعملوها'), bodra: at('بودرة'), mumia: at('موميا'),
   yeshrabo: at('ويشربوها'), dawa: at('كدوا'), ko7a: at('الكحة'), goroo7: at('للجروح'),
   ba3deen: at('وبعدين'), rassameen: at('الرسامين'), lon1: at('اللون'), helw: at('حلو'),
   wa3amalo: at('وعملوا'), lon2: at('لون'), bonni: at('بني'), bonni2: at('بني', 1), mumia2: at('المومياء'),
@@ -36,12 +38,12 @@ const T = {
   bani: at('بني', 2), ha2ee2i: at('حقيقي'),
   akhad: at('أخد'), dafan: at('ودفنها'), geneena: at('جنينة'), beeto: at('بيته'), amalaha: at('وعملها'), genaza: at('جنازة'),
   wellon: at('واللون'), yetba3: at('بيتباع'), london: at('لندن'), sana: at('سنة'), alf: at('ألف'), talateen: at('وتلاتين'),
-  ya3ni: at('يعني'), geddak: at('جدك'), far3ooni: at('الفرعوني'), met3alla2: at('متعلق'), europa: at('أوروبا'), delwa2ti: at('دلوقتي'),
-  law: at('لو'), makan: at('مكان'), hate3mel: at('هتعمل'), eh: at('إيه'), ekteb: at('اكتبلي'), comments: at('الكومنتات'),
+  ya3ni: at('يعني'), geddak: at('جدك'), far3ooni: at('الفرعوني'), met3alla2: at('متعلق'), europa: at('أوروبا', 1), delwa2ti: at('دلوقتي'),
+  law: at('لو', 1), makan: at('مكان'), hate3mel: at('هتعمل'), eh: at('إيه'), ekteb: at('اكتبلي'), comments: at('الكومنتات'),
   fahman: at('الفهمان'), kasban: at('كسبان'),
 };
 // signature moments pinned to the measured audio onsets (voice level envelope), not just the transcript
-T.estanna = 16.42 + VO; T.fahman = 39.0 + VO; T.kasban = 39.75 + VO;
+T.estanna = 20.67 + VO; T.fahman = 43.25 + VO; T.kasban = 44.0 + VO;
 const END = MUMMIES_DURATION_S;
 
 // ============================================================ character
@@ -49,6 +51,9 @@ const TALKABLE: Pose[] = ['hero', 'explain', 'point_up', 'thinking', 'temple', '
 const POSES: PoseKey[] = [
   [0, 'temple'],            // first frames match the last frame (loop)
   [VO, 'hero'],
+  [T.hayeddook, 'explain'],
+  [T.takolha, 'worried'],
+  [T.lemodda, 'hero'],
   [T.tahn, 'explain'],
   [T.yeshrabo, 'worried'],
   [T.ba3deen, 'thinking'],
@@ -81,7 +86,7 @@ const FACE = {x: CHAR_X + HEAD[0] * CS, y: CHAR_Y + HEAD[1] * CS};
 // ============================================================ camera
 const CAM0: Cam = {x: 520, y: 860, z: 180};
 const CAM_KEYS: CamKey[] = [
-  [VO, 2.6, {x: 540, y: 940, z: 30}],
+  [VO, 1.2, {x: 540, y: 940, z: 30}], // quick pull-back so the hook board is fully in frame
   [T.ba3deen - 0.15, T.ba3deen + 0.45, {x: 512, y: 770, z: 160}],
   [T.etrasamet - 0.1, T.etrasamet + 0.4, {x: 540, y: 860, z: 90}],
   [T.estanna - 0.04, T.estanna + 0.1, {x: 540, y: FACE.y + 20, z: 380}], // punch-in exactly on "استنى"
@@ -98,9 +103,9 @@ const SHAKES: [number, number, number][] = [[T.estanna, 16, 6], [T.ha2ee2i, 7, 7
 
 // ============================================================ board (chalkboard inset above his head)
 const BX = 80, BY = 84, BW = 860, BH = 480;
-type Scene = 'grind' | 'medicine' | 'palette' | 'tube' | 'paintings' | 'painter' | 'funeral' | 'london' | 'wall' | 'comment';
+type Scene = 'sick' | 'grind' | 'medicine' | 'palette' | 'tube' | 'paintings' | 'painter' | 'funeral' | 'london' | 'wall' | 'comment';
 const SCENES: [number, Scene | null][] = [
-  [0, null], [T.tahn - 0.12, 'grind'], [T.yeshrabo - 0.08, 'medicine'], [T.ba3deen - 0.08, 'palette'], [T.wa3amalo - 0.05, 'tube'],
+  [0, null], [T.ayeet - 0.1, 'sick'], [T.tahn - 0.12, 'grind'], [T.yeshrabo - 0.08, 'medicine'], [T.ba3deen - 0.08, 'palette'], [T.wa3amalo - 0.05, 'tube'],
   [T.etrasamet - 0.08, 'paintings'], [T.estanna - 0.12, null], [T.rassam - 0.1, 'painter'], [T.akhad - 0.05, 'funeral'],
   [T.wellon - 0.08, 'london'], [T.ya3ni - 0.08, 'wall'], [T.law - 0.08, 'comment'], [T.fahman - 0.15, null],
 ];
@@ -127,6 +132,58 @@ const MummyFace: React.FC<{r: number}> = ({r}) => (
     <path d={`M ${-r * 0.9} ${-r * 0.6} L ${r * 0.8} ${-r * 0.75} M ${-r * 0.85} ${r * 0.7} L ${r * 0.85} ${r * 0.55}`} stroke={INK} strokeWidth={r * 0.08} fill="none" />
   </g>
 );
+
+const StarBadge: React.FC = () => (
+  <g>
+    <circle r={96} fill="#2b4ea8" stroke={INK} strokeWidth={10} />
+    {Array.from({length: 12}, (_, i) => {
+      const a = (i / 12) * Math.PI * 2;
+      return <Star key={i} x={Math.cos(a) * 66} y={Math.sin(a) * 66} r={13} fill="#ffd23f" />;
+    })}
+  </g>
+);
+
+// hook: a sick face in old Europe is served an Egyptian mummy on a plate
+const Sick: React.FC<{t: number}> = ({t}) => {
+  const f = popIn(t - T.ayeet, 0.3), badge = popIn(t - T.europa1, 0.28);
+  const plate = popIn(t - T.hayeddook, 0.3), mum = popIn(t - T.mumya, 0.3), cut = popIn(t - T.takolha, 0.24);
+  const scared = t >= T.takolha ? 2.4 : 1;
+  const hop = t >= T.takolha ? wobble(t - T.takolha, 4, 5) : 0;
+  return (
+    <g>
+      <g transform={`translate(${175 + Math.sin(t * 5) * 4} 305) rotate(${Math.sin(t * 2.6) * 5}) scale(${f})`}>
+        <circle r={104} fill="#b9d98a" stroke={INK} strokeWidth={11} />
+        <path d="M -62 -30 q 20 -18 40 0 M 22 -30 q 20 -18 40 0" stroke={INK} strokeWidth={10} fill="none" strokeLinecap="round" />
+        <path d="M -40 44 q 12 -14 24 0 q 12 14 24 0 q 12 -14 24 0" stroke={INK} strokeWidth={9} fill="none" strokeLinecap="round" />
+        <g transform="translate(34 44) rotate(-28)">
+          <rect x={0} y={-9} width={120} height={18} rx={9} fill="#fff" stroke={INK} strokeWidth={7} />
+          <rect x={30} y={-4} width={62} height={8} rx={4} fill={RED} />
+          <circle cx={122} cy={0} r={15} fill={RED} stroke={INK} strokeWidth={7} />
+        </g>
+        <ellipse cx={-62} cy={18} rx={18} ry={11} fill="#8fc46a" opacity={0.8} /><ellipse cx={66} cy={18} rx={18} ry={11} fill="#8fc46a" opacity={0.8} />
+      </g>
+      <SweatDrop x={60} y={190} dt={t - T.ayeet - 0.15} s={0.6} />
+      <g transform={`translate(175 96) rotate(${wobble(t - T.europa1 - 0.28, 2, 4) * 12}) scale(${badge * 0.6})`}><StarBadge /></g>
+      {/* the plate, then the mummy on it, then the cutlery */}
+      <g transform={`translate(640 372) scale(${plate})`}>
+        <ellipse rx={205} ry={56} fill="#f4f7fb" stroke={INK} strokeWidth={11} />
+        <ellipse rx={140} ry={34} fill="#dfe6ee" stroke={INK} strokeWidth={6} />
+      </g>
+      <g transform={`translate(${640 + Math.sin(t * 2 * Math.PI * 15) * 2.5 * scared} 384) scale(${mum * (1 - 0.08 * hop)} ${mum * (1 + 0.1 * hop)})`}><Pic n="mummy" h={330} foot /></g>
+      <SweatDrop x={770} y={110} dt={t - T.takolha} s={0.6} />
+      <SweatDrop x={520} y={120} dt={t - T.takolha - 0.18} s={0.5} />
+      <g transform={`translate(425 270) rotate(${-10 + wobble(t - T.takolha - 0.24, 3, 4) * 14}) scale(${cut})`}>
+        <path d="M -30 -150 L -30 -70 Q -30 -40 0 -40 Q 30 -40 30 -70 L 30 -150 M 0 -150 L 0 -60" stroke={INK} strokeWidth={26} fill="none" strokeLinecap="round" />
+        <path d="M -30 -150 L -30 -70 Q -30 -40 0 -40 Q 30 -40 30 -70 L 30 -150 M 0 -150 L 0 -60" stroke="#cfd6dd" strokeWidth={12} fill="none" strokeLinecap="round" />
+        <rect x={-13} y={-44} width={26} height={200} rx={13} fill="#cfd6dd" stroke={INK} strokeWidth={8} />
+      </g>
+      <g transform={`translate(848 270) rotate(${10 - wobble(t - T.takolha - 0.24, 3, 4) * 14}) scale(${cut * 0.9})`}>
+        <path d="M -14 -160 C 26 -130 30 -70 16 -20 L -14 -20 Z" fill="#e9eef2" stroke={INK} strokeWidth={8} strokeLinejoin="round" />
+        <rect x={-14} y={-22} width={28} height={180} rx={13} fill="#8a5a33" stroke={INK} strokeWidth={8} />
+      </g>
+    </g>
+  );
+};
 
 const Grind: React.FC<{t: number}> = ({t}) => {
   // a scared mummy in a stone mortar; every pound of the pestle pushes it down until only powder is left
@@ -472,11 +529,7 @@ const Wall: React.FC<{t: number}> = ({t}) => {
       <SweatDrop x={250} y={170} dt={t - T.delwa2ti - 0.2} s={0.5} />
       {/* Europe badge: ring of stars */}
       <g transform={`translate(735 330) rotate(${wobble(t - T.europa - 0.3, 2, 4) * 12}) scale(${eu})`}>
-        <circle r={96} fill="#2b4ea8" stroke={INK} strokeWidth={10} />
-        {Array.from({length: 12}, (_, i) => {
-          const a = (i / 12) * Math.PI * 2;
-          return <Star key={i} x={Math.cos(a) * 66} y={Math.sin(a) * 66} r={13} fill="#ffd23f" />;
-        })}
+        <StarBadge />
       </g>
     </g>
   );
@@ -530,6 +583,7 @@ const Board: React.FC<{t: number}> = ({t}) => {
         <rect x={0} y={0} width={BW} height={BH} rx={14} fill={BOARD} stroke={INK} strokeWidth={6} />
         <rect x={10} y={10} width={BW - 20} height={BH - 20} rx={10} fill="none" stroke="#ffffff" strokeOpacity={0.05} strokeWidth={8} />
         <g transform={`translate(${BW / 2} ${BH / 2}) scale(${cs}) translate(${-BW / 2 + 0} ${-BH / 2})`}>
+          {content === 'sick' && <Sick t={t} />}
           {content === 'grind' && <Grind t={t} />}
           {content === 'medicine' && <Medicine t={t} />}
           {content === 'palette' && <PaletteScene t={t} />}
@@ -551,8 +605,8 @@ const HookMummy: React.FC<{t: number}> = ({t}) => {
   const out = T.tahn - 0.14;
   if (t > out + 0.2) return null;
   const s = t < out ? 1 : popOut(t - out, 0.18);
-  const fear = t >= T.seneen ? 2.2 : 1;
-  const jump = t >= T.seneen ? wobble(t - T.seneen, 4, 6) : 0;
+  const fear = t >= T.takolha ? 2.2 : 1;
+  const jump = t >= T.takolha ? wobble(t - T.takolha, 4, 6) : 0;
   const gh = 400, gw = (gh * IMG.mummy[0]) / IMG.mummy[1];
   const x = 215 + Math.sin(t * 2 * Math.PI * 16) * 3 * fear, y = DESK_SCREEN_Y + 45;
   const rot = Math.sin(t * 2 * Math.PI * 8.5) * 2.2 * fear;
@@ -561,8 +615,8 @@ const HookMummy: React.FC<{t: number}> = ({t}) => {
       <ellipse cx={215} cy={y - 4} rx={gw * 0.42 * s} ry={14 * s} fill="#000" opacity={0.25} />
       <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s * (1 - 0.08 * jump)} ${s * (1 + 0.1 * jump)})`}>
         <image href={P('mummy.png')} x={-gw / 2} y={-gh} width={gw} height={gh} />
-        <SweatDrop x={-gw * 0.55} y={-gh * 0.9} dt={t - T.seneen} s={0.6} />
-        <SweatDrop x={gw * 0.55} y={-gh * 0.85} dt={t - T.seneen - 0.15} s={0.5} />
+        <SweatDrop x={-gw * 0.55} y={-gh * 0.9} dt={t - T.takolha} s={0.6} />
+        <SweatDrop x={gw * 0.55} y={-gh * 0.85} dt={t - T.takolha - 0.15} s={0.5} />
       </g>
     </svg>
   );
@@ -571,8 +625,9 @@ const HookMummy: React.FC<{t: number}> = ({t}) => {
 // ============================================================ sound
 type Cue = [number, string, number];
 const SFX: Cue[] = [
-  [0, 'tremble', 0.32], [T.seneen, 'tremble', 0.4], [T.seneen, 'gulp', 0.3], [T.tahn - 0.14, 'swish', 0.3],
-  [T.tahn - 0.12, 'whoosh', 0.28], ...POUNDS.map((p): Cue => [p, 'thud', 0.42]), [T.bodra, 'pop', 0.3], [T.mumia, 'sparkle', 0.3],
+  [0, 'tremble', 0.32], [T.ayeet - 0.1, 'whoosh', 0.28], [T.ayeet, 'pop', 0.3], [T.europa1, 'pop', 0.25], [T.hayeddook, 'pop', 0.3],
+  [T.mumya, 'boing', 0.3], [T.takolha, 'ding', 0.3], [T.takolha, 'tremble', 0.4], [T.takolha + 0.1, 'gulp', 0.3], [T.tahn - 0.14, 'swish', 0.3],
+  [T.tahn - 0.12, 'swish', 0.28], ...POUNDS.map((p): Cue => [p, 'thud', 0.42]), [T.bodra, 'pop', 0.3], [T.mumia, 'sparkle', 0.3],
   [T.yeshrabo - 0.08, 'swish', 0.3], [T.yeshrabo, 'pop', 0.28], [T.dawa, 'gulp', 0.35], [T.ko7a, 'squish', 0.35], [T.goroo7, 'pop', 0.3],
   [T.ba3deen - 0.08, 'swish', 0.3], [T.rassameen, 'boing', 0.28], [T.lon1, 'squish', 0.3], [T.helw, 'sparkle', 0.35], [T.helw, 'ding', 0.25],
   [T.wa3amalo - 0.05, 'whoosh', 0.28], [T.wa3amalo + 0.05, 'pop', 0.3], [T.bonni, 'squish', 0.4], [T.mumia2, 'boing', 0.3], [T.mumia2 + 0.1, 'tremble', 0.3],
@@ -593,9 +648,9 @@ const POSE_SWAP_SFX: Cue[] = POSES.slice(2).map(([t]) => [t - 0.06, 'swish', 0.1
 // caption key words (quotes around a word in the script are kept in the caption, so colour both spellings)
 const COLORS: Record<string, string> = {};
 const paint = (ws: string[], c: string) => { for (const w of ws) for (const k of [w, `"${w}`, `${w}"`, `"${w}"`]) COLORS[norm(k)] = c; };
-paint(['المومياوات', 'بودرة', 'موميا', 'كدوا', 'الرسامين', 'حلو', 'بني', 'المومياء', 'لوحات', 'إنجليزي', 'الأنبوبة', 'جنينة', 'لندن',
+paint(['أوروبا', 'مومياء', 'مصرية', 'المومياوات', 'بودرة', 'موميا', 'كدوا', 'الرسامين', 'حلو', 'بني', 'المومياء', 'لوحات', 'إنجليزي', 'الأنبوبة', 'جنينة', 'لندن',
   'ألف', 'تسعمية', 'تلاتة', 'وتلاتين', 'الفرعوني', 'حيطة', 'أوروبا', 'الكومنتات'], YELLOW);
-paint(['بيطحنوا', 'استنى', 'الغريب', 'آدم', 'حقيقي', 'ودفنها', 'جنازة'], RED);
+paint(['عييت', 'تاكلها', 'بيطحنوا', 'استنى', 'الغريب', 'آدم', 'حقيقي', 'ودفنها', 'جنازة'], RED);
 
 // ============================================================ composition
 export const Mummies: React.FC = () => {
@@ -636,7 +691,7 @@ export const Mummies: React.FC = () => {
       {redPulse > 0 && <AbsoluteFill style={{background: `radial-gradient(ellipse at 50% 45%, rgba(255,60,40,0) 45%, rgba(255,60,40,${redPulse}) 100%)`}} />}
       {/* captions at ~65% of the frame height: clear of the Shorts/TikTok channel name, title and buttons */}
       <Captions t={t} groups={groups} colors={COLORS} y={1250} x={460} />
-      <Sequence from={Math.round(VO * FPS)}><Audio src={staticFile('elfahman/mummies/vo/take1.mp3')} volume={1} /></Sequence>
+      <Sequence from={Math.round(VO * FPS)}><Audio src={staticFile('elfahman/mummies/vo/vo.mp3')} volume={1} /></Sequence>
       {[...SFX, ...POSE_SWAP_SFX].map(([tt, n, v], i) => (
         <Sequence key={i} from={Math.max(0, Math.round(tt * FPS))} durationInFrames={Math.round(1.6 * FPS)}>
           <Audio src={staticFile(`elfahman/sfx/${n}.wav`)} volume={v} />

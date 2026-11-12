@@ -45,13 +45,16 @@ price). Check your ElevenLabs usage page for the final charged amount.
 | Prop: shocked Victorian painter | same | pQwamb7c76pF7KgCOrip | 337 |
 | Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 40.4 s | | np7cLaSiRSI0nEsMOdSa | 584 |
 | Word timing: Scribe v1 | | 6wcY6fGZhybHIFkcl24i | 0 |
-| Drawn in code: mortar and pestle, powder jar, medicine bottle, spoon, cough face, plaster, palette, brush, paint stroke, framed paintings, flag, garden, house, headstone, flowers, shop shelf, price tag, clock tower, year counter, pyramids, hanging frame, star badge, question mark, comment bubble | | – | 0 |
+| Voice: hook line added after the first render (same model and voice), 1 take, 4.1 s, joined in front of the main take | | bP6vx6ofe76nmskSU3rz | 61 |
+| Word timing of the hook line: Scribe v1 | | mE4HEeuj0gISxoCQObcH | 0 |
+| Drawn in code: sick face, plate, fork and knife, mortar and pestle, powder jar, medicine bottle, spoon, cough face, plaster, palette, brush, paint stroke, framed paintings, flag, garden, house, headstone, flowers, shop shelf, price tag, clock tower, year counter, pyramids, hanging frame, star badge, question mark, comment bubble | | – | 0 |
 | Sound effects: reused from the library | | – | 0 |
-| **Video 02 total** | | | **1,595** |
+| **Video 02 total** | | | **1,656** |
 
-## Grand total (library + videos 01–02): 7,045 credits
+## Grand total (library + videos 01–02): 7,106 credits
 
-No picture or voice was regenerated.
+No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
+(61 credits) and joined to the existing take, instead of a new full take (~640).
 
 ## Estimate for the next video (library reused)
 

@@ -63,6 +63,11 @@ Work on a branch, in the repo root. Budget: ~580 credits per 40 s of voice + ~33
    - the chalkboard `SCENES` and their small drawing components,
    - `SFX` cues and the caption `COLORS` key words.
    Keep the signature-line block and the ending/loop block as they are. Register the composition in `src/Root.tsx`.
+   **Script changed after the voice was made?** Do not redo the whole take. Generate only the new line (1 take),
+   match its loudness to the main take, join the files into `public/elfahman/NN-topic/vo/vo.mp3`, shift the main take's
+   Scribe words by the join offset, merge both word lists into `scribe_words.json`, and run `timing.py` on `vo.mp3`
+   (episode 02's hook line was added this way: `take0_hook.mp3` + `take1.mp3` -> `vo.mp3`). Words that now appear
+   twice need the right `nth` in `at('word', nth)`, and the pinned onsets move by the offset.
 6. **QA.**
    - Contact sheet: `COMP=<Id> REBUNDLE=1 node scripts/stills.mjs out/sheet.png 0 1.2 3.4 ...` (one time per beat).
    - Render: `scripts/render.sh <Id> out/<name>.mp4` (~10–12 min on 4 CPU cores for 40 s).
