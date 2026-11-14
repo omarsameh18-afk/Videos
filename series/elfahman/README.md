@@ -63,6 +63,9 @@ Work on a branch, in the repo root. Budget: ~580 credits per 40 s of voice + ~33
    - the chalkboard `SCENES` and their small drawing components,
    - `SFX` cues and the caption `COLORS` key words.
    Keep the signature-line block and the ending/loop block as they are. Register the composition in `src/Root.tsx`.
+   `Doorway.tsx` (episode 03) is the template for a video with **no generated pictures**: stick figures, rooms, doors,
+   thought bubbles, icons, brain and folders are all small SVG components there. Its hook is already on the board in
+   frame 1 (door swinging, caption up), and its last shot is the same room with the door shut, so the end loops into the start.
    **Script changed after the voice was made?** Do not redo the whole take. Generate only the new line (1 take),
    match its loudness to the main take, join the files into `public/elfahman/NN-topic/vo/vo.mp3`, shift the main take's
    Scribe words by the join offset, merge both word lists into `scribe_words.json`, and run `timing.py` on `vo.mp3`
@@ -73,6 +76,10 @@ Work on a branch, in the repo root. Budget: ~580 credits per 40 s of voice + ~33
    - Render: `scripts/render.sh <Id> out/<name>.mp4` (~10–12 min on 4 CPU cores for 40 s).
    - Pop scan: `python3 scripts/popscan.py out/<name>.mp4`. Every flagged jump must be an intended beat
      (board pop, punch-in, pose swap squash). Also check the first-vs-last frame difference stays small (loop).
+   - Captions vs script (episodes that list their caption groups in `<topic>.captions.json`, from episode 03):
+     `python3 scripts/captioncheck.py <script.txt> src/elfahman/videos/<topic>.words.json src/elfahman/videos/<topic>.captions.json`.
+   - Loudness: `scripts/loudnorm.sh out/<name>.mp4 <final>.mp4` brings the mix to -14 LUFS (true peak <= -1.5 dB) without
+     touching the picture (from episode 03).
    - Audio peak: `ffmpeg -i out/<name>.mp4 -af volumedetect -f null -` (keep max below -1 dB).
 
 ## Regenerating the library (only if the character must change)

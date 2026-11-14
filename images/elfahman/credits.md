@@ -51,15 +51,27 @@ price). Check your ElevenLabs usage page for the final charged amount.
 | Sound effects: reused from the library | | – | 0 |
 | **Video 02 total** | | | **1,656** |
 
-## Grand total (library + videos 01–02): 7,106 credits
+## Video 03: the doorway effect (تأثير الباب)
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 44.0 s | | mEFFHJcmPM9vEI1Bjd73 | 618 |
+| Word timing: Scribe v1 | | UG8OHknwH9xldgvKdMnf | 0 |
+| New generated pictures | none (target was 0, limit 2) | – | 0 |
+| Drawn in code: cut-away rooms, swinging door, front-view door, stick figures (walk cycle, seated player), thought bubbles and pop burst, key, phone, clock, cup, brain (with arms and face), folders "مشهد 1" / "مشهد 2", clipboard, USA and Australia flags, dotted distance lines and "=" badge, arrows, check mark, red cross, desk, chair, monitor with a blocky game, "مفتاح" word pops, comment bubble, question marks | | – | 0 |
+| Sound effects: reused from the library | | – | 0 |
+| **Video 03 total** | | | **618** |
+
+## Grand total (library + videos 01–03): 7,724 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
-(61 credits) and joined to the existing take, instead of a new full take (~640).
+(61 credits) and joined to the existing take, instead of a new full take (~640). Video 03 used one voice take and no
+pictures at all.
 
 ## Estimate for the next video (library reused)
 
 | Item | Credits |
 |---|---|
-| Voice, 1 take, ~40 s | ~580 |
-| 3 props at 1K high (~337 each) | ~1,010 |
-| **Per video** | **~1,600** (≈ 18 videos per 30k-credit month, or ~45 with voice only and every prop drawn in code) |
+| Voice, 1 take, ~40–45 s | ~580–620 |
+| 3 props at 1K high (~337 each), only if code can't draw them | ~1,010 |
+| **Per video** | **~600 with every prop drawn in code (video 03), ~1,600 with 3 generated props** (≈ 48 or 18 videos per 30k-credit month) |
