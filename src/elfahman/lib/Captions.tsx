@@ -3,8 +3,12 @@ import {clamp, easeOut} from './anim';
 
 // Arabic captions: 2-3 words at a time, Cairo ExtraBold, white with a thick black outline,
 // key words yellow #FFD23F or red #FF5A4E, lower-middle, kept out of the right 15% of the frame.
-export type Word = {w: string; s: number; e: number};
-export type Group = {words: Word[]; s: number; e: number; style?: 'gold' | 'big'};
+// Word.c: colour of this one occurrence (wins over the colours map).
+// Group extras (all optional, from episode 04): br = words on the first line of a two-line card (or the word index of each
+// line break, e.g. [2, 5] for three lines); w100 = real width of its
+// widest line at 100 px (scripts/captionsizes.mjs), used instead of the estimate; fs = base size; x / maxW = own centre and width.
+export type Word = {w: string; s: number; e: number; c?: string};
+export type Group = {words: Word[]; s: number; e: number; style?: 'gold' | 'big' | 'hook'; br?: number | number[]; w100?: number; fs?: number; x?: number; maxW?: number};
 export const YELLOW = '#FFD23F', RED = '#FF5A4E', GOLD = '#FFC93C';
 const HARAKAT = /[ً-ْـ]/g;
 export const norm = (w: string) => w.replace(HARAKAT, '').replace(/[.…!،,:؟?]/g, '');
@@ -40,12 +44,15 @@ export const Captions: React.FC<{t: number; groups: Group[]; colors: Record<stri
   const dt = t - g.s + 0.03;
   const pop = dt < 0.14 ? 0.82 + 0.28 * easeOut(clamp(dt / 0.14)) : 1.1 - 0.1 * clamp((dt - 0.14) / 0.08);
   const style = g.style;
-  let fs = style === 'big' ? 132 : style === 'gold' ? 116 : 96;
-  const len = g.words.reduce((a, w) => a + norm(w.w).length + 1, 0);
-  const estW = len * fs * 0.52;
-  const maxW = 2 * Math.min(x - 70, 900 - x);
+  let fs = g.fs ?? (style === 'big' ? 132 : style === 'gold' ? 116 : 96);
+  const cx = g.x ?? x; // keep cx + half width <= 918 (right 15% clear)
+  const cuts = [0, ...(g.br === undefined ? [] : Array.isArray(g.br) ? g.br : [g.br]), g.words.length];
+  const lines = cuts.slice(1).map((c, i) => g.words.slice(cuts[i], c));
+  const estW = g.w100 !== undefined ? (g.w100 / 100 + 0.2) * fs
+    : Math.max(...lines.map((ws) => ws.reduce((a, w) => a + norm(w.w).length + 1, 0))) * fs * 0.52;
+  const maxW = g.maxW ?? 2 * Math.min(cx - 70, 900 - cx);
   if (estW > maxW) fs *= maxW / estW; // stays inside the frame and out of the right 15%
-  const cx = x; // keep x + half width <= 918 (right 15% clear)
+  const lh = fs * 1.34;
   return (
     <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}>
       <defs>
@@ -54,15 +61,17 @@ export const Captions: React.FC<{t: number; groups: Group[]; colors: Record<stri
         </linearGradient>
       </defs>
       <g transform={`translate(${cx} ${y}) scale(${pop})`}>
-        <text x={0} y={0} textAnchor="middle" direction="rtl" fontFamily="Cairo" fontWeight={900} fontSize={fs}
-          stroke="#000" strokeWidth={fs * 0.2} strokeLinejoin="round" paintOrder="stroke" fill="#fff"
-          style={{filter: 'drop-shadow(0 8px 0 rgba(0,0,0,0.35))'}}>
-          {g.words.map((w, i) => {
-            const active = t >= w.s - 0.02;
-            const c = style === 'gold' ? 'url(#gold)' : colors[norm(w.w)] ?? '#fff';
-            return <tspan key={i} fill={c} opacity={style === 'gold' && !active ? 0 : 1}>{clean(w.w)}{i < g.words.length - 1 ? ' ' : ''}</tspan>;
-          })}
-        </text>
+        {lines.map((ws, li) => (
+          <text key={li} x={0} y={(li - (lines.length - 1) / 2) * lh} textAnchor="middle" direction="rtl" fontFamily="Cairo" fontWeight={900} fontSize={fs}
+            stroke="#000" strokeWidth={fs * 0.2} strokeLinejoin="round" paintOrder="stroke" fill="#fff"
+            style={{filter: 'drop-shadow(0 8px 0 rgba(0,0,0,0.35))'}}>
+            {ws.map((w, i) => {
+              const active = t >= w.s - 0.02;
+              const c = style === 'gold' ? 'url(#gold)' : w.c ?? colors[norm(w.w)] ?? '#fff';
+              return <tspan key={i} fill={c} opacity={style === 'gold' && !active ? 0 : 1}>{clean(w.w)}{i < ws.length - 1 ? ' ' : ''}</tspan>;
+            })}
+          </text>
+        ))}
       </g>
     </svg>
   );

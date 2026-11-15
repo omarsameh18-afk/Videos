@@ -14,7 +14,7 @@ for (const t of times) {
   const frame = Math.min(composition.durationInFrames - 1, Math.round(parseFloat(t) * 60));
   const o = `out/stills/f${String(frame).padStart(4, '0')}.png`;
   fs.mkdirSync('out/stills', {recursive: true});
-  await renderStill({serveUrl, composition, frame, output: o, scale: 0.25, browserExecutable});
+  await renderStill({serveUrl, composition, frame, output: o, scale: parseFloat(process.env.SCALE || '0.25'), browserExecutable});
   files.push([o, t]);
 }
 execFileSync('python3', ['-c', `

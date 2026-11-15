@@ -62,11 +62,25 @@ price). Check your ElevenLabs usage page for the final charged amount.
 | Sound effects: reused from the library | | – | 0 |
 | **Video 03 total** | | | **618** |
 
-## Grand total (library + videos 01–03): 7,724 credits
+## Video 04: writing direction (اتجاه الكتابة)
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 42.8 s | | Yf3ZL8UFivYkfCx26RfT | 617 |
+| Word timing: Scribe v1 | | rPvSyGRZJOMAKt5uudtp | 0 |
+| Hook rule + length: the same take tightened in code (`tools/tighten.py`): leading silence trimmed, hook gaps cut, hook line at 1.056x, pauses capped at 0.32 s (42.8 s -> 39.5 s) | no new generation | – | 0 |
+| New generated pictures | none (target was 0, limit 2) | – | 0 |
+| Drawn in code: split board, "ABC" / "أ ب ت" lettering, blue and red arrows, clock with rewind arc, year tag, one-origin dot, coast map with pin, trading boat, tablet with 6 invented angular letters, dotted routes, sheet with "عربي", Greek temple, stick figure, snake lines with pencil, map of Europe, U-turn arrow, "الأصل" tag, comment bubble, flipping name card, down arrows, question mark, check mark | | – | 0 |
+| Sound effects: reused from the library | | – | 0 |
+| **Video 04 total** | | | **617** |
+
+The price was checked first with `estimate_only` (616.94 credits, nothing charged), then one generation was run.
+
+## Grand total (library + videos 01–04): 8,341 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
-(61 credits) and joined to the existing take, instead of a new full take (~640). Video 03 used one voice take and no
-pictures at all.
+(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03 and 04 used one voice take
+and no pictures at all.
 
 ## Estimate for the next video (library reused)
 
