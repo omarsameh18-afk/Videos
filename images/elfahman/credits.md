@@ -76,16 +76,31 @@ price). Check your ElevenLabs usage page for the final charged amount.
 
 The price was checked first with `estimate_only` (616.94 credits, nothing charged), then one generation was run.
 
-## Grand total (library + videos 01–04): 8,341 credits
+## Video 05: the liar (الكدّاب)
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 41.0 s, script sent as written (no tags) | | j1hymwyDvWH7yJppID6v | 508 |
+| Word timing: Scribe v1 | | uAO510hFe5kMnDbgIyyb | 0 |
+| Drama pauses: the same take at 1.0x, edited in code (`tools/pauses.py`): 0.05 s of leading silence trimmed, room tone added in 4 pauses (three drama pauses to 0.80 s, the pause after "استنى" to 0.42 s); nothing stretched, nothing cut (41.0 s -> 42.3 s) | no new generation | – | 0 |
+| New generated pictures | none (target was 0, limit 2) | – | 0 |
+| Music: low suspense bed + soft hits, synthesized in code (`tools/suspense_bed.py`) | | – | 0 |
+| Drawn in code: stick figures, speech bubbles (tick / cross flicker, text bars, fog, tangle), question marks, three playing cards with chalk numbers, cartoon eyes (darting, staring, zoomed with a reflection), red cross stamp, neat sheets with a shine, "مش فاكر" and "غلط" tags, correction mark, magnifying glass, name tag, map pin, clock, green ticks, sweat drop, comment icon, comment box with typed text, reply bubbles with a laughing face, down arrows, spotlight and vignette | | – | 0 |
+| Sound effects: reused from the library | | – | 0 |
+| **Video 05 total** | | | **508** |
+
+The voice run reported 507.95 credits (`credit_costs` at run start and the run status price).
+
+## Grand total (library + videos 01–05): 8,849 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
-(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03 and 04 used one voice take
+(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04 and 05 used one voice take
 and no pictures at all.
 
 ## Estimate for the next video (library reused)
 
 | Item | Credits |
 |---|---|
-| Voice, 1 take, ~40–45 s | ~580–620 |
+| Voice, 1 take, ~40–45 s | ~510–620 |
 | 3 props at 1K high (~337 each), only if code can't draw them | ~1,010 |
 | **Per video** | **~600 with every prop drawn in code (video 03), ~1,600 with 3 generated props** (≈ 48 or 18 videos per 30k-credit month) |

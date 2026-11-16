@@ -1,0 +1,15 @@
+{
+  "note": "caption groups: words per caption, in script order (max 3 words; exceptions: the hook line = ONE card on two lines, and the quoted comment in the call to action, which the brief asks for as one card). cards = per-card options (br: words on the first line of a two-line card, fs: base size, x / maxW: own centre and width, style). w100 = real width of each card's widest line at 100 px, written by scripts/captionsizes.mjs",
+  "sizes": [7,  3, 1, 3,  1, 2, 3,  2, 3, 2,  1, 3,  2, 2, 3, 3,  1, 2, 2, 2, 2,  1, 3,  3, 3, 2, 3,  2, 2,  3, 4, 3,  2],
+  "hook": 7,
+  "hook_biggest": true,
+  "allow": [30],
+  "cta": [29, 30, 31],
+  "base": {"normal": 82, "big": 88, "gold": 88},
+  "cards": {
+    "0": {"style": "hook", "br": 4, "fs": 140, "x": 477, "maxW": 882},
+    "4": {"style": "big"}, "10": {"style": "big"}, "16": {"style": "big"}, "21": {"style": "big"},
+    "31": {"br": 2}
+  },
+  "w100": [943.6, 708.6, 371.6, 845.6, 210.9, 749, 691.7, 674.2, 831.8, 589.1, 232.7, 803.9, 707.4, 697.1, 715, 848.9, 227.3, 556.3, 490.2, 369.8, 839, 310.2, 701.4, 735.7, 682.1, 590.3, 630.5, 453.8, 505.3, 912.2, 890.1, 598.6, 724.9]
+}

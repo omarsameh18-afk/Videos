@@ -104,6 +104,25 @@ Work on a branch, in the repo root. Budget: ~580 credits per 40 s of voice + ~33
      touching the picture (from episode 03).
    - Audio peak: `ffmpeg -i out/<name>.mp4 -af volumedetect -f null -` (keep max below -1 dB).
 
+## Suspense episodes (from episode 05, `Liar.tsx`)
+
+Episode 05 ("الكدّاب") is the template for a calm, darker "secret" episode:
+
+- **Voice stays raw (1.0x).** No time-stretch and no gap-cutting. `tools/pauses.py` only trims the leading silence and
+  *lengthens* chosen pauses with room tone: `--pause <index of the word before the pause>:<seconds>` (0.8 s for a drama
+  pause). It also snaps the Scribe words onto the real audio onsets and writes `scribe_words.pauses.json` (every pause,
+  hook end, speech end) for the report. Then run `timing.py` as usual.
+- **Drama pause** = the board freezes (all idle motion runs on an idle clock that stops), the camera pushes in slowly,
+  the music drops to one held low note, and the next word lands with a soft hit and a small shake (`DRAMA` in `Liar.tsx`).
+- **Music** (0 credits): `tools/suspense_bed.py <words.json> <vo.mp3> public/elfahman/<ep>/music --end <seconds>
+  --drama i,i,i --hits i,i,... --resolve <index of "الفهمان">` writes `bed.wav` (20 LU under the voice, resolves to major
+  on the closing line, silent by the last frame) and `hits.wav`.
+- **Mood**: set dimmed 25% (`ROOM`), soft vignette, spotlight gradient on the board.
+- **Hook is the biggest text**: `"base"` in `<topic>.captions.json` sets the sizes of the other cards under the hook card
+  and `"hook_biggest": true` makes `captioncheck.py` enforce it; `"allow": [card]` lists a card the brief asks for with
+  more than 3 words.
+- **Loop**: frame 0 starts directly in the hook pose (no wink frame); the cut from the last frame sits inside a squash.
+
 ## Regenerating the library (only if the character must change)
 
 `python3 series/elfahman/tools/prep_library.py` (keys, aligns poses to the hero with ECC, builds mouth/blink/wink layers,
