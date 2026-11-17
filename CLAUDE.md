@@ -5,8 +5,8 @@ Everything for this series is already built and saved. **Do not rebuild the char
 Read `series/elfahman/README.md` first: it has the series rules and the step-by-step recipe for a new video.
 
 - Reusable library (character poses, mouth/blink/wink layers, set, sounds, font): `public/elfahman/lib/`, `public/elfahman/sfx/`
-- Reusable code: `src/elfahman/lib/`; episode template to copy: `src/elfahman/videos/Writing.tsx` (episode 04: hook rule, no generated pictures), `Liar.tsx` (episode 05: suspense mood, drama pauses, music bed) or `Rabies.tsx` (with props)
-- Tools: `series/elfahman/tools/` (timing.py, tighten.py, pauses.py, suspense_bed.py, prep scripts, sfx.py); QA: `scripts/stills.mjs`, `scripts/popscan.py`, `scripts/captioncheck.py`, `scripts/captionsizes.mjs`, `scripts/hookcheck.py`; render: `scripts/render.sh`, loudness: `scripts/loudnorm.sh`
+- Reusable code: `src/elfahman/lib/`; episode template to copy: `src/elfahman/videos/Writing.tsx` (episode 04: hook rule, no generated pictures), `Liar.tsx` (episode 05: suspense mood, drama pauses, music bed), `Sommaroy.tsx` (episode 06: map zoom, mood change, curious music bed, record scratch) or `Rabies.tsx` (with props)
+- Tools: `series/elfahman/tools/` (timing.py, tighten.py, pauses.py, suspense_bed.py, curious_bed.py, prep scripts, sfx.py); QA: `scripts/stills.mjs`, `scripts/popscan.py`, `scripts/captioncheck.py`, `scripts/captionsizes.mjs`, `scripts/hookcheck.py`; render: `scripts/render.sh`, loudness: `scripts/loudnorm.sh`
 - Each episode lives in `series/elfahman/videos/NN-topic/` (script, words, final MP4, contact sheet)
 - Credits: log every generation in `images/elfahman/credits.md` (ElevenLabs Starter 30k/month: pictures 1K-2K only, 1 voice take, max 3-4 new props per video)
 

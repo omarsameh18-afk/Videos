@@ -91,16 +91,34 @@ The price was checked first with `estimate_only` (616.94 credits, nothing charge
 
 The voice run reported 507.95 credits (`credit_costs` at run start and the run status price).
 
-## Grand total (library + videos 01–05): 8,849 credits
+## Video 06: Sommarøy, the island that tried to abolish time (سومَرُوي)
+
+Flow "Elfahman 06 Sommaroy voice" (`ciOdDXh76WJpnbeGFsKA`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 47.8 s, script sent exactly as written (no tags, no extra text) | | uIRWjmCcbDfpMlYJB6wG | 703 |
+| Word timing: Scribe v1 | | dkoPeLlKtFR6FPvnuv2m | 0 |
+| Pauses: the same take at 1.0x, edited in code (`tools/pauses.py`): 0.022 s of leading silence trimmed, room tone added in 14 pauses (three drama pauses to 0.80 s, eleven short "..." / sentence pauses to 0.45 s); nothing stretched, nothing cut (47.8 s -> 51.0 s) | no new generation | – | 0 |
+| New generated pictures | none (target was 0, limit 2) | – | 0 |
+| Music: light curious bed, drama-pause low note, soft hits, record scratch, glass crack, clock tick, all synthesized in code (`tools/curious_bed.py`) | | – | 0 |
+| Drawn in code: cracking wall clock with flying hands and falling pieces, map of Europe with the zoom into northern Norway (fjord coast, islands, Sommarøy glowing), midnight sun on its loop, flipping calendars, 2:00 clock, moon / sun icons, kids with a ball, fisherman, painter and house, shrugging islanders, petition with signatures, parliament, hands dropping watches, bridge with swinging watches, globe, newspapers, "إعلان" stamp, megaphone, tourism office, suitcases, planes, ticking clock, night sky, stars, northern lights, snowy island, choice cards, comment icon, down arrows | | – | 0 |
+| Sound effects: library + 2 synthesized for this video | | – | 0 |
+| **Video 06 total** | | | **703** |
+
+The price was checked first with `estimate_only` (702.93 credits, nothing charged), then one generation was run
+(`credit_costs` at run start: 703). Scribe was also priced first (0 credits).
+
+## Grand total (library + videos 01–06): 9,552 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
-(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04 and 05 used one voice take
+(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05 and 06 used one voice take
 and no pictures at all.
 
 ## Estimate for the next video (library reused)
 
 | Item | Credits |
 |---|---|
-| Voice, 1 take, ~40–45 s | ~510–620 |
+| Voice, 1 take, ~40–50 s | ~510–700 |
 | 3 props at 1K high (~337 each), only if code can't draw them | ~1,010 |
 | **Per video** | **~600 with every prop drawn in code (video 03), ~1,600 with 3 generated props** (≈ 48 or 18 videos per 30k-credit month) |

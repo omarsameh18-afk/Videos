@@ -123,6 +123,25 @@ Episode 05 ("الكدّاب") is the template for a calm, darker "secret" episod
   more than 3 words.
 - **Loop**: frame 0 starts directly in the hook pose (no wink frame); the cut from the last frame sits inside a squash.
 
+## Strange-story episodes (from episode 06, `Sommaroy.tsx`)
+
+Episode 06 ("سومَرُوي") is the template for a light "telling a friend a strange story" episode with a mood change:
+
+- **Pauses without a new take**: `tools/pauses.py` also lengthens short "..." / sentence pauses to ~0.45 s (`--pause i:0.45`)
+  as well as the drama pauses (`--pause i:0.8`). A pause that already has a breath inside it is left alone.
+- **Music** (0 credits): `tools/curious_bed.py <words.json> <vo.mp3> public/elfahman/<ep>/music --end <s> --drama i,i,i
+  --hits i,... --resolve <index of "الفهمان"> --scratch <onset of "استنى"> --dark <s> --winter <s>` writes `bed.wav`
+  (plucked marimba + pizzicato in D major, 20 LU under the voice; darker B minor from `--dark`; cold pad + shimmer from
+  `--winter`; one held low note in each drama pause; resolves on the closing line), `hits.wav`, `scratch.wav` (record
+  scratch made from the bed itself, placed on "استنى") and `../sfx/crack.wav`, `../sfx/tick.wav`.
+- **Freeze-frame**: the idle clock also stops from "استنى" to the next line, so the board freezes with the scratch.
+- **Mood**: `warm` / `cool` / `winter` colour layers over the picture (under the captions) and the set dim follow the story;
+  they return to warm on the closing line so the loop matches frame 0.
+- **Maps in code**: Europe as a few polygons (`vectorEffect="non-scaling-stroke"` so the zoom keeps the lines thin), then a
+  procedural fjord coast and island blobs for the close-up.
+- **Long hook line**: when line 1 is too wide for the safe area, the hook card may use the full width with a 40 px margin
+  (`"x": 540, "maxW": 1000`) and the base sizes drop so the hook stays the biggest text.
+
 ## Regenerating the library (only if the character must change)
 
 `python3 series/elfahman/tools/prep_library.py` (keys, aligns poses to the hero with ECC, builds mouth/blink/wink layers,
