@@ -109,10 +109,28 @@ Flow "Elfahman 06 Sommaroy voice" (`ciOdDXh76WJpnbeGFsKA`).
 The price was checked first with `estimate_only` (702.93 credits, nothing charged), then one generation was run
 (`credit_costs` at run start: 703). Scribe was also priced first (0 credits).
 
-## Grand total (library + videos 01–06): 9,552 credits
+## Video 07: what if all humans vanished (لو البشر كلهم اختفوا)
+
+Flow "Elfahman 07 Humans vanish voice" (`wkcIStw9hSPM9EIUL7st`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 66.2 s, script sent exactly as written (without the [MYSTERY PAUSE] tag; no tags, no extra text) | | wJWEXM7bbgVXQmGQVcZh | 974 |
+| Word timing: Scribe v1 | | mtdy7ltvCLDzUposvj9W | 0 |
+| Pause edit: the same take at 1.0x, edited in code (`tools/capgaps.py`): 0.012 s of leading silence trimmed, every silence cut to max 0.25 s (31 cuts, 4.64 s removed), the natural "..." after "كله" kept at 0.36 s (not lengthened), 0.4 s of silence after the last word; nothing stretched (66.2 s -> 61.65 s) | no new generation | – | 0 |
+| New generated pictures | none (target was 0, limit 3) | – | 0 |
+| Music: ambient pad thinning into wind + birds (crickets at night), held low note for the mystery, golden chord on the reveal, chip whooshes, all synthesized in code (`tools/ambient_bed.py`) | | – | 0 |
+| Drawn in code: Earth with vanishing people and poofs, night skyline with block-by-block blackout, power plant with a stopping gear, stars + Milky Way + shooting star, bulb, metro tunnel cross-section with train, pump and rising water, street with deer / fox / boar, cracking asphalt with grass and flowers, snowy street with cockroach, radiator and crown, house with a tree breaking the window and the roof, steel truss bridge rusting and snapping, city overgrown by trees, crumbling skyscrapers and dust, desert with blowing sand and a hidden shape, three pyramids in golden light, stone block with rope vs dust pile, lone man with tumbleweed, comment icon, time chip with spinning clock, timeline bar, down arrows | | – | 0 |
+| Sound effects: library + the episode-06 crack | | – | 0 |
+| **Video 07 total** | | | **974** |
+
+The price was checked first with `estimate_only` (973.90 credits, nothing charged), then one generation was run
+(`credit_costs` at run start: 974). Scribe was also priced first (0 credits).
+
+## Grand total (library + videos 01–07): 10,526 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
-(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05 and 06 used one voice take
+(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05, 06 and 07 used one voice take
 and no pictures at all.
 
 ## Estimate for the next video (library reused)

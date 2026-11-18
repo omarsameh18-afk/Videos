@@ -7,6 +7,7 @@ import {Doorway, DOORWAY_DURATION_S} from './elfahman/videos/Doorway';
 import {Writing, WRITING_DURATION_S} from './elfahman/videos/Writing';
 import {Liar, LIAR_DURATION_S} from './elfahman/videos/Liar';
 import {Sommaroy, SOMMAROY_DURATION_S} from './elfahman/videos/Sommaroy';
+import {Humans, HUMANS_DURATION_S} from './elfahman/videos/Humans';
 
 // الفهمان series: one composition per episode (1080x1920, 60 fps)
 export const RemotionRoot: React.FC = () => (
@@ -22,6 +23,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Elfahman05Liar" component={Liar} durationInFrames={Math.round(LIAR_DURATION_S * FPS)}
       fps={FPS} width={1080} height={1920} />
     <Composition id="Elfahman06Sommaroy" component={Sommaroy} durationInFrames={Math.round(SOMMAROY_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman07Humans" component={Humans} durationInFrames={Math.round(HUMANS_DURATION_S * FPS)}
       fps={FPS} width={1080} height={1920} />
   </>
 );

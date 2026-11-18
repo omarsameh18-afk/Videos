@@ -142,6 +142,21 @@ Episode 06 ("سومَرُوي") is the template for a light "telling a friend a 
 - **Long hook line**: when line 1 is too wide for the safe area, the hook card may use the full width with a 40 px margin
   (`"x": 540, "maxW": 1000`) and the base sizes drop so the hook stays the biggest text.
 
+## Fast "what if" timeline episodes (from episode 07, `Humans.tsx`)
+
+Episode 07 ("لو البشر كلهم اختفوا") is the template for a fast timeline with a strict pause rule:
+
+- **Pause rule without a new take**: `tools/capgaps.py <take.mp3> <scribe_take.json> <vo.mp3> <scribe_words.json> --hook-words N
+  --max-pause 0.25 --mystery <word index>:0.6 --tail 0.4` keeps the voice at 1.0x and only *removes* silence: leading silence
+  trimmed, every gap cut to <= 0.25 s, one marked pause capped at 0.6 s (never lengthened), 0.4 s after the last word.
+  It writes `scribe_words.pauses.json` (hook end, longest body pause, mystery pause, end silence) for the QA report.
+- **Time chips**: `CHIPS` pops a big chip at the top of the board exactly on each time phrase, with a clock whose hands spin
+  faster at each jump (`SPIN`) and a thin timeline bar filling right-to-left step by step. Scenes keep the top ~110 px light.
+- **A beat every ~2 s**: `HUMANS_BEATS` lists every board beat; bundle it with esbuild and print the longest gap (episode 07: 1.88 s).
+- **Music** (0 credits): `tools/ambient_bed.py <words.json> <vo.mp3> public/elfahman/<ep>/music --end <s> --chips t,... --wind <s>
+  --birds <s> --night a,b --sig <onset of "استنى"> --reveal <s> --resolve <index of "الفهمان">`: pad that thins out into wind +
+  birds, one held low note for the mystery, golden chord on the reveal, C major on the closing line, chip whooshes in `hits.wav`.
+
 ## Regenerating the library (only if the character must change)
 
 `python3 series/elfahman/tools/prep_library.py` (keys, aligns poses to the hero with ECC, builds mouth/blink/wink layers,
