@@ -162,3 +162,19 @@ Episode 07 ("لو البشر كلهم اختفوا") is the template for a fast 
 `python3 series/elfahman/tools/prep_library.py` (keys, aligns poses to the hero with ECC, builds mouth/blink/wink layers,
 keys props), `python3 series/elfahman/tools/prep_set.py` (set layers), `python3 series/elfahman/tools/sfx.py` (sounds).
 Then copy `public/elfahman/lib/character.json` to `src/elfahman/lib/`. QA sheets land in `images/elfahman/qa/`.
+
+## Science-surprise episodes (from episode 08, `Screens.tsx`)
+
+Episode 08 ("الأطفال والشاشات") is the template for a "study surprise" episode (setup -> study -> mystery -> reveal -> nuance -> advice -> poll):
+
+- **Same pause rule as episode 07** (`tools/capgaps.py ... --max-pause 0.25 --mystery <index of "والمفاجأة؟">:0.6 --tail 0.4`).
+  The bed's drama window should use the measured silence start from `scribe_words.pauses.json` (Scribe word ends are padded):
+  pass a copy of the words file with that word's `e` set to the measured start.
+- **Long hook line**: a 9-word hook on two lines over the full width (`"x": 540, "maxW": 1040`) is ~65 px, so the base sizes drop
+  to 61/63/63 to keep the hook card the biggest text (`hook_biggest`). Pick the line break with the smallest `w100`.
+- **Mystery -> reveal in place**: the covered chart (cloth + big "؟") is swapped for the colourful reveal without a push, with a
+  white flash (`isReveal`), the room dims during the pause and gets a warm lift on the reveal.
+- **Link, not cause**: the causal arrow gets a ✗, then two arrows walk side by side (legs) — reuse for any correlation story.
+- Drawing kit in code: `Kid` (g = 0 child .. 1 teen; arms phone / run / down), `Brain` (normal / glow / sleepy), `Phone`,
+  `Scientist`, `Mom`, `Flag`, `Clock`, `Ball`, `Bolt` / `Spark`, `Confetti`, `MiniChart` (poll up / down).
+- **Loop**: the last scene is the hook drawing run with `t - END`, so its motion arrives at the frame-0 state on the last frame.

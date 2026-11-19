@@ -127,10 +127,28 @@ Flow "Elfahman 07 Humans vanish voice" (`wkcIStw9hSPM9EIUL7st`).
 The price was checked first with `estimate_only` (973.90 credits, nothing charged), then one generation was run
 (`credit_costs` at run start: 974). Scribe was also priced first (0 credits).
 
-## Grand total (library + videos 01–07): 10,526 credits
+## Video 08: kids and screens (الأطفال والشاشات)
+
+Flow "Elfahman 08 Screens kids voice" (`hTK7OStLF0zRnXc4W8V0`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 64.8 s, script as written without the [MYSTERY PAUSE] marker (tashkeel only on `تَمَن` and `الحِسْبة` in the text sent to the voice) | | qDdxPCpiM8jvEuQ9XrvV | 969 |
+| Word timing: Scribe v1 | | 1CqWjAL8iLJ7JiPAJxSv | 0 |
+| Pause edit: the same take at 1.0x, edited in code (`tools/capgaps.py`): 0.047 s of leading silence trimmed, every silence cut to max 0.25 s (34 cuts, 5.07 s removed), the mystery pause after "والمفاجأة؟" kept at its natural 0.37 s (cap 0.6 s, not lengthened), 0.4 s after the last word; nothing stretched (64.8 s -> 59.66 s) | no new generation | – | 0 |
+| New generated pictures | none (limit 3–4) | – | 0 |
+| Music: curious marimba bed, held low note in the mystery pause, record scratch on "استنى", minor section for "link, not cause", resolves on "الفهمان", soft hits, all synthesized in code (`tools/curious_bed.py`) | | – | 0 |
+| Drawn in code: kid with a glowing phone and a racing, sparking brain; mom wagging her finger with a speech bubble (phone ✗, dizzy brain); scientists; waving Finland flag; "260 طفل" counter with a grid of kid heads; flipping calendar 1–8 and a kid growing into a teen by a height ruler; magnifier; clipboard + two filling bars (play/move vs screens); stopwatch and quiz sheet; covered chart with "؟"; colourful reveal (rays, confetti, bar shooting up, lightning brain, "أسرع", score card, up arrow); "الحسبة" frame with two crossed-out cards and the unchanged result ✓; phone → brain arrow crossed out, two arrows walking side by side; clock ✗ vs phone under a magnifier; puzzle game + glowing brain ✓ vs endless feed + sleepy brain ✗; balance scale with phone and football; split poll with down/up charts; comment bubble; down arrows | | – | 0 |
+| Sound effects: library + the episode-06 tick | | – | 0 |
+| **Video 08 total** | | | **969** |
+
+The price was checked first with `estimate_only` (968.90 credits, nothing charged), then one generation was run
+(`credit_costs` at run start: 969). Scribe was also priced first (0 credits).
+
+## Grand total (library + videos 01–08): 11,495 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
-(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05, 06 and 07 used one voice take
+(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05, 06, 07 and 08 used one voice take
 and no pictures at all.
 
 ## Estimate for the next video (library reused)
