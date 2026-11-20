@@ -25,6 +25,7 @@ i = 0; fss = []
 for k, n in enumerate(sizes):
     g = words[i:i + n]; i += n
     is_hook = k == 0 and hook and n == hook
+    if k == 0 and caps.get('hook_cards', 1) == 2 and n > 4: flag_h = True; ok = False; print('   <-- hook caption 1 has more than 4 words')
     flag = '' if 1 <= n <= 3 or is_hook else '   (allowed exception: more than 3 words)' if k in allow else '   <-- more than 3 words'
     if flag and k not in allow: ok = False
     br = cards.get(str(k), {}).get('br')
@@ -37,9 +38,11 @@ for k, n in enumerate(sizes):
     print(f'{n}  {size}{text}{"   (hook: one card, two lines)" if is_hook else ""}{flag}')
 print(f'\nscript words {len(script)}, timed words {len(words)}, caption words {sum(sizes)}, captions {len(sizes)}')
 if w100:
-    rest = [f for k, f in enumerate(fss) if not (k == 0 and hook)]
+    hc = caps.get('hook_cards', 1) if hook else 0   # from episode 09: the hook is 2 cards (caption 1 <= 4 words from frame 0, then caption 2)
+    rest = [f for k, f in enumerate(fss) if k >= hc]
+    if hc == 2: print(f'hook caption 2: {fss[1]:.0f} px')
     print(f'font sizes: hook card {fss[0]:.0f} px, other cards {min(rest):.0f}-{max(rest):.0f} px, call-to-action cards {", ".join(f"{fss[k]:.0f}" for k in cta)} px')
     if caps.get('hook_biggest'):
-        big = fss[0] > max(rest); print('hook card is the biggest text' if big else 'HOOK CARD IS NOT THE BIGGEST TEXT'); ok = ok and big
+        big = min(fss[:max(hc, 1)]) > max(rest); print('hook card is the biggest text' if big else 'HOOK CARD IS NOT THE BIGGEST TEXT'); ok = ok and big
 print('CAPTIONS MATCH THE SCRIPT WORD FOR WORD' if ok else 'MISMATCH')
 sys.exit(0 if ok else 1)

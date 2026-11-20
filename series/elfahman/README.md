@@ -178,3 +178,18 @@ Episode 08 ("الأطفال والشاشات") is the template for a "study surp
 - Drawing kit in code: `Kid` (g = 0 child .. 1 teen; arms phone / run / down), `Brain` (normal / glow / sleepy), `Phone`,
   `Scientist`, `Mom`, `Flag`, `Clock`, `Ball`, `Bolt` / `Spark`, `Confetti`, `MiniChart` (poll up / down).
 - **Loop**: the last scene is the hook drawing run with `t - END`, so its motion arrives at the frame-0 state on the last frame.
+
+## Hook caption rule (from episode 09, `Tears.tsx`; every video from now on)
+
+- **Caption 1** = at most 4 words, big and centred (`"style": "hook", "x": 540`), on screen from frame 0 (episode 09: two lines
+  "ليه بتعيط / غصب عنك", 150 px). **Caption 2** = the rest of the hook line, replaces caption 1 exactly when the voice reaches
+  its first word (`out[0].e = out[1].s`), also big (128 px). The voice says the whole hook in one go.
+- `<topic>.captions.json`: `"hook": <words in caption 1>`, `"hook_cards": 2`, `"hook_biggest": true`. `captioncheck.py` then
+  fails if caption 1 has more than 4 words or if either hook card is not bigger than every other card.
+- **Pause rule**: `tools/capgaps.py ... --max-pause 0.25 --mystery <index>:0.6 --tail 0.4 --merge 0.06`. `--merge` treats two
+  quiet runs split by a click or a tiny blip (< 60 ms) as ONE pause, so it gets cut to 0.25 s too (without it, episode 09 had
+  0.43 s gaps that the old report counted as two 0.22 s pauses).
+- Drawing kit added in `Tears.tsx`: `MyFace` (his own face from a library pose, cropped round in SVG, loaded with
+  `delayRender`, tears rolling), `ShoutMouth`, `Waves`, `Stamp`, `Person` (adult: shout / angry / smile, anger flush, `Steam`),
+  `Lion`, `Alarm`, `Body` (outline that fills from the feet, neck squeeze, children clipped inside), `Heart` + `beat()`, `Gauge`,
+  `Shoe`, `Fist`, `Gear`, `Lungs`, `EmojiFace` (cry / fume), envelope, ECG line.

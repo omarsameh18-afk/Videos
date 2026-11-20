@@ -145,10 +145,28 @@ Flow "Elfahman 08 Screens kids voice" (`hTK7OStLF0zRnXc4W8V0`).
 The price was checked first with `estimate_only` (968.90 credits, nothing charged), then one generation was run
 (`credit_costs` at run start: 969). Scribe was also priced first (0 credits).
 
-## Grand total (library + videos 01–08): 11,495 credits
+## Video 09: why you cry when someone yells (ليه بتعيط لما حد يزعقلك؟)
+
+Flow "Elfahman 09 Tears yelling voice" (`DCG9nd3F41TorSfe8rCS`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 72.9 s, script as written without the [MYSTERY PAUSE] marker (tashkeel only on `اللّوزة` and `المِيَّة` in the text sent to the voice) | | gXePB7jYXS9pxCycDfMK | 957 |
+| Word timing: Scribe v1 | | RANiN4TmEkfw1N3v4RZ1 | 0 |
+| Pause edit: the same take at 1.0x, edited in code (`tools/capgaps.py --merge 0.06`): 0.027 s of leading silence trimmed, every silence cut to max 0.25 s (44 cuts, 8.44 s removed; quiet runs split by a click are now cut as one pause), the mystery pause after "تفتكر حصل إيه؟" kept at its natural 0.42 s (cap 0.6 s, not lengthened), 0.4 s after the last word; nothing stretched (72.9 s -> 64.34 s) | no new generation | – | 0 |
+| New generated pictures | none (limit 3–4) | – | 0 |
+| Music: curious marimba bed, record scratch on "استنى", darker section for the experiment, held low note in the mystery pause, shimmer from the reveal, resolves on "الفهمان", soft hits, all synthesized in code (`tools/curious_bed.py`) | | – | 0 |
+| Drawn in code: shouting mouth with sound waves; his own face (library `worried` pose, cropped) with rolling tears; "ضعيف" / "حساس" stamps crossed out; shield over a brain; shouting man, brain with the glowing red almond (amygdala), alarm light, cartoon lion; big red emergency button; body outline with racing heart, squeezed throat, stress-hormone bubbles; running shoe and fist crossed out; body filling up + pressure gauge; head with a valve, tears and steam; heart-rate monitor slowing down; deflating balloon and relaxed sigh face; lab with flasks, man sniffing a "دموع" tube; game monitor with an angry face, steam; pulsing question mark; anger bar dropping and a -44% counter; envelope flying from a tear to another head, opening to "اهدى"; teary eye + "عادي" ✓; body with turning gears; breathing lungs with a snail; split poll with crying / fuming faces; comment bubble; down arrows | | – | 0 |
+| Sound effects: library + the episode-06 tick | | – | 0 |
+| **Video 09 total** | | | **957** |
+
+The price was checked first with `estimate_only` (956.90 credits, nothing charged), then one generation was run
+(`credit_costs` at run start: 957). Scribe was also priced first (0 credits).
+
+## Grand total (library + videos 01–09): 12,452 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
-(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05, 06, 07 and 08 used one voice take
+(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05, 06, 07, 08 and 09 used one voice take
 and no pictures at all.
 
 ## Estimate for the next video (library reused)

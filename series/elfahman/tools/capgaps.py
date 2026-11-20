@@ -8,7 +8,7 @@
 #  - --tail seconds of silence are kept after the last word
 #  - writes the edited voice + the Scribe words moved onto the new timeline + <out_scribe>.pauses.json (every pause, for QA)
 # usage: python3 series/elfahman/tools/capgaps.py <take.mp3> <scribe_words_take.json> <out_vo.mp3> <out_scribe_words.json>
-#          --hook-words 8 [--max-pause 0.25] [--mystery 140:0.6] [--tail 0.4] [--thr -40]
+#          --hook-words 8 [--max-pause 0.25] [--mystery 140:0.6] [--tail 0.4] [--thr -40] [--merge 0.06]
 import argparse, json, os, subprocess, tempfile
 import numpy as np
 
@@ -19,6 +19,7 @@ ap.add_argument('--max-pause', type=float, default=0.25)
 ap.add_argument('--mystery', default=None, help='<index of the word before the pause>:<max seconds>')
 ap.add_argument('--tail', type=float, default=0.4)
 ap.add_argument('--thr', type=float, default=-40.0, help='silence threshold, dBFS')
+ap.add_argument('--merge', type=float, default=0.0, help='merge quiet runs split by a blip shorter than this (s), from episode 09')
 A = ap.parse_args()
 SR = 44100
 
@@ -46,6 +47,13 @@ a = decode(A.take); dur = len(a) / SR
 sw = json.load(open(A.scribe)); sw = sw['words'] if isinstance(sw, dict) else sw
 sw = [w for w in sw if w.get('type', 'word') == 'word']
 runs = silences(a, A.thr, 0.05)
+def merge(rs, gap):
+    out = []
+    for r in rs:
+        if out and r[0] - out[-1][1] < gap: out[-1] = (out[-1][0], r[1])
+        else: out.append(r)
+    return out
+if A.merge > 0: runs = merge(runs, A.merge)
 blk = int(0.005 * SR)
 first = next(i for i in range(len(a) // blk) if 10 * np.log10((a[i * blk:(i + 1) * blk] ** 2).mean() + 1e-12) > -50)
 lead = max(0.0, first * blk / SR - 0.008)
@@ -104,6 +112,7 @@ json.dump({'words': words}, open(A.out_scribe, 'w'), ensure_ascii=False)
 
 # report on the edited file
 b = decode(A.out_vo); L = len(b) / SR; nr = silences(b, A.thr, 0.05)
+if A.merge > 0: nr = merge(nr, A.merge)
 end_sil = nr[-1][1] - nr[-1][0] if nr and nr[-1][1] >= L - 0.03 else 0.0
 speech_end = L - end_sil
 body = [r for r in nr if r[0] > 0.02 and r[1] < L - 0.03]
