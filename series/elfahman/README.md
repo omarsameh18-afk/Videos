@@ -216,3 +216,16 @@ Episode 10 ("العالم كان هيخلص الأسبوع اللي فات!") fo
   <scribe_words.pauses.json> --keep <mystery start>:<end> --keep-max 0.6` removes only the excess from the middle of every quiet run
   longer than 0.25 s at -30 dB (voice stays 1.0x) and shifts the words; then run `timing.py`. Do not run `capgaps.py --thr -30`
   instead: it clips word tails and moves the mystery pause.
+
+## Relaxed pacing (from episode 10 v2, `DoomsdayV2.tsx`)
+
+The pacing rule changed after episode 10: relaxed and natural, never rushed, never dead air. `tools/pace.py` re-edits the RAW take
+(no new voice, 1.0x, nothing stretched; silence is cut or digital silence added) by the script's punctuation:
+`python3 series/elfahman/tools/pace.py <take1.mp3> <scribe_words_take1.json> <script.txt> <vo_v2.mp3> <scribe_words_v2.json>
+--hook 6 --straight <index of "استنى"> --mystery <index>:0.8 --cut a:b --tail 0.4 --sent-min 0.47 --sent-max 0.52 --comma-min 0.2 --comma-max 0.25`
+- Sentence gaps (. ! ?) ~0.38–0.48 s, comma gaps ~0.17–0.24 s, gaps inside a phrase <= 0.15 s, nothing over 0.6 s except the
+  0.8 s mystery pause (all measured with ffmpeg silencedetect at -40 dB; the `--sent-*` / `--comma-*` targets are a little higher
+  because silencedetect counts soft breath tails as sound). `--set b:len` fixes one gap whose kept ends hold a breath.
+- `--cut a:b` drops a whole sentence (its words and gaps); the boundary that remains gets a sentence gap. Write `script_v2.txt`
+  without it, then `timing.py`, a new captions file (drop that sentence's cards) and the episode code with the word indices shifted.
+- Body pace for episode 10 v2: 2.62 words/s (target 2.5–2.8).
