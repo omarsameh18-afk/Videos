@@ -181,6 +181,10 @@ Flow "Elfahman 10 Doomsday voice" (`2vu7brOlfkUHNy5H5oMn`).
 The price was checked first with `estimate_only` (1,116.89 credits, nothing charged), then one generation was run
 (`credit_costs` at run start: 1,117). Scribe was also priced first (0 credits).
 
+
+**Video 10 v2 (re-paced): 0 credits.** The same voice take was re-edited in code (`tools/pace.py`: natural sentence/comma gaps,
+0.8 s mystery pause, one sentence cut) and the same visuals were re-synced. No new voice, Scribe or pictures.
+
 ## Grand total (library + videos 01–10): 13,569 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
