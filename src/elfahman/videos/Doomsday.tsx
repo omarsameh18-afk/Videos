@@ -15,7 +15,7 @@ import CAPS from './doomsday.captions.json';
 // A.D. 2026" — world population growing faster and faster would reach infinity on that day; the strange part: it was his own
 // birthday, and before he was a scientist he was a magician; it didn't happen because people have fewer children now).
 // Every picture is drawn in code. Voice: the raw take at 1.0x, every silence cut to max 0.25 s (tools/capgaps.py --merge 0.06);
-// the only longer pause is the natural one after "تفتكر؟" (0.44 s, cap 0.6 s, never lengthened).
+// the only longer pause is the natural one after "تفتكر؟" (0.46 s, cap 0.6 s, never lengthened); a second pass (tools/trimgaps.py) caps every gap at -30 dB too.
 // Hook caption rule: caption 1 "العالم كان هيخلص" (3 words, big, centred) from frame 0, replaced by caption 2 "الأسبوع اللي فات!"
 // exactly when the voice reaches it. The hook board (cracking Earth + red warning flash + a calendar flipping to "١٣ نوفمبر")
 // moves from frame 0, and the last scene is the same hook board running into its frame-0 state (loop).
@@ -30,7 +30,7 @@ const idx = (w: string, nth = 0) => {
   return hits[nth];
 };
 const S = (i: number) => words[i].s + VO; // onset of word i (index in doomsday.words.json)
-const SPEECH_END = 70.94 + VO; // measured end of the last word (scribe_words.pauses.json)
+const SPEECH_END = 68.45 + VO; // measured end of the last word (scribe_words.pauses.json)
 export const DOOMSDAY_DURATION_S = Math.round((SPEECH_END + 0.4) * FPS) / FPS; // 0.4 s of silence after the last word
 const END = DOOMSDAY_DURATION_S;
 
@@ -56,9 +56,9 @@ const T = {
 };
 if (nq(words[104].w) !== 'استنى' || nq(words[201].w) !== 'الفهمان' || nq(words[135].w) !== 'تفتكر' || nq(words[184].w) !== 'المترو') throw new Error('word index table is off');
 // signature moments pinned to the measured audio onsets (timing.py)
-T.estanna = 36.37 + VO; T.fahman = 69.78 + VO; T.kasban = 70.57 + VO;
-// the mystery pause: the real silence after "تفتكر؟" (scribe_words.pauses.json: 47.644-48.088 s, 0.44 s)
-const MYST: [number, number] = [47.644 + VO, T.ashan];
+T.estanna = 35.18 + VO; T.fahman = 67.28 + VO; T.kasban = 68.08 + VO;
+// the mystery pause: the real silence after "تفتكر؟" (scribe_words.pauses.json: 45.797-46.253 s, 0.46 s)
+const MYST: [number, number] = [45.797 + VO, T.ashan];
 // idle clock: idle wiggles stop during the stare from "استنى" (board held, darker)
 const FREEZE: [number, number][] = [[T.estanna, T.yom3 - 0.05]];
 const idle = (t: number) => t - FREEZE.reduce((a, [p0, p1]) => a + clamp(t - p0 - 0.04, 0, p1 - p0 - 0.04), 0);

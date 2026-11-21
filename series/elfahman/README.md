@@ -211,3 +211,8 @@ Episode 10 ("العالم كان هيخلص الأسبوع اللي فات!") fo
   `Infinity_` (lemniscate, the font has no ∞), `Calculator`, `Bread`, `Dice`, `Cake`, `PartyHat`, `Confetti`, `House`, `Ear` + `Pinch`,
   `Clock`, `Typewriter`, `Film` (old film frame) + the `bw` filter (black-and-white photo), a month calendar grid (week starts on Saturday),
   a rolling digit counter.
+- **Pause rule, second pass** (`tools/trimgaps.py`, from episode 10): after `capgaps.py` (-40 dB), breath tails between -40 and -30 dB
+  could still make a gap measure 0.28 s at -30 dB. `python3 series/elfahman/tools/trimgaps.py <vo.mp3> <scribe_words.json> --pauses
+  <scribe_words.pauses.json> --keep <mystery start>:<end> --keep-max 0.6` removes only the excess from the middle of every quiet run
+  longer than 0.25 s at -30 dB (voice stays 1.0x) and shifts the words; then run `timing.py`. Do not run `capgaps.py --thr -30`
+  instead: it clips word tails and moves the mystery pause.
