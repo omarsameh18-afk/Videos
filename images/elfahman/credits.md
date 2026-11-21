@@ -163,10 +163,28 @@ Flow "Elfahman 09 Tears yelling voice" (`DCG9nd3F41TorSfe8rCS`).
 The price was checked first with `estimate_only` (956.90 credits, nothing charged), then one generation was run
 (`credit_costs` at run start: 957). Scribe was also priced first (0 credits).
 
-## Grand total (library + videos 01–09): 12,452 credits
+## Video 10: the 1960 doomsday paper (العالم كان هيخلص الأسبوع اللي فات!)
+
+Flow "Elfahman 10 Doomsday voice" (`2vu7brOlfkUHNy5H5oMn`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 78.6 s, script as written without the [MYSTERY PAUSE] marker (tashkeel only on `يِقرَص وِدن` and an inline `[playfully]` tag before the metro line in the text sent to the voice) | | eZPfZeOTIiQYAYkrCZPb | 1,117 |
+| Word timing: Scribe v1 | | aEfh0vtlDvUuyyJYbKrj | 0 |
+| Pause edit: the same take at 1.0x, edited in code (`tools/capgaps.py --merge 0.06`): 0.027 s of leading silence trimmed, every silence cut to max 0.25 s (45 cuts, 7.10 s removed), the mystery pause after "تفتكر؟" kept at its natural 0.44 s (cap 0.6 s, not lengthened), 0.4 s after the last word; nothing stretched (78.6 s -> 71.34 s) | no new generation | – | 0 |
+| New generated pictures | none (limit 3–4) | – | 0 |
+| Music: curious marimba bed, record scratch on "استنى", darker section for the strange part, held low note in the mystery pause, shimmer from the answer, resolves on "الفهمان", soft hits, all synthesized in code (`tools/curious_bed.py`) | | – | 0 |
+| Drawn in code: cracking Earth with a red warning flash and a calendar flipping to ١٣ نوفمبر; crystal ball crossed out, lab flask, glasses; 1960 black-and-white film frame, typewriter, the scientist and two students, a thick "Science" magazine; the headline typed out; the November 2026 calendar with Friday the 13th circled; growing crowd of little people, the population curve, calculator, the curve shooting off the board, ∞; quote + family tree; bread crossed out, the packed sweating Earth; birthday cake, party hat, dice crossed out, confetti; top hat, wand, rabbit, sparkles; the smiling Earth and a pulsing question mark; the house with 8 kids -> 2–3; the flattening curve and a counter rolling to ٨ مليار; winking hat, "ههههه", an ear being pinched; the packed 5 o'clock metro car and clock; comment bubble "أزحم مكان؟" with a down arrow | | – | 0 |
+| Sound effects: library + the episode-06 crack and tick | | – | 0 |
+| **Video 10 total** | | | **1,117** |
+
+The price was checked first with `estimate_only` (1,116.89 credits, nothing charged), then one generation was run
+(`credit_costs` at run start: 1,117). Scribe was also priced first (0 credits).
+
+## Grand total (library + videos 01–10): 13,569 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
-(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05, 06, 07, 08 and 09 used one voice take
+(61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05, 06, 07, 08, 09 and 10 used one voice take
 and no pictures at all.
 
 ## Estimate for the next video (library reused)

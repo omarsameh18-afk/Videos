@@ -193,3 +193,21 @@ Episode 08 ("الأطفال والشاشات") is the template for a "study surp
   `delayRender`, tears rolling), `ShoutMouth`, `Waves`, `Stamp`, `Person` (adult: shout / angry / smile, anger flush, `Steam`),
   `Lion`, `Alarm`, `Body` (outline that fills from the feet, neck squeeze, children clipped inside), `Heart` + `beat()`, `Gauge`,
   `Shoe`, `Fist`, `Gear`, `Lungs`, `EmojiFace` (cry / fume), envelope, ECG line.
+
+## Viral "it almost happened" episodes (from episode 10, `Doomsday.tsx`)
+
+Episode 10 ("العالم كان هيخلص الأسبوع اللي فات!") follows the episode 09 hook caption rule and pause rule:
+
+- **Hook**: caption 1 "العالم كان هيخلص" (3 words, two lines, 165 px) from frame 0, caption 2 "الأسبوع اللي فات!" (118 px) on the onset
+  of "الأسبوع". The voice says the whole hook in one go; it ends at 1.57 s.
+- **Scribe can drop a word into the silence after it** (episode 10: "فات!" was timed 1.6–2.0 s inside a silence that starts at
+  1.57 s), which made `capgaps.py` report the hook end at the *next* pause. Check the hook end with
+  `ffmpeg -af silencedetect=n=-40dB:d=0.04` on `vo.mp3` and fix that word in `scribe_words.json` before `timing.py`.
+- **Voice direction tags**: an inline `[playfully]` in the text sent to eleven_v4 gave the teasing tone on the metro line; Scribe
+  returns the tag as a word, so drop it from the Scribe list before `capgaps.py`.
+- Drawing kit added in `Doomsday.tsx`: `Earth` (crack 0..1, faces shock / smile / worry), `CalPage` + `FlipCal` (pages flip up and
+  land on a day, continuous in t so the loop runs into frame 0), `Warn`, `Glasses`, `CrystalBall`, `Scientist` (+ top hat), `TopHat`
+  (winking), `Wand`, `Rabbit`, `Mini` (tiny person, sweat), `Kid`, population curves (`hyper` -> ∞, `logi` flattening, `Axes`, `Line`),
+  `Infinity_` (lemniscate, the font has no ∞), `Calculator`, `Bread`, `Dice`, `Cake`, `PartyHat`, `Confetti`, `House`, `Ear` + `Pinch`,
+  `Clock`, `Typewriter`, `Film` (old film frame) + the `bw` filter (black-and-white photo), a month calendar grid (week starts on Saturday),
+  a rolling digit counter.
