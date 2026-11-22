@@ -3,6 +3,10 @@
 import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { EnvHttpProxyAgent, setGlobalDispatcher } from 'undici';
+
+// Respect HTTPS_PROXY (Node's fetch ignores it by default).
+if (process.env.HTTPS_PROXY || process.env.https_proxy) setGlobalDispatcher(new EnvHttpProxyAgent());
 
 export const CACHE_DIR = '.cache/tts';
 
