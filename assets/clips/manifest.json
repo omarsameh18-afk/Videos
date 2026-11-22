@@ -119,7 +119,15 @@
       "generationId": "C869pjuRgG22fLUvqF7h",
       "credits": 609,
       "prompt": "MASTER ref; AVERAGE build: slim arms, narrow shoulders, no V-torso, flat stomach no six-pack, loose coat; relaxed, shaker in right hand"
+    },
+    {
+      "name": "avg-idle",
+      "file": "assets/clips/avg-idle.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "0EN59bS0eXC3MY0c2Lhf",
+      "credits": 2121,
+      "prompt": "from pose-average: calm breathing, nod, weight shift; body stays average; static camera, no morphing, no logos, shaker stays a shaker"
     }
   ],
-  "totalCredits": 22540
+  "totalCredits": 24661
 }
