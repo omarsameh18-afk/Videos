@@ -4,6 +4,8 @@
 export type HandShape = 'fist' | 'point' | 'thumbsUp' | 'open' | 'shaker' | 'hidden';
 export type PoseName = 'idle' | 'pointing' | 'flexing' | 'armsCrossed' | 'facepalm' | 'thumbsUp' | 'fingerUp';
 
+export const POSE_NAMES: PoseName[] = ['pointing', 'flexing', 'armsCrossed', 'facepalm', 'thumbsUp', 'fingerUp'];
+
 export interface ArmDef {
   shoulder: number;
   elbow: number;
@@ -32,7 +34,7 @@ export const POSES: Record<PoseName, PoseDef> = {
     right: hang('shaker'),
     lean: 3,
   },
-  thumbsUp: { left: { shoulder: 10, elbow: -98, wrist: 0, hand: 'thumbsUp', front: true }, right: hang('shaker') },
+  thumbsUp: { left: { shoulder: 52, elbow: 116, wrist: 0, hand: 'thumbsUp' }, right: hang('shaker') },
   fingerUp: { left: { shoulder: 30, elbow: 128, wrist: 0, hand: 'point' }, right: hang('shaker') },
 };
 

@@ -68,19 +68,13 @@ export const Mouth: React.FC<{ shape: MouthShape }> = ({ shape }) => {
       return <path transform={t} d="M -24 -4 Q 0 14 24 -4" fill="none" {...line} />;
     case 'small':
       return <ellipse transform={t} cx={0} cy={2} rx={14} ry={8} fill={C.mouth} {...line} />;
-    case 'open':
-      return (
-        <g transform={t}>
-          <path d="M -24 -6 Q 0 -10 24 -6 Q 22 26 0 28 Q -22 26 -24 -6 Z" fill={C.mouth} {...line} />
-          <path d="M -12 20 Q 0 12 12 20 Q 6 27 0 27 Q -6 27 -12 20 Z" fill={C.tongue} />
-        </g>
-      );
     case 'wide':
+      // tall open "ah"
       return (
         <g transform={t}>
-          <path d="M -34 -10 Q 0 -16 34 -10 Q 30 36 0 40 Q -30 36 -34 -10 Z" fill={C.mouth} {...line} />
-          <path d="M -30 -9 Q 0 -14 30 -9 L 28 2 Q 0 -2 -28 2 Z" fill={C.teeth} />
-          <path d="M -16 30 Q 0 18 16 30 Q 8 38 0 38 Q -8 38 -16 30 Z" fill={C.tongue} />
+          <path d="M -24 -10 Q 0 -16 24 -10 Q 30 34 0 40 Q -30 34 -24 -10 Z" fill={C.mouth} {...line} />
+          <path d="M -20 -10 Q 0 -14 20 -10 L 18 -2 Q 0 -5 -18 -2 Z" fill={C.teeth} />
+          <path d="M -14 30 Q 0 20 14 30 Q 7 38 0 38 Q -7 38 -14 30 Z" fill={C.tongue} />
         </g>
       );
     case 'o':
@@ -103,12 +97,14 @@ export const Mouth: React.FC<{ shape: MouthShape }> = ({ shape }) => {
           <path d="M -29 12 Q 0 6 29 12 M -14 -1 L -14 19 M 0 -2 L 0 18 M 14 -1 L 14 19" fill="none" {...line} strokeWidth={3.5} />
         </g>
       );
-    case 'grin':
+    case 'laugh':
+      // wide crescent grin, corners pulled up
       return (
         <g transform={t}>
-          <path d="M -36 -8 Q 0 -4 36 -8 Q 30 40 0 42 Q -30 40 -36 -8 Z" fill={C.mouth} {...line} />
-          <path d="M -32 -7 Q 0 -3 32 -7 L 30 6 Q 0 10 -30 6 Z" fill={C.teeth} />
-          <path d="M -18 32 Q 0 18 18 32 Q 8 41 0 41 Q -8 41 -18 32 Z" fill={C.tongue} />
+          <path d="M -46 -18 Q 0 2 46 -18 Q 36 38 0 40 Q -36 38 -46 -18 Z" fill={C.mouth} {...line} />
+          <path d="M -42 -15 Q 0 4 42 -15 L 38 -4 Q 0 14 -38 -4 Z" fill={C.teeth} />
+          <path d="M -18 30 Q 0 18 18 30 Q 8 39 0 39 Q -8 39 -18 30 Z" fill={C.tongue} />
+          <path d="M -52 -22 Q -46 -20 -44 -14 M 52 -22 Q 46 -20 44 -14" fill="none" {...line} strokeWidth={4} />
         </g>
       );
     case 'smirk':
@@ -166,8 +162,9 @@ export const Head: React.FC<{
   mouth?: MouthShape;
   blink?: number;
   frame?: number;
-}> = ({ expression, mouth, blink = 0, frame = 0 }) => {
-  const e = EXPRESSIONS[expression];
+  brows?: { browL: Brow; browR: Brow }; // animated brows (springs) override the expression's
+}> = ({ expression, mouth, blink = 0, frame = 0, brows }) => {
+  const e = { ...EXPRESSIONS[expression], ...brows };
   return (
     <g>
       {/* neck */}

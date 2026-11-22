@@ -37,11 +37,14 @@ export const Hand: React.FC<{ shape: HandShape; worldAngle: number }> = ({ shape
         </g>
       );
     case 'thumbsUp':
+      // used with the forearm pointing up: thumb sticks out past the fist along +y
       return (
         <g>
-          <rect x={20} y={10} width={64} height={28} rx={14} fill={C.skin} {...line} />
-          <rect x={-38} y={2} width={76} height={70} rx={26} fill={C.skin} {...line} />
-          <path d="M -24 24 Q 0 22 10 26 M -24 42 Q 0 40 10 44 M -24 58 Q 0 56 10 60" fill="none" {...line} strokeWidth={4} />
+          <rect x={-34} y={44} width={30} height={84} rx={15} fill={C.skin} {...line} />
+          <path d="M -26 116 Q -19 110 -12 116" fill="none" {...line} strokeWidth={3.5} />
+          <rect x={-38} y={2} width={80} height={72} rx={26} fill={C.skin} {...line} />
+          <path d="M 6 18 L 40 18 M 6 34 L 40 34 M 6 50 L 40 50" fill="none" {...line} strokeWidth={4} />
+          <path d="M -30 64 Q -14 70 4 62" fill="none" {...line} strokeWidth={4} />
         </g>
       );
     case 'open':

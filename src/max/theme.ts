@@ -1,4 +1,4 @@
-// Brand palette for "The Gym Scientist". Change colors here only.
+// Brand palette for Max (BrainPump). Change colors here only.
 export const C = {
   outline: '#1B1B2F',
   skin: '#F4B88E',
