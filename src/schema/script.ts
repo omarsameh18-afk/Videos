@@ -202,6 +202,7 @@ export const ClipScene = z.object({
     upper: z.object({ from: z.number().min(1).max(1.4), to: z.number().min(1).max(1.4) }).optional(),
     bodyMeters: z.object({ upper: z.tuple([z.number().min(0).max(100), z.number().min(0).max(100)]), legs: z.tuple([z.number().min(0).max(100), z.number().min(0).max(100)]) }).optional(),
     silhouette: z.boolean().default(false),
+    bigNumber: z.object({ text: z.string().min(1), label: z.string().min(1) }).optional(), // solo silhouette card: counts up
     clipStart: z.number().int().min(0).max(120).default(0), // solo: frames into the clip where the scene starts
     offsetRight: z.number().int().min(0).default(0), // frames into the right clip (so mirrored twins are not identical)
   }),

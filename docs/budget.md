@@ -5,3 +5,4 @@ Start (2026-11-22, before skip-leg-day): account used 58,033 / 124,177 (66,144 l
 | video | images | clips | TTS | total | running total | account left |
 |---|---|---|---|---|---|---|
 | skip-leg-day | 1,218 (2) | 6,363 (3) | ~142 | 7,723 | 7,723 / 50,000 | 58,421 |
+| skip-leg-day fix (50%+ line) | - | - | 40 | 40 | 7,763 / 50,000 | 58,381 |

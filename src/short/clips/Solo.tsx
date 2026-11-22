@@ -45,12 +45,12 @@ const Body: React.FC<{ clip: string; upper: number; punch: number; start: number
 };
 
 /** Simple front body silhouette; the legs glow (reveal card). */
-const Silhouette: React.FC<{ glow: number; f: number }> = ({ glow, f }) => {
+const Silhouette: React.FC<{ glow: number; f: number; small?: boolean }> = ({ glow, f, small }) => {
   const pulse = 0.65 + 0.35 * Math.sin(f / 4);
   const up = '#3A4066';
   const legFill = C.accent;
   return (
-    <svg width={560} height={1000} viewBox="0 0 280 500" style={{ position: 'absolute', left: 260, top: 90, overflow: 'visible' }}>
+    <svg width={small ? 400 : 560} height={small ? 714 : 1000} viewBox="0 0 280 500" style={{ position: 'absolute', left: small ? 340 : 260, top: small ? 410 : 90, overflow: 'visible' }}>
       <defs>
         <filter id="legGlow" x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation={6 + 6 * pulse} result="b" />
@@ -96,7 +96,19 @@ export const SoloView: React.FC<SceneProps> = ({ scene, timing }) => {
         {p.silhouette ? (
           <>
             <AbsoluteFill style={{ background: 'radial-gradient(circle at 50% 70%, rgba(184,255,46,0.18), rgba(11,12,28,0) 60%)' }} />
-            <Silhouette glow={glowIn} f={f} />
+            <Silhouette glow={glowIn} f={f} small={!!p.bigNumber} />
+            {p.bigNumber && (() => {
+              const m = p.bigNumber.text.match(/^(\D*)(\d+)(.*)$/);
+              const cnt = spring({ frame: f - 4, fps, config: { damping: 20, stiffness: 70, overshootClamping: true } });
+              const shown = m ? `${m[1]}${Math.round(Number(m[2]) * cnt)}${m[3]}` : p.bigNumber.text;
+              const pop = spring({ frame: f - 2, fps, config: { damping: 9, stiffness: 260 } });
+              return (
+                <div style={{ position: 'absolute', left: 0, width: 1080, top: 20, textAlign: 'center' }}>
+                  <div style={{ ...headline(250, C.accent), lineHeight: 1, transform: `scale(${interpolate(pop, [0, 1], [0.6, 1])})` }}>{shown}</div>
+                  <div style={{ ...headline(76, '#fff'), marginTop: 6, opacity: interpolate(f, [10, 18], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) }}>{p.bigNumber.label.toUpperCase()}</div>
+                </div>
+              );
+            })()}
             {p.tags.map((t, i) => {
               const s = spring({ frame: f - 12 - i * 8, fps, config: { damping: 10, stiffness: 300, overshootClamping: true } });
               return (

@@ -8,7 +8,7 @@ import { Script, narrationText } from '../src/schema/script.ts';
 
 const script = Script.parse(JSON.parse(readFileSync(process.argv[2], 'utf8')));
 const text = narrationText(script);
-const sentences = text.match(/[^.?!]+[.?!]+/g).map((s) => s.trim());
+const sentences = text.match(/[^.?!]+[.?!]+["”]?/g).map((s) => s.trim());
 
 const sources = [];
 for (const dir of ['.cache/tts', 'voice']) {

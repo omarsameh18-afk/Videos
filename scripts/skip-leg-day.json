@@ -46,10 +46,10 @@
     },
     {
       "type": "ClipScene", "background": "lab",
-      "narration": "The problem? With age, most muscle loss hits your legs. He skipped his biggest muscles.",
-      "emphasis": ["legs"],
+      "narration": "The problem? Your lower body holds over half your muscle mass. He skipped most of his gains.",
+      "emphasis": ["half"],
       "sourceIndex": 0,
-      "props": { "layout": "solo", "clip": "chicken-wobble", "silhouette": true, "showWeek": false, "lines": ["Aging drains", "the lower body"] }
+      "props": { "layout": "solo", "clip": "chicken-wobble", "silhouette": true, "showWeek": false, "bigNumber": { "text": "50%+", "label": "of your muscle" }, "lines": ["Leg day trains"] }
     },
     {
       "type": "ClipScene", "background": "gym",
