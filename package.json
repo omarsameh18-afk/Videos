@@ -1,35 +1,18 @@
 {
-  "name": "brainpump-shorts",
-  "version": "1.0.0",
-  "description": "Max (BrainPump) YouTube Shorts animation system",
+  "name": "videos",
+  "private": true,
   "scripts": {
-    "studio": "remotion studio src/index.ts",
-    "typecheck": "tsc -p .",
-    "proof-sheet": "remotion still src/index.ts ProofSheet review/proof-sheet.png",
-    "rig-test": "node scripts/rig-test.mjs"
+    "studio": "remotion studio",
+    "render": "remotion render"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/omarsameh18-afk/Videos.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/omarsameh18-afk/Videos/issues"
-  },
-  "homepage": "https://github.com/omarsameh18-afk/Videos#readme",
   "dependencies": {
-    "@remotion/cli": "^4.0.545",
-    "@remotion/media-utils": "^4.0.545",
-    "@remotion/renderer": "^4.0.545",
+    "@remotion/bundler": "^4.0.300",
+    "@remotion/cli": "^4.0.300",
+    "@remotion/renderer": "^4.0.300",
+    "@types/react": "^18.3.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "remotion": "^4.0.545"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.31",
-    "typescript": "^7.0.2"
-  },
-  "private": true
+    "remotion": "^4.0.300",
+    "typescript": "^5.6.3"
+  }
 }

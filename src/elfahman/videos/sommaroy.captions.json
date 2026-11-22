@@ -1,0 +1,14 @@
+{
+  "note": "caption groups: words per caption, in script order (max 3 words; the hook line is the only exception = ONE card on two lines). cards = per-card options (br: words on the first line of a two-line card, fs: base size, x / maxW: own centre and width, style). w100 = real width of each card's widest line at 100 px, written by scripts/captionsizes.mjs",
+  "sizes": [7,  3, 1, 2, 2,  2, 2, 2, 3, 3,  3, 3, 2,  2, 3,  3, 2, 2,  3, 3, 2, 3,  2, 3,  2, 2,  1, 3,  2, 2,  2, 2, 3, 3,  3, 3,  2, 2, 1, 3, 2,  2, 3, 2, 3, 3,  2],
+  "hook": 7,
+  "hook_biggest": true,
+  "allow": [],
+  "cta": [42, 44, 45],
+  "base": {"normal": 76, "big": 82, "gold": 82},
+  "cards": {
+    "0": {"style": "hook", "br": 4, "fs": 150, "x": 540, "maxW": 1000},
+    "2": {"style": "big"}, "26": {"style": "big"}, "42": {"style": "big"}, "44": {"style": "big"}, "45": {"br": 2}
+  },
+  "w100": [1136.4, 829.2, 428.6, 435.8, 598.3, 477.6, 644.3, 491.7, 703, 617.7, 873.7, 921.4, 487.4, 704.9, 944.4, 864.1, 403, 632.6, 970.4, 766.9, 441.4, 543.3, 767, 1035, 437.1, 475.6, 310.2, 701.4, 624.7, 460.3, 635.8, 478.2, 757, 805.9, 952.9, 965.7, 476.2, 684.4, 378.2, 818.8, 629.2, 758.4, 485.9, 486.8, 676.9, 485.4, 724.9]
+}

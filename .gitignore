@@ -1,3 +1,5 @@
-node_modules
-out
-*.mp4
+node_modules/
+build/
+out/
+images/*/raw/*.json
+images/*/raw/*_k.png
