@@ -3,7 +3,10 @@
     "id": "rest-1-vs-3",
     "title": "What Happens If You Rest 1 Minute vs 3 Minutes Between Sets?",
     "topic": "rest intervals and hypertrophy",
-    "targetSec": [20, 25],
+    "targetSec": [
+      20,
+      25
+    ],
     "sources": [
       {
         "label": "Schoenfeld et al., 2016",
@@ -12,57 +15,197 @@
     ],
     "seed": 11
   },
-  "voice": { "voiceId": "TX3LPaxmHKxFdv7VOQHJ", "modelId": "eleven_multilingual_v2", "speed": 1.1, "maxGapSec": 0.15 },
+  "voice": {
+    "voiceId": "TX3LPaxmHKxFdv7VOQHJ",
+    "modelId": "eleven_multilingual_v2",
+    "speed": 1.1,
+    "maxGapSec": 0.15
+  },
   "scenes": [
     {
       "type": "ClipScene",
       "background": "gym",
-      "narration": "Only the rest is different.",
-      "emphasis": ["rest"],
+      "narration": "The only difference? Rest between sets.",
+      "emphasis": [
+        "rest"
+      ],
       "props": {
-        "layout": "versus", "clip": "exhausted", "drainLeft": true, "showWeek": false,
-        "lines": ["Same workout.", "One grew way more."],
-        "labels": ["1 min", "3 min"],
-        "week": { "from": 8, "to": 8 },
-        "swapRight": { "atWeek": 6, "clip": "bigmax-flex", "scale": 1.0 },
-        "grow": { "left": 0, "right": 0.04 }
+        "layout": "versus",
+        "clip": "exhausted",
+        "drainLeft": true,
+        "showWeek": false,
+        "lines": [
+          "Same workout.",
+          "One grew way more."
+        ],
+        "labels": [
+          "1 min",
+          "3 min"
+        ],
+        "week": {
+          "from": 8,
+          "to": 8
+        },
+        "swapRight": {
+          "atWeek": 6,
+          "clip": "bigmax-flex",
+          "scale": 1.0
+        },
+        "grow": {
+          "left": 0,
+          "right": 0.04
+        }
       }
     },
     {
       "type": "ClipScene",
       "background": "gym",
       "narration": "Two Maxes, eight weeks. Left Max rests one minute between sets. Right Max rests three.",
-      "emphasis": ["eight"],
+      "emphasis": [
+        "eight"
+      ],
       "props": {
-        "layout": "versus", "clip": "bicep-curl", "clipRight": "bicep-curl", "mirrorRight": true, "drainLeft": true,
-        "labels": ["1 min", "3 min"], "week": { "from": 1, "to": 2 },
-        "repsByWeek": { "left": [12, 11, 10, 8, 8, 7, 6, 6], "right": [12, 12, 12, 12, 12, 12, 12, 12] },
-        "grow": { "left": 0, "right": 0.04 }
+        "layout": "versus",
+        "clip": "bicep-curl",
+        "clipRight": "bicep-curl",
+        "mirrorRight": true,
+        "drainLeft": true,
+        "labels": [
+          "1 min",
+          "3 min"
+        ],
+        "week": {
+          "from": 1,
+          "to": 2
+        },
+        "repsByWeek": {
+          "left": [
+            12,
+            11,
+            10,
+            8,
+            8,
+            7,
+            6,
+            6
+          ],
+          "right": [
+            12,
+            12,
+            12,
+            12,
+            12,
+            12,
+            12,
+            12
+          ]
+        },
+        "grow": {
+          "left": 0,
+          "right": 0.04
+        }
       }
     },
     {
       "type": "ClipScene",
       "background": "gym",
       "narration": "One-minute Max rushes back, gasping. Three-minute Max sips his shake and fully recovers.",
-      "emphasis": ["recovers"],
+      "emphasis": [
+        "recovers"
+      ],
       "props": {
-        "layout": "versus", "clip": "exhausted", "clipRight": "sip-shaker", "drainLeft": true,
-        "labels": ["1 min", "3 min"], "week": { "from": 3, "to": 5 },
-        "repsByWeek": { "left": [12, 11, 10, 8, 8, 7, 6, 6], "right": [12, 12, 12, 12, 12, 12, 12, 12] },
-        "grow": { "left": 0, "right": 0.04 }
+        "layout": "versus",
+        "clip": "exhausted",
+        "clipRight": "sip-shaker",
+        "drainLeft": true,
+        "labels": [
+          "1 min",
+          "3 min"
+        ],
+        "week": {
+          "from": 3,
+          "to": 5
+        },
+        "repsByWeek": {
+          "left": [
+            12,
+            11,
+            10,
+            8,
+            8,
+            7,
+            6,
+            6
+          ],
+          "right": [
+            12,
+            12,
+            12,
+            12,
+            12,
+            12,
+            12,
+            12
+          ]
+        },
+        "grow": {
+          "left": 0,
+          "right": 0.04
+        }
       }
     },
     {
       "type": "ClipScene",
       "background": "gym",
       "narration": "By week eight, one-minute Max feels like he is working harder. But three-minute Max lifts more every single set.",
-      "emphasis": ["more"],
+      "emphasis": [
+        "more"
+      ],
       "props": {
-        "layout": "versus", "clip": "exhausted", "clipRight": "bicep-curl", "mirrorRight": true, "drainLeft": true,
-        "labels": ["1 min", "3 min"], "week": { "from": 6, "to": 8 },
-        "repsByWeek": { "left": [12, 11, 10, 8, 8, 7, 6, 6], "right": [12, 12, 12, 12, 12, 12, 12, 12] },
-        "swapRight": { "atWeek": 6, "clip": "bigmax-flex", "scale": 1.0 },
-        "grow": { "left": 0, "right": 0.04 }
+        "layout": "versus",
+        "clip": "exhausted",
+        "clipRight": "bicep-curl",
+        "mirrorRight": true,
+        "drainLeft": true,
+        "labels": [
+          "1 min",
+          "3 min"
+        ],
+        "week": {
+          "from": 6,
+          "to": 8
+        },
+        "repsByWeek": {
+          "left": [
+            12,
+            11,
+            10,
+            8,
+            8,
+            7,
+            6,
+            6
+          ],
+          "right": [
+            12,
+            12,
+            12,
+            12,
+            12,
+            12,
+            12,
+            12
+          ]
+        },
+        "swapRight": {
+          "atWeek": 6,
+          "clip": "bigmax-flex",
+          "scale": 1.0
+        },
+        "grow": {
+          "left": 0,
+          "right": 0.04
+        }
       }
     },
     {
@@ -70,25 +213,64 @@
       "background": "lab",
       "narration": "Longer rest let him lift more weight every set.",
       "sourceIndex": 0,
-      "emphasis": ["more"],
+      "emphasis": [
+        "more"
+      ],
       "props": {
-        "layout": "versus", "clip": "exhausted", "drainLeft": true, "showWeek": false,
-        "lines": ["More rest = more reps", "= more growth"],
-        "labels": ["1 min", "3 min"], "week": { "from": 8, "to": 8 },
-        "swapRight": { "atWeek": 6, "clip": "bigmax-flex", "scale": 1.0 },
-        "grow": { "left": 0, "right": 0.04 }
+        "layout": "versus",
+        "clip": "exhausted",
+        "drainLeft": true,
+        "showWeek": false,
+        "lines": [
+          "More rest = more reps",
+          "= more growth"
+        ],
+        "labels": [
+          "1 min",
+          "3 min"
+        ],
+        "week": {
+          "from": 8,
+          "to": 8
+        },
+        "swapRight": {
+          "atWeek": 6,
+          "clip": "bigmax-flex",
+          "scale": 1.0
+        },
+        "grow": {
+          "left": 0,
+          "right": 0.04
+        }
       }
     },
     {
       "type": "ClipScene",
       "background": "gym",
-      "narration": "Pick your timer.",
+      "narration": "Which one are you?",
       "props": {
-        "layout": "versus", "clip": "exhausted", "drainLeft": true, "showWeek": false, "freeze": true, "timers": true,
-        "lines": ["Which one are you?"],
-        "week": { "from": 8, "to": 8 },
-        "swapRight": { "atWeek": 6, "clip": "bigmax-flex", "scale": 1.0 },
-        "grow": { "left": 0, "right": 0.04 }
+        "layout": "versus",
+        "clip": "exhausted",
+        "drainLeft": true,
+        "showWeek": false,
+        "freeze": true,
+        "timers": true,
+        "lines": [
+          "Pick your timer."
+        ],
+        "week": {
+          "from": 8,
+          "to": 8
+        },
+        "swapRight": {
+          "atWeek": 6,
+          "clip": "bigmax-flex",
+          "scale": 1.0
+        },
+        "grow": {
+          "left": 0,
+          "right": 0.04
+        }
       }
     }
   ]

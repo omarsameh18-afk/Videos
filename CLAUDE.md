@@ -14,3 +14,8 @@
 - Render spec: 1080x1920, 30 fps, H.264, yuv420p, AAC, max 60 s.
 - Secrets: ELEVENLABS_API_KEY lives in .env only. Never commit .env.
 - In the cloud container set REMOTION_BROWSER=/opt/pw-browsers/chromium_headless_shell.
+
+## Credit rules (standing)
+- TTS voice: up to 1,000 ElevenLabs credits per video without asking. Prefer re-using recorded sentences
+  (`scripts/splice-voice.mjs`) and recording only the new lines.
+- Image/video generation, or anything above 1,000 credits: ask Omar first (estimate with `estimate_only`).

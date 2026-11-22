@@ -87,7 +87,7 @@ export const DANGLING = new Set([
   'with', 'and', 'but', 'or', 'nor', 'is', 'are', 'was', 'were', 'be', "it's", "that's", 'that', 'this',
   'these', 'those', 'after', 'before', 'into', 'than', 'as', 'by', 'so', 'if', 'very', 'really', 'no', 'one',
   'some', 'any', 'every', "isn't", "don't", "doesn't", 'can', 'will', 'would', 'should',
-  'means', 'mean', 'makes', 'make', 'gets', 'get', 'let', 'out', 'single', 'like', 'he', 'she', 'they', 'we', 'i', 'you',
+  'means', 'mean', 'makes', 'make', 'gets', 'get', 'let', 'out', 'single', 'like', 'he', 'she', 'they', 'we', 'i', 'you', 'which', 'what', 'who', 'how', 'why', 'where', 'when',
 ]);
 const PARTICLES = new Set(['in', 'up', 'to', 'on', 'off', 'out', 'down', 'over']);
 const bare = (w) => w.toLowerCase().replace(/[^a-z0-9']/g, '');
