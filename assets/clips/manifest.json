@@ -127,7 +127,15 @@
       "generationId": "0EN59bS0eXC3MY0c2Lhf",
       "credits": 2121,
       "prompt": "from pose-average: calm breathing, nod, weight shift; body stays average; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "avg-exhausted",
+      "file": "assets/clips/avg-exhausted.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "KfJe5pqeuAIxoemoztRJ",
+      "credits": 2121,
+      "prompt": "from pose-average: becomes exhausted, sweat drops, red cheeks, panting, wipes forehead; body stays average; static camera, no morphing, no logos, shaker stays a shaker"
     }
   ],
-  "totalCredits": 24661
+  "totalCredits": 26782
 }

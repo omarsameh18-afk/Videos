@@ -8,9 +8,12 @@ import { SceneProps } from '../scenes/types';
 import { TimerBadge } from '../experiment/SubjectsLayer';
 
 const CLIP_FRAMES = 150;
+// clips whose wanted state starts later (e.g. avg-exhausted is calm for ~2 s): start there (comp frames)
+const CLIP_START: Record<string, number> = { 'avg-exhausted': 60 };
 
 const Half: React.FC<{ side: 'left' | 'right'; clip: string; scale: number; freeze: boolean; mirror?: boolean }> = ({ side, clip, scale, freeze, mirror }) => {
-  const video = <OffthreadVideo src={staticFile(`clips/${clip}.mp4`)} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
+  const start = CLIP_START[clip] ?? 0;
+  const video = <OffthreadVideo src={staticFile(`clips/${clip}.mp4`)} startFrom={start} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
   return (
     <div style={{ position: 'absolute', left: side === 'left' ? 0 : VERSUS.half, top: VERSUS.top, width: VERSUS.half, height: VERSUS.bottom - VERSUS.top, overflow: 'hidden' }}>
       <div
@@ -21,7 +24,7 @@ const Half: React.FC<{ side: 'left' | 'right'; clip: string; scale: number; free
           transformOrigin: '50% 12%', // grows from the neck down: the head never leaves the frame
         }}
       >
-        {freeze ? <Freeze frame={60}>{video}</Freeze> : <Loop durationInFrames={CLIP_FRAMES}>{video}</Loop>}
+        {freeze ? <Freeze frame={40}>{video}</Freeze> : <Loop durationInFrames={CLIP_FRAMES - start}>{video}</Loop>}
       </div>
     </div>
   );
