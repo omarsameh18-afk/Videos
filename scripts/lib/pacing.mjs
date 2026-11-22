@@ -4,7 +4,9 @@
 // - Max placement per scene + layout checks (no crop, no overlap with cards, >= 45% tall)
 import { readFileSync } from 'node:fs';
 import { sceneSentences } from './intents.mjs';
-import { placeMax, maxRect, unionBounds, overlaps, CARD_RECT, MARGIN, UI_RIGHT, FEET_Y, FRAME, MAX_ZOOM } from '../../src/short/geometry.ts';
+import { placeMax, maxRect, unionBounds, overlaps, CARD_RECT, MARGIN, UI_RIGHT, FEET_Y, FRAME, MAX_ZOOM, VISUAL_TYPES, VIS_MAIN, VIS_LOW, HOOK_GAUGE, HOOK_TEXT } from '../../src/short/geometry.ts';
+import { chartMarkerFrame, GAUGE_SLAM, NUMBER_LAND } from '../../src/short/visualTiming.ts';
+import { BACKGROUNDS } from '../../src/config.ts';
 
 export const MAX_GAP_SEC = 1.5;
 const BOUNDS = JSON.parse(readFileSync(new URL('../../src/max/poseBounds.json', import.meta.url), 'utf8'));
@@ -22,8 +24,11 @@ export function buildPacing(script, scenes, words, fps) {
   const zoomKeys = [];
   const layoutErrors = [];
 
+  const bgStart = script.meta.seed % BACKGROUNDS.length;
   scenes.forEach((t, i) => {
     const sc = script.scenes[i];
+    // VISUAL RULE 3: background per scene, rotating so neighbours differ
+    t.background = sc.background ?? BACKGROUNDS[(bgStart + i) % BACKGROUNDS.length];
     const sceneWords = words.slice(t.firstWord, t.firstWord + t.wordCount);
     const sentences = sceneSentences(sc);
     t.sentences = sentences.map((s) => ({ ...s, at: s.sentence === 0 ? 0 : f(sceneWords[s.firstWordInScene].start) - 2 - t.from }));
@@ -50,7 +55,11 @@ export function buildPacing(script, scenes, words, fps) {
     if (r.x < MARGIN.x - 0.5 || r.x + r.w > UI_RIGHT + 0.5 || r.y < MARGIN.y - 0.5) layoutErrors.push(`${at}: Max leaves the safe margin`);
     const card = CARD_RECT[sc.type];
     if (card && overlaps(r, card)) layoutErrors.push(`${at}: Max overlaps the card`);
-    if (maxRect(t.placement, b).h < 0.45 * FRAME.h * 0.97) layoutErrors.push(`${at}: Max is only ${(maxRect(t.placement, b).h / FRAME.h * 100).toFixed(0)}% of frame height`);
+    const corner = VISUAL_TYPES.includes(sc.type);
+    if (corner && (overlaps(r, VIS_MAIN) || overlaps(r, VIS_LOW))) layoutErrors.push(`${at}: Max overlaps the visual`);
+    if (sc.type === 'Hook' && (r.y < HOOK_GAUGE.cy || overlaps(r, HOOK_TEXT))) layoutErrors.push(`${at}: Max overlaps the hook gauge/text`);
+    const big = !corner && sc.type !== 'Hook';
+    if (big && maxRect(t.placement, b).h < 0.45 * FRAME.h * 0.97) layoutErrors.push(`${at}: Max is only ${(maxRect(t.placement, b).h / FRAME.h * 100).toFixed(0)}% of frame height`);
     if (r.y + r.h > FEET_Y + 12) layoutErrors.push(`${at}: Max reaches into the caption band`);
 
     // emphasis words: shake + caption accent
@@ -75,7 +84,23 @@ export function buildPacing(script, scenes, words, fps) {
       changes.push({ frame: t.from + t.land, kind: 'card' });
       sfx.push({ t: (t.from + t.land) / fps, sfx: 'pop' });
     }
+    // visual beats (frames relative to the scene) -> a change + a pop each
+    const beats = [];
+    if ((sc.type === 'Hook' && sc.props.gauge) || sc.type === 'Gauge') beats.push(GAUGE_SLAM);
+    if (sc.type === 'AnimatedChart' && sc.props.marker) beats.push(chartMarkerFrame(t.durationInFrames, sc.props.xTicks.length, sc.props.marker.at));
+    if (sc.type === 'MuscleZoom') t.sentences.slice(1).forEach((x) => beats.push(Math.max(1, x.at)));
+    if (sc.type === 'SplitVersus') {
+      const rev = t.sentences.find((x) => x.intent === 'reveal') ?? t.sentences.at(-1);
+      beats.push(Math.max(6, rev.at));
+    }
+    if (sc.type === 'BigNumber') beats.push(NUMBER_LAND);
+    for (const bt of beats) {
+      changes.push({ frame: t.from + bt, kind: 'card' });
+      sfx.push({ t: (t.from + bt) / fps, sfx: 'pop' });
+    }
   });
+  const bgs = new Set(scenes.map((t) => t.background));
+  if (scenes.length > 1 && bgs.size < 2) layoutErrors.push('the whole Short uses one background (need 2+)');
 
   // fill gaps with camera punch-ins (100% <-> 115%, reset at each cut)
   const maxGap = Math.round(MAX_GAP_SEC * fps);

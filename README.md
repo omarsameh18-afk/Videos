@@ -20,6 +20,11 @@ scripts/lib/amplitude.mjs   per-frame loudness from the MP3 (ffmpeg)
 src/dev/               ProofSheet + RigTest compositions
 ```
 
+## Scene types
+Hook (optional gauge interrupt), AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber, Outro
+(+ older card scenes: WrongVsRight, StatCard, MuscleHighlight). Each scene/sentence has an `intent` that picks Max's pose.
+Rules: docs/REVIEW.md (pacing, animation, visual).
+
 ## Rig
 - **Expressions** (independent of pose): neutral, shocked, angry, laughing, smug, thinking
 - **Poses**: pointing, flexing, armsCrossed, facepalm, thumbsUp, fingerUp (+ idle)

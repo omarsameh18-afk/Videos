@@ -2,6 +2,11 @@
 import { readFileSync } from 'node:fs';
 import { Script, narrationText } from '../../src/schema/script.ts';
 import { intentErrors } from './intents.mjs';
+import { VISUAL_TEXT } from '../../src/config.ts';
+import { VIS_MAIN, VIS_LOW, HOOK_TEXT } from '../../src/short/geometry.ts';
+
+// VISUAL RULE 4: visual text <= 4 words and fits on one line at >= 64px (Anton ~0.47em per char)
+const fits = (text, width) => text.length * 0.47 * VISUAL_TEXT.minPx <= width;
 
 const banned = JSON.parse(readFileSync(new URL('../../config/bannedWords.json', import.meta.url), 'utf8'));
 export const MAX_WORDS_PER_LINE = 6;
@@ -48,6 +53,28 @@ export function validateScript(raw) {
     errors.push(...intentErrors(sc, at));
     const said = words(sc.narration).map((w) => w.toLowerCase().replace(/[^a-z0-9']/g, ''));
     for (const e of sc.emphasis) if (!said.includes(e.toLowerCase().replace(/[^a-z0-9']/g, ''))) errors.push(`${at}: emphasis word "${e}" is not in the narration`);
+    const vis = []; // [text, available width]
+    if (sc.type === 'Hook') sc.onScreenText.forEach((l) => vis.push([l, HOOK_TEXT.w]));
+    if (sc.type === 'Hook' && sc.props.gauge) vis.push([sc.props.gauge.label, 520]);
+    if (sc.type === 'Gauge') vis.push([sc.props.label, 520]);
+    if (sc.type === 'AnimatedChart') {
+      sc.props.series.forEach((x) => vis.push([x.label, VIS_MAIN.w / 2 - 40]));
+      if (sc.props.marker) vis.push([sc.props.marker.label, VIS_LOW.w]);
+      if (sc.props.xLabel) vis.push([sc.props.xLabel, VIS_LOW.w]);
+      if (sc.props.marker && sc.props.marker.at >= sc.props.xTicks.length) errors.push(`${at}: marker.at is past the last x tick`);
+      sc.props.series.forEach((x) => x.points.length !== sc.props.xTicks.length && errors.push(`${at}: series "${x.label}" needs ${sc.props.xTicks.length} points`));
+    }
+    if (sc.type === 'MuscleZoom') sc.props.steps.forEach((x) => vis.push([x, VIS_LOW.w]));
+    if (sc.type === 'SplitVersus') [sc.props.wrong, sc.props.right].forEach((x) => x.split('=').forEach((p, k) => vis.push([(k ? '= ' : '') + p.trim(), (VIS_MAIN.w - 24) / 2 - 130])));
+    if (sc.type === 'BigNumber') {
+      vis.push([sc.props.label, VIS_LOW.w]);
+      if (words(sc.props.label).length > 3) errors.push(`${at}: BigNumber label must be <= 3 words`);
+    }
+    for (const [text, w] of vis) {
+      const n = words(text.replace(/=/g, ' ')).length;
+      if (n > VISUAL_TEXT.maxWords) errors.push(`${at}: visual text "${text}" has ${n} words (max ${VISUAL_TEXT.maxWords})`);
+      if (!fits(text, w)) errors.push(`${at}: visual text "${text}" does not fit on one line at ${VISUAL_TEXT.minPx}px`);
+    }
     if (sc.type === 'StatCard' && sc.sourceIndex === undefined) errors.push(`${at}: StatCard needs a sourceIndex`);
   });
 

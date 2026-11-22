@@ -3,14 +3,14 @@
     "id": "myth-sore-to-grow",
     "title": "Myth: you need to feel sore to grow",
     "topic": "muscle soreness vs hypertrophy",
-    "targetSec": [12, 15],
+    "targetSec": [13, 16],
     "sources": [
       {
         "label": "Schoenfeld & Contreras, 2013",
         "citation": "Schoenfeld BJ, Contreras B. Is postexercise muscle soreness a valid indicator of muscular adaptations? Strength Cond J. 2013;35(5):16-21."
       },
       {
-        "label": "Damas et al., 2016",
+        "label": "Damas et al., 2016 · schematic",
         "citation": "Damas F, et al. Resistance training-induced changes in integrated myofibrillar protein synthesis are related to hypertrophy only after attenuation of muscle damage. J Physiol. 2016;594(18):5209-5222."
       }
     ],
@@ -21,34 +21,48 @@
     {
       "type": "Hook",
       "intent": "question",
-      "narration": "Not sore after training? Does that mean it didn't work?",
-      "onScreenText": ["SORE = GROWTH?"],
-      "moves": [{ "atSentence": 1, "intent": "question", "expression": "shocked" }],
-      "emphasis": ["didn't"]
+      "expression": "shocked",
+      "background": "gym",
+      "narration": "No soreness after training means no gains, right?",
+      "onScreenText": ["No soreness = no gains?"],
+      "emphasis": ["gains"],
+      "props": { "gauge": { "label": "Soreness", "from": 92, "to": 0 } }
     },
     {
-      "type": "WrongVsRight",
+      "type": "MuscleZoom",
       "intent": "myth",
-      "narration": "Nope. Soreness just means the move was new to your muscle. It's not a growth meter.",
+      "background": "lab",
+      "narration": "Wrong. Soreness is just tiny damage from a move your muscle isn't used to. It's not a growth signal.",
       "sourceIndex": 0,
       "moves": [
         { "atSentence": 1, "intent": "reveal" },
         { "atSentence": 2, "intent": "myth" }
       ],
-      "emphasis": ["new", "not"],
-      "props": { "wrong": "Sore = growth", "right": "Sore = new move" }
+      "emphasis": ["damage"],
+      "props": { "muscle": "biceps", "steps": ["Wrong!", "Sore = new move", "Not growth"] }
     },
     {
-      "type": "StatCard",
+      "type": "AnimatedChart",
       "intent": "stat",
-      "narration": "One study: real growth only showed up after week three, once soreness faded.",
+      "background": "chalkboard",
+      "narration": "In one study, soreness dropped fast, but real growth only kicked in after week three.",
       "sourceIndex": 1,
-      "emphasis": ["after"],
-      "props": { "value": 3, "prefix": "WEEK ", "label": ["Growth came", "AFTER soreness", "faded"] }
+      "emphasis": ["three"],
+      "props": {
+        "kind": "line",
+        "xTicks": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+        "xLabel": "Weeks",
+        "series": [
+          { "label": "Soreness", "color": "pink", "points": [70, 95, 55, 22, 10, 6, 5, 4, 4, 3, 3] },
+          { "label": "Growth", "color": "lime", "points": [0, 1, 2, 3, 10, 20, 31, 42, 54, 66, 78] }
+        ],
+        "marker": { "at": 3, "label": "Week 3" }
+      }
     },
     {
       "type": "Outro",
       "intent": "ending",
+      "background": "gym",
       "narration": "You still grew."
     }
   ]

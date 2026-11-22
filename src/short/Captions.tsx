@@ -26,7 +26,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
         justifyContent: 'center',
         flexWrap: 'wrap',
         alignContent: 'flex-start',
-        gap: '0 22px',
+        gap: '0 26px',
         transform: `scale(${interpolate(pageIn, [0, 1], [0.85, 1])})`,
       }}
     >
@@ -44,13 +44,14 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
               fontSize: 70,
               lineHeight: 1.12,
               textTransform: 'uppercase',
-              color: active ? (emphasis.includes(wi) ? C.accent2 : C.accent) : '#FFFFFF',
+              // VISUAL RULE 4: lime only on the one key word
+              color: emphasis.includes(wi) ? C.accent : '#FFFFFF',
               opacity: said ? 1 : 0.55,
               WebkitTextStroke: '14px #0B0C1C',
               paintOrder: 'stroke fill',
               textShadow: '0 6px 0 rgba(0,0,0,0.45)',
               display: 'inline-block',
-              transform: `scale(${active ? interpolate(pop, [0, 1], [1.25, 1.08]) : 1})`,
+              transform: `scale(${active ? interpolate(pop, [0, 1], [1.1, 1.04]) : 1})`,
             }}
           >
             {w.text}

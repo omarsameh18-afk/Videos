@@ -21,7 +21,17 @@ export const CARD_RECT: Record<string, Rect> = {
   MuscleHighlight: { x: COLUMN.x, y: COLUMN.top, w: COLUMN.right - COLUMN.x, h: 560 },
 };
 // text at the top of no-card scenes (Max must stay below it)
-export const TOP_TEXT_BOTTOM: Record<string, number> = { Hook: 300, Outro: 270 };
+export const TOP_TEXT_BOTTOM: Record<string, number> = { Outro: 270 };
+
+// VISUAL RULE 2: in visual scenes the visual is the star; Max shrinks to the bottom-right corner.
+export const VISUAL_TYPES = ['AnimatedChart', 'Gauge', 'MuscleZoom', 'SplitVersus', 'BigNumber'];
+export const VIS_MAIN: Rect = { x: 54, y: 150, w: UI_RIGHT - 54, h: 700 }; // the visual itself (y 150-850)
+export const VIS_LOW: Rect = { x: 54, y: 880, w: 560, h: 300 }; // its labels / legend (lower-left)
+export const CORNER = { left: 640, top: 860, scale: 0.33 };
+// Hook: gauge interrupt on top, Max (medium-big) underneath
+export const HOOK_GAUGE = { cx: 502, cy: 600, r: 320 };
+export const HOOK_TEXT: Rect = { x: 54, y: 140, w: UI_RIGHT - 54, h: 120 };
+export const HOOK = { top: 612, scale: 0.6 };
 
 export const unionBounds = (bs: Bounds[]): Bounds => ({
   minX: Math.min(...bs.map((b) => b.minX)),
@@ -43,17 +53,19 @@ const right = (r: Rect) => r.x + r.w;
 /** Place Max for a scene: as big as MAX_SCALE allows, flipped toward a card, zoom capped to fit. */
 export function placeMax(sceneType: string, b: Bounds): Placement {
   const card = CARD_RECT[sceneType];
+  const corner = VISUAL_TYPES.includes(sceneType);
+  const hook = sceneType === 'Hook';
   const flip = !!card;
-  const regionL = MARGIN.x;
+  const regionL = corner ? CORNER.left : MARGIN.x;
   const regionR = card ? card.x - GAP : UI_RIGHT;
-  const regionTop = card ? MARGIN.y : (TOP_TEXT_BOTTOM[sceneType] ?? MARGIN.y) + 10;
-  let scale = MAX_SCALE;
+  const regionTop = corner ? CORNER.top : hook ? HOOK.top : card ? MARGIN.y : (TOP_TEXT_BOTTOM[sceneType] ?? MARGIN.y) + 10;
+  let scale = corner ? CORNER.scale : hook ? HOOK.scale : MAX_SCALE;
   const width = (b.maxX - b.minX) * scale;
   if (width > regionR - regionL) scale = (regionR - regionL) / (b.maxX - b.minX);
   // horizontal: hug the left margin next to a card, else centre in the region
   const probe: Placement = { cx: 0, flip, scale, maxZoom: 1 };
   const r0 = maxRect(probe, b);
-  const cx = card ? regionL - r0.x : (regionL + regionR) / 2 - (r0.x + r0.w / 2);
+  const cx = card ? regionL - r0.x : corner ? regionR - 4 - (r0.x + r0.w) : (regionL + regionR) / 2 - (r0.x + r0.w / 2);
   const p: Placement = { cx, flip, scale, maxZoom: 1 };
   // largest zoom (<= MAX_ZOOM) that keeps every edge inside the region
   let z = MAX_ZOOM;

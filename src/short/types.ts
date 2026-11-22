@@ -14,6 +14,8 @@ export interface SceneTiming {
   reveal?: number; // WrongVsRight: frame (scene-relative) the second card lands
   land?: number; // StatCard: frame (scene-relative) the number lands
   placement: Placement; // where/how big Max stands in this scene
+  sentences?: { at: number; intent: string; pose: string; expression: string }[]; // scene-relative frames
+  background: string;
 }
 export interface CaptionPage { words: number[]; start: number; end: number }
 export interface FrameKey<T> { at: number; value: T }

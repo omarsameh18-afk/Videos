@@ -31,14 +31,67 @@ const SceneBase = {
       }),
     )
     .default([]),
-  // key words: camera shake + caption accent when spoken
-  emphasis: z.array(z.string()).default([]),
+  // the ONE key word (lime in captions) + camera shake when spoken
+  emphasis: z.array(z.string()).max(1, 'max 1 key word per scene').default([]),
+  background: z.enum(['lab', 'gym', 'chalkboard']).optional(),
 };
+
+const GaugeProps = z.object({
+  label: z.string().min(1), // e.g. "SORENESS"
+  from: z.number().min(0).max(100).default(100), // needle start (0-100)
+  to: z.number().min(0).max(100).default(0), // needle slams here
+});
 
 export const HookScene = z.object({
   type: z.literal('Hook'),
   ...SceneBase,
-  props: z.object({}).default({}),
+  // optional visual interrupt on frame 1
+  props: z.object({ gauge: GaugeProps.optional() }).default({}),
+});
+
+const Color = z.enum(['lime', 'pink', 'white', 'blue']);
+export const AnimatedChartScene = z.object({
+  type: z.literal('AnimatedChart'),
+  ...SceneBase,
+  props: z.object({
+    kind: z.enum(['line', 'bar']).default('line'),
+    xTicks: z.array(z.string()).min(2), // e.g. ["0", "1", ... "10"] (weeks)
+    xLabel: z.string().default(''),
+    series: z
+      .array(z.object({ label: z.string().min(1), color: Color, points: z.array(z.number().min(0).max(100)).min(2) }))
+      .min(1)
+      .max(3),
+    marker: z.object({ at: z.number().int().min(0), label: z.string().min(1) }).optional(), // vertical marker at x index
+  }),
+});
+
+export const GaugeScene = z.object({ type: z.literal('Gauge'), ...SceneBase, props: GaugeProps });
+
+export const MuscleZoomScene = z.object({
+  type: z.literal('MuscleZoom'),
+  ...SceneBase,
+  props: z.object({
+    muscle: z.enum(MUSCLES).default('biceps'),
+    steps: z.array(z.string().min(1)).min(1), // one label per sentence (shown in order)
+  }),
+});
+
+export const SplitVersusScene = z.object({
+  type: z.literal('SplitVersus'),
+  ...SceneBase,
+  props: z.object({ wrong: z.string().min(1), right: z.string().min(1), wrongLabel: z.string().default('MYTH'), rightLabel: z.string().default('FACT') }),
+});
+
+export const BigNumberScene = z.object({
+  type: z.literal('BigNumber'),
+  ...SceneBase,
+  props: z.object({
+    value: z.number(),
+    decimals: z.number().int().min(0).max(2).default(0),
+    prefix: z.string().default(''),
+    suffix: z.string().default(''),
+    label: z.string().min(1), // max 3 words
+  }),
 });
 
 export const MuscleHighlightScene = z.object({
@@ -79,7 +132,10 @@ export const OutroScene = z.object({
   props: z.object({}).default({}),
 });
 
-export const Scene = z.discriminatedUnion('type', [HookScene, MuscleHighlightScene, WrongVsRightScene, StatCardScene, OutroScene]);
+export const Scene = z.discriminatedUnion('type', [
+  HookScene, MuscleHighlightScene, WrongVsRightScene, StatCardScene, OutroScene,
+  AnimatedChartScene, GaugeScene, MuscleZoomScene, SplitVersusScene, BigNumberScene,
+]);
 
 export const Source = z.object({
   label: z.string().min(1), // short footer text, e.g. "Schoenfeld et al., 2017"

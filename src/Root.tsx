@@ -3,6 +3,7 @@ import { Composition } from 'remotion';
 import { ProofSheet, PROOF_SIZE } from './dev/ProofSheet';
 import { RigTest } from './dev/RigTest';
 import { MaxFrame } from './dev/MaxFrame';
+import { VisualGallery } from './dev/VisualGallery';
 import { PoseProbe, PROBE, PROBE_POSES, PROBE_EXPR } from './dev/PoseProbe';
 import { MaxFigureProps } from './max/MaxFigure';
 import { VIDEO } from './config';
@@ -22,6 +23,7 @@ export const RemotionRoot: React.FC = () => (
       defaultProps={{ durationInFrames: 1, scenes: [], words: [], pages: [], chars: [], amplitude: [], audioSrc: '', exprKeys: [], poseKeys: [], zoomKeys: [], shakes: [], emphasisWords: [] } as unknown as ShortProps}
     />
     <Composition id="ProofSheet" component={ProofSheet} {...PROOF_SIZE} fps={VIDEO.fps} durationInFrames={1} />
+    <Composition id="VisualGallery" component={VisualGallery} width={VIDEO.width} height={VIDEO.height} fps={VIDEO.fps} durationInFrames={60} defaultProps={{ which: 'split' as 'split' | 'number' | 'gauge' }} />
     <Composition id="PoseProbe" component={PoseProbe} width={PROBE.width} height={PROBE.height} fps={30} durationInFrames={PROBE_POSES.length * PROBE_EXPR.length} />
     <Composition
       id="MaxFrame"

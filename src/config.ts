@@ -52,6 +52,18 @@ export const DEFAULT_INTENT: Record<string, Intent> = {
   StatCard: 'stat',
   MuscleHighlight: 'reveal',
   Outro: 'ending',
+  AnimatedChart: 'stat',
+  Gauge: 'stat',
+  MuscleZoom: 'reveal',
+  SplitVersus: 'myth',
+  BigNumber: 'stat',
 };
-// pointing is only allowed where there is a card to point at
-export const CARD_SCENES = ['WrongVsRight', 'StatCard', 'MuscleHighlight'];
+// "visual is the star" scenes: Max shrinks to the bottom-right corner and reacts
+export const VISUAL_SCENES = ['AnimatedChart', 'Gauge', 'MuscleZoom', 'SplitVersus', 'BigNumber'];
+// pointing is only allowed where there is a card/visual to point at
+export const CARD_SCENES = ['WrongVsRight', 'StatCard', 'MuscleHighlight', ...VISUAL_SCENES];
+
+// VISUAL RULES: on-screen visual text
+export const VISUAL_TEXT = { minPx: 64, maxWords: 4 };
+export const BACKGROUNDS = ['lab', 'gym', 'chalkboard'] as const;
+export type BackgroundName = (typeof BACKGROUNDS)[number];

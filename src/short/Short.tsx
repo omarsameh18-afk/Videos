@@ -13,8 +13,10 @@ import { StatCard } from './scenes/StatCard';
 import { Outro } from './scenes/Outro';
 import { MuscleHighlight } from './scenes/MuscleHighlight';
 import { SceneProps } from './scenes/types';
+import { AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber } from './scenes/Visuals';
+import type { BackgroundName } from '../config';
 
-const SCENES: Record<string, React.FC<SceneProps>> = { Hook, WrongVsRight, StatCard, Outro, MuscleHighlight };
+const SCENES: Record<string, React.FC<SceneProps>> = { Hook, WrongVsRight, StatCard, Outro, MuscleHighlight, AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber };
 
 export const Short: React.FC<ShortProps> = (props) => {
   waitForFonts();
@@ -28,7 +30,11 @@ export const Short: React.FC<ShortProps> = (props) => {
   const shake = `translate(${Math.sin(frame * 3.1) * 14 * k}px, ${Math.cos(frame * 2.3) * 10 * k}px)`;
   return (
     <AbsoluteFill style={{ transform: shake }}>
-      <Background zoomKeys={zoomKeys} />
+      {scenes.map((t, i) => (
+        <Sequence key={`bg${i}`} from={t.from} durationInFrames={t.durationInFrames}>
+          <Background zoomKeys={zoomKeys.map((z) => ({ ...z, at: z.at - t.from }))} variant={t.background as BackgroundName} />
+        </Sequence>
+      ))}
       <MaxLayer {...props} />
       {/* scene text + cards sit above Max so his zooms never cover them */}
       {scenes.map((t, i) => {

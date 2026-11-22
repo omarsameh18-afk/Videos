@@ -59,3 +59,18 @@ Render PNG frames (and the MP4 at stage gates), open them, and check every item.
 7. **Ending:** the last sentence finishes fully + 0.4 s tail. Audio and captions are never cut mid-sentence.
 
 Self-review: `scripts/review-frames.sh <id> <frames...>` -> review/<id>/sheet.png, then check every rule above.
+
+## VISUAL RULES (permanent) — "science explained with animation"
+1. **Explain with a visual component**, not a standing puppet: `AnimatedChart` (line/bar draws on), `Gauge` (needle slams
+   and settles), `MuscleZoom` (flat muscle, zoom-in, highlight + glowing micro-tears), `SplitVersus` (wrong vs right with
+   icons), `BigNumber` (huge count-up + <= 3-word label). Schema: src/schema/script.ts; components: src/short/visuals/.
+2. **The visual is the star** (VIS_MAIN + label area ≈ 65% of the safe area). During visuals Max shrinks to the
+   bottom-right corner (~17% tall) and reacts (pose by meaning; pointing aims at the visual). Max is big only in the hook
+   (medium, under the gauge) and the ending (full size). Checked at render time (no overlap with the visual).
+3. **3+ backgrounds** (lab, gym floor, chalkboard), chosen per scene (`background`, else rotating). Never one background
+   for the whole Short (render fails).
+4. **Visual text >= 64px, <= 4 words, one line, never overflows** (validator checks word count + fit; entrances never
+   overshoot past their box). Caption highlight = lime, only on the ONE key word (`emphasis`, max 1 per scene).
+5. **Hook = visual interrupt on frame 1** (e.g. gauge needle slams to 0 + white flash + Max shocked) with the question text.
+
+Dev check for visuals not used in a Short: `VisualGallery` composition (review/visual-gallery.png).
