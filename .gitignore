@@ -1,3 +1,7 @@
 node_modules
 out
 *.mp4
+.env
+.cache
+public/renders
+review/*/f*.png

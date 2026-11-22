@@ -26,6 +26,16 @@ src/dev/               ProofSheet + RigTest compositions
 - **Talking mouths**: closed, small, wide, O, laugh. Loudness picks closed/small/wide. The O mouth is used when the letter being spoken is o/u/w (from ElevenLabs timestamps), and laugh when Max is laughing.
 - **Blink** every 3–5 s (seeded). **Brows** spring with overshoot on expression change; arms spring between poses.
 
+## Making a Short
+```
+npm run validate -- scripts/example.json            # schema + content rules
+npm run render   -- scripts/example.json            # ElevenLabs TTS with timestamps (needs ELEVENLABS_API_KEY in .env), cached in .cache/tts
+npm run render   -- scripts/example.json voice/x.mp3  # use an existing MP3; needs voice/x.timestamps.json next to it
+npm run import-voice -- script.json voice/x.mp3 scribe-words.json  # word timings (ElevenLabs Scribe) -> timestamps JSON
+```
+Output: `out/<meta.id>.mp4` (1080x1920, 30 fps, H.264 yuv420p, AAC, <= 60 s). Script format: `src/schema/script.ts`.
+Review stills: `scripts/review-frames.sh <id> <frame>...` -> `review/<id>/sheet.png`. Checklist: `docs/REVIEW.md`.
+
 ## Commands
 ```
 npm run studio        # live preview

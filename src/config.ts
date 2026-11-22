@@ -7,9 +7,8 @@ export const CHANNEL = {
 
 export const CHARACTER = {
   name: 'Max',
-  // Max never calls himself (or shows text saying) doctor / scientist / coach / PT,
-  // and never gives medical advice. The script validator rejects these words.
-  bannedWords: ['doctor', 'dr.', 'scientist', 'coach', 'personal trainer', 'physio', 'diagnos', 'prescri'],
+  // Max never says/shows doctor, scientist, coach or PT and never gives medical advice.
+  // Banned words live in config/bannedWords.json (enforced by `npm run validate`).
 };
 
 export const VIDEO = {

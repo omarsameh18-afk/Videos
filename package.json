@@ -6,7 +6,10 @@
     "studio": "remotion studio src/index.ts",
     "typecheck": "tsc -p .",
     "proof-sheet": "remotion still src/index.ts ProofSheet review/proof-sheet.png",
-    "rig-test": "node scripts/rig-test.mjs"
+    "rig-test": "node scripts/rig-test.mjs",
+    "validate": "node --no-warnings scripts/validate.mjs",
+    "render": "node --no-warnings scripts/render.mjs",
+    "import-voice": "node --no-warnings scripts/import-voice.mjs"
   },
   "repository": {
     "type": "git",
@@ -20,12 +23,15 @@
   },
   "homepage": "https://github.com/omarsameh18-afk/Videos#readme",
   "dependencies": {
+    "@fontsource/anton": "^5.3.0",
+    "@fontsource/montserrat": "^5.3.0",
     "@remotion/cli": "^4.0.545",
     "@remotion/media-utils": "^4.0.545",
     "@remotion/renderer": "^4.0.545",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "remotion": "^4.0.545"
+    "remotion": "^4.0.545",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@types/react": "^18.3.31",

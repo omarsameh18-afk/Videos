@@ -1,0 +1,50 @@
+{
+  "meta": {
+    "id": "myth-sore-to-grow",
+    "title": "Myth: you need to feel sore to grow",
+    "topic": "muscle soreness vs hypertrophy",
+    "sources": [
+      {
+        "label": "Schoenfeld & Contreras, 2013",
+        "citation": "Schoenfeld BJ, Contreras B. Is postexercise muscle soreness a valid indicator of muscular adaptations? Strength Cond J. 2013;35(5):16-21."
+      },
+      {
+        "label": "Damas et al., 2016",
+        "citation": "Damas F, et al. Resistance training-induced changes in integrated myofibrillar protein synthesis are related to hypertrophy only after attenuation of muscle damage. J Physiol. 2016;594(18):5209-5222."
+      }
+    ],
+    "seed": 7
+  },
+  "voice": { "voiceId": "TX3LPaxmHKxFdv7VOQHJ", "modelId": "eleven_multilingual_v2" },
+  "scenes": [
+    {
+      "type": "Hook",
+      "narration": "Not sore? You still grew.",
+      "expression": "shocked",
+      "pose": "pointing",
+      "onScreenText": ["NOT SORE?", "YOU STILL GREW."]
+    },
+    {
+      "type": "WrongVsRight",
+      "narration": "Soreness is just your muscle reacting to something new. It is not a growth meter.",
+      "expression": "smug",
+      "pose": "armsCrossed",
+      "sourceIndex": 0,
+      "props": { "wrong": "Sore = growth", "right": "Progress = growth" }
+    },
+    {
+      "type": "StatCard",
+      "narration": "In one study, growth only tracked muscle building from week three, after the soreness faded.",
+      "expression": "thinking",
+      "pose": "fingerUp",
+      "sourceIndex": 1,
+      "props": { "value": 3, "prefix": "WEEK ", "label": ["Growth tracked muscle building", "only after soreness faded"] }
+    },
+    {
+      "type": "Outro",
+      "narration": "Chase progress, not pain. Pump your brain.",
+      "expression": "laughing",
+      "pose": "thumbsUp"
+    }
+  ]
+}
