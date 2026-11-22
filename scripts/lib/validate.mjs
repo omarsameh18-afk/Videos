@@ -100,7 +100,7 @@ export function validateScript(raw) {
       p.tags.forEach((x) => { vis.push([x, 972]); headlines.push(x); });
       if (p.meters) { vis.push([p.meters.label, 972]); headlines.push(p.meters.label); }
       const man = existsSync('assets/clips/manifest.json') ? JSON.parse(readFileSync('assets/clips/manifest.json', 'utf8')).items.map((x) => x.name) : [];
-      for (const c of [p.clip, p.clipRight, p.swapRight?.clip].filter(Boolean)) if (!man.includes(c)) errors.push(`${at}: clip "${c}" is not in assets/clips/manifest.json`);
+      for (const c of [p.clip, p.clipRight, p.swapRight?.clip, ...(p.seqLeft ?? []), ...(p.seqRight ?? []), ...(p.seqRightBig ?? [])].filter(Boolean)) if (!man.includes(c)) errors.push(`${at}: clip "${c}" is not in assets/clips/manifest.json`);
     }
     if (['SplitClone', 'GymSet', 'DayCounter', 'Reveal'].includes(sc.type)) {
       for (const side of ['left', 'right']) vis.push([sc.props[side].label, 380]);

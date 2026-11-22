@@ -62,7 +62,7 @@ const { amplitude, durationSec } = computeAmplitude(voiceWav, FPS);
 const words = alignmentToWords(ed.alignment);
 const scenes = sceneTimings(script, words, durationSec, FPS, { tailSec: 0.4, leadFrames: 1 });
 const pacing = buildPacing(script, scenes, words, FPS);
-const pages = captionPages(words, scenes, { maxWords: 3, maxChars: 24 });
+const pages = captionPages(words, scenes, { maxWords: 4, maxChars: 30 });
 const chars = ed.alignment.characters.map((c, i) => ({
   char: c,
   start: ed.alignment.character_start_times_seconds[i],
@@ -96,7 +96,7 @@ console.log(`✓ mix: voice ${mix.voiceLufs.toFixed(1)} LUFS, music ${mix.musicG
 // 6. render (AI clips are served from public/clips)
 if (script.scenes.some((x) => x.type === 'ClipScene')) {
   mkdirSync('public/clips', { recursive: true });
-  for (const x of script.scenes.filter((y) => y.type === 'ClipScene')) for (const c of [x.props.clip, x.props.clipRight, x.props.swapRight?.clip].filter(Boolean)) copyFileSync(`assets/clips/${c}.mp4`, `public/clips/${c}.mp4`);
+  for (const x of script.scenes.filter((y) => y.type === 'ClipScene')) for (const c of new Set([x.props.clip, x.props.clipRight, x.props.swapRight?.clip, ...(x.props.seqLeft ?? []), ...(x.props.seqRight ?? []), ...(x.props.seqRightBig ?? [])].filter(Boolean))) copyFileSync(`assets/clips/${c}.mp4`, `public/clips/${c}.mp4`);
 }
 mkdirSync('.cache/props', { recursive: true });
 mkdirSync('out', { recursive: true });

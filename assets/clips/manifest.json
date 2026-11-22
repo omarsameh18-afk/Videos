@@ -135,7 +135,39 @@
       "generationId": "KfJe5pqeuAIxoemoztRJ",
       "credits": 2121,
       "prompt": "from pose-average: becomes exhausted, sweat drops, red cheeks, panting, wipes forehead; body stays average; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "avg-knees",
+      "file": "assets/clips/avg-knees.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "PrlWN491lCpodmNfEktE",
+      "credits": 2121,
+      "prompt": "from pose-average: hands on knees, breathing hard, sweat drops, no tears; shaker in hand; static camera, no morphing, no logos"
+    },
+    {
+      "name": "avg-jealous",
+      "file": "assets/clips/avg-jealous.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "xwhp7qTrNaZHGzd7ERwX",
+      "credits": 2121,
+      "prompt": "from pose-average: looks sideways right, jealous annoyed frown, huff; shaker in hand; static camera, no morphing, no logos, no tears"
+    },
+    {
+      "name": "avg-curl",
+      "file": "assets/clips/avg-curl.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "cJKR1EAnbuHFFCkY86K7",
+      "credits": 2121,
+      "prompt": "from pose-average: clean controlled bicep curls with the shaker, three steady reps, shaker gripped, no tears"
+    },
+    {
+      "name": "avg-curl-fail",
+      "file": "assets/clips/avg-curl-fail.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "g1tSFbfJXMJpnCCJaQ0B",
+      "credits": 2121,
+      "prompt": "from pose-average: struggling curl, arm shakes, fails halfway, drops arm, shaker gripped, no tears"
     }
   ],
-  "totalCredits": 26782
+  "totalCredits": 35266
 }

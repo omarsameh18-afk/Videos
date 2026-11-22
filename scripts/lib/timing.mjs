@@ -136,7 +136,7 @@ export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
   };
   texts.forEach((w, k) => {
     seg.push(k);
-    if (/[.;:?!]$/.test(w) || (/,$/.test(w) && seg.length >= 2)) flush();
+    if (/[.;:?!]$/.test(w)) flush();
   });
   if (seg.length) flush();
   return out;

@@ -68,6 +68,14 @@ export function buildPacing(script, scenes, words, fps) {
         }
         if (p.reps) for (const n of [p.reps.left, p.reps.right]) for (let k = 1; k <= n; k++) changes.push({ frame: t.from + Math.ceil((k * dur * 0.85) / n), kind: 'rep' });
         if (p.reveal) sfx.push({ t: t.from / fps + 0.03, sfx: 'thud' });
+        if (p.swapRight && p.week && p.swapRight.atWeek > p.week.from && p.swapRight.atWeek <= p.week.to) {
+          const n = p.week.to - p.week.from + 1;
+          const fr = t.from + Math.round(((p.swapRight.atWeek - p.week.from) / n) * dur);
+          sfx.push({ t: fr / fps, sfx: 'whoosh' }, { t: fr / fps + 0.05, sfx: 'thud' });
+          changes.push({ frame: fr, kind: 'card' });
+        }
+        const segF = Math.round((p.segSec ?? 2) * fps);
+        if ((p.seqLeft ?? []).length > 1 || (p.seqRight ?? []).length > 1) for (let fr = segF; fr < dur; fr += segF) changes.push({ frame: t.from + fr, kind: 'move' });
         if (p.tags.length) p.tags.forEach((_, k) => { const fr = t.from + Math.round(dur * 0.25) + k * 8; changes.push({ frame: fr, kind: 'card' }); sfx.push({ t: fr / fps, sfx: 'pop' }); });
         if (i === 0) sfx.push({ t: t.from / fps + 0.05, sfx: 'thud' });
       }

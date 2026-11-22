@@ -14,7 +14,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
   const page = pages.find((p) => t >= p.start - 0.05 && t < p.end);
   const mode = maxMode(sceneType);
   if (!page || mode === 'end') return null; // end card: the hero text is the caption
-  const box = mode === 'reactor' ? SIDE_CAPTION : { x: CONTENT.x, y: mode === 'none' ? captionYFor(sceneType) : CAPTION_Y, w: CONTENT.width, h: CAPTION_H };
+  const box = mode === 'reactor' ? SIDE_CAPTION : { x: CONTENT.x, y: mode === 'none' ? captionYFor(sceneType) : CAPTION_Y, w: CONTENT.width, h: sceneType === 'ClipScene' ? 145 : CAPTION_H };
   const pageIn = spring({ frame: frame - Math.round(page.start * fps), fps, config: { damping: 14, stiffness: 260 } });
   return (
     <div
@@ -44,7 +44,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
             style={{
               fontFamily: FONT_BODY,
               fontWeight: 900,
-              fontSize: mode === 'reactor' ? 66 : 70,
+              fontSize: mode === 'reactor' ? 66 : sceneType === 'ClipScene' ? 62 : 70,
               lineHeight: 1.12,
               textTransform: 'uppercase',
               // VISUAL RULE 4: lime only on the one key word

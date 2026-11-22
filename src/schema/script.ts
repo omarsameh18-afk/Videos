@@ -192,6 +192,12 @@ export const ClipScene = z.object({
     grow: z.object({ left: z.number().default(0), right: z.number().default(0) }).optional(), // scale per week
     swapRight: z.object({ atWeek: z.number().int(), clip: z.string(), scale: z.number().default(1) }).optional(),
     freeze: z.boolean().default(false), // freeze the clips (end card)
+    // clip rotation per half (versus): segments of segSec each, cycling; seqRightBig plays after swapRight.atWeek
+    seqLeft: z.array(z.string()).optional(),
+    seqRight: z.array(z.string()).optional(),
+    seqRightBig: z.array(z.string()).optional(),
+    segSec: z.number().min(0.5).max(4).default(2),
+    offsetRight: z.number().int().min(0).default(0), // frames into the right clip (so mirrored twins are not identical)
   }),
 });
 
