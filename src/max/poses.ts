@@ -30,7 +30,7 @@ export const POSES: Record<PoseName, PoseDef> = {
   armsCrossed: {
     left: { shoulder: -8, elbow: -112, wrist: 0, hand: 'hidden' },
     // shaker hand tucked under the far bicep; the shaker peeks out beside it
-    right: { shoulder: -34, elbow: -66, wrist: 0, hand: 'shaker', shakerTilt: 12, shakerOffset: [-157, 14] },
+    right: { shoulder: -26, elbow: -80, wrist: 0, hand: 'shaker' },
     frontArm: 'left',
   },
   facepalm: {
