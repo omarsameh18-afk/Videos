@@ -34,3 +34,24 @@ export const SAFE = {
   bottomY: VIDEO.height - SAFE_ZONE.bottom,
   centerX: SAFE_ZONE.left + (VIDEO.width - SAFE_ZONE.left - SAFE_ZONE.right) / 2,
 };
+
+// ANIMATION RULE 1: pose by MEANING. A scene/sentence declares an intent; pose + expression
+// come from here (an explicit pose/expression must be one of the allowed ones).
+export const INTENTS = {
+  question: { pose: 'thinking', expression: 'thinking', poses: ['thinking'], expressions: ['thinking', 'shocked', 'neutral'] },
+  myth: { pose: 'armsCrossed', expression: 'smug', poses: ['armsCrossed', 'facepalm'], expressions: ['smug', 'angry', 'neutral'] },
+  reveal: { pose: 'pointing', expression: 'shocked', poses: ['pointing'], expressions: ['shocked', 'neutral', 'smug'] },
+  stat: { pose: 'fingerUp', expression: 'neutral', poses: ['fingerUp'], expressions: ['neutral', 'smug', 'thinking'] },
+  goodNews: { pose: 'thumbsUp', expression: 'laughing', poses: ['thumbsUp'], expressions: ['laughing', 'smug', 'neutral'] },
+  ending: { pose: 'flexing', expression: 'laughing', poses: ['flexing'], expressions: ['laughing', 'smug'] },
+} as const;
+export type Intent = keyof typeof INTENTS;
+export const DEFAULT_INTENT: Record<string, Intent> = {
+  Hook: 'question',
+  WrongVsRight: 'myth',
+  StatCard: 'stat',
+  MuscleHighlight: 'reveal',
+  Outro: 'ending',
+};
+// pointing is only allowed where there is a card to point at
+export const CARD_SCENES = ['WrongVsRight', 'StatCard', 'MuscleHighlight'];

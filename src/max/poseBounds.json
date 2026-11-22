@@ -1,0 +1,50 @@
+{
+ "idle": {
+  "minX": 111,
+  "maxX": 688,
+  "minY": 31,
+  "maxY": 999
+ },
+ "pointing": {
+  "minX": 46,
+  "maxX": 688,
+  "minY": 31,
+  "maxY": 999
+ },
+ "flexing": {
+  "minX": 6,
+  "maxX": 793,
+  "minY": 31,
+  "maxY": 999
+ },
+ "armsCrossed": {
+  "minX": 157,
+  "maxX": 658,
+  "minY": 31,
+  "maxY": 999
+ },
+ "facepalm": {
+  "minX": 184,
+  "maxX": 711,
+  "minY": 34,
+  "maxY": 1007
+ },
+ "thumbsUp": {
+  "minX": -31,
+  "maxX": 688,
+  "minY": 31,
+  "maxY": 999
+ },
+ "fingerUp": {
+  "minX": 79,
+  "maxX": 688,
+  "minY": 31,
+  "maxY": 999
+ },
+ "thinking": {
+  "minX": 148,
+  "maxX": 688,
+  "minY": 31,
+  "maxY": 999
+ }
+}

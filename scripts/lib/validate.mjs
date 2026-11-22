@@ -1,6 +1,7 @@
 // Script validation: schema + content rules. Used by `npm run validate` and `npm run render`.
 import { readFileSync } from 'node:fs';
 import { Script, narrationText } from '../../src/schema/script.ts';
+import { intentErrors } from './intents.mjs';
 
 const banned = JSON.parse(readFileSync(new URL('../../config/bannedWords.json', import.meta.url), 'utf8'));
 export const MAX_WORDS_PER_LINE = 6;
@@ -44,8 +45,7 @@ export function validateScript(raw) {
     if (sc.sourceIndex !== undefined && sc.sourceIndex >= s.meta.sources.length) {
       errors.push(`${at}: sourceIndex ${sc.sourceIndex} but only ${s.meta.sources.length} source(s)`);
     }
-    const n = words(sc.narration).length;
-    for (const m of sc.moves) if (m.atWord >= n) errors.push(`${at}: move atWord ${m.atWord} but narration has ${n} words`);
+    errors.push(...intentErrors(sc, at));
     const said = words(sc.narration).map((w) => w.toLowerCase().replace(/[^a-z0-9']/g, ''));
     for (const e of sc.emphasis) if (!said.includes(e.toLowerCase().replace(/[^a-z0-9']/g, ''))) errors.push(`${at}: emphasis word "${e}" is not in the narration`);
     if (sc.type === 'StatCard' && sc.sourceIndex === undefined) errors.push(`${at}: StatCard needs a sourceIndex`);

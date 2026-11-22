@@ -2,6 +2,7 @@ import type { ScriptT } from '../schema/script';
 import type { CharTiming } from '../max/lipsync';
 import type { ExpressionName } from '../max/expressions';
 import type { PoseName } from '../max/poses';
+import type { Placement } from './geometry';
 
 export interface Word { text: string; start: number; end: number }
 export interface SceneTiming {
@@ -12,6 +13,7 @@ export interface SceneTiming {
   beats?: number[];
   reveal?: number; // WrongVsRight: frame (scene-relative) the second card lands
   land?: number; // StatCard: frame (scene-relative) the number lands
+  placement: Placement; // where/how big Max stands in this scene
 }
 export interface CaptionPage { words: number[]; start: number; end: number }
 export interface FrameKey<T> { at: number; value: T }

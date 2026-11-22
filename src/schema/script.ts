@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 export const EXPRESSIONS = ['neutral', 'shocked', 'angry', 'laughing', 'smug', 'thinking'] as const;
-export const POSES = ['idle', 'pointing', 'flexing', 'armsCrossed', 'facepalm', 'thumbsUp', 'fingerUp'] as const;
+export const POSES = ['idle', 'pointing', 'flexing', 'armsCrossed', 'facepalm', 'thumbsUp', 'fingerUp', 'thinking'] as const;
 export const MUSCLES = [
   'chest', 'shoulders', 'biceps', 'triceps', 'forearms', 'abs',
   'traps', 'lats', 'glutes', 'quads', 'hamstrings', 'calves',
@@ -10,15 +10,26 @@ export const MUSCLES = [
 
 const Line = z.string().min(1);
 
+export const INTENT_NAMES = ['question', 'myth', 'reveal', 'stat', 'goodNews', 'ending'] as const;
+
 const SceneBase = {
   narration: z.string().min(1),
-  expression: z.enum(EXPRESSIONS).default('neutral'),
-  pose: z.enum(POSES).default('idle'),
+  // what the first sentence MEANS; pose + expression come from INTENTS in src/config.ts
+  intent: z.enum(INTENT_NAMES).optional(),
+  expression: z.enum(EXPRESSIONS).optional(), // optional override (must be allowed for the intent)
+  pose: z.enum(POSES).optional(),
   onScreenText: z.array(Line).default([]), // one entry per line
   sourceIndex: z.number().int().min(0).optional(), // -> meta.sources[i], shown as a source footer
-  // mid-scene changes, keyed to a word of this scene's narration (0-based)
+  // later sentences of this scene (0-based sentence index): max ONE pose per sentence
   moves: z
-    .array(z.object({ atWord: z.number().int().min(0), expression: z.enum(EXPRESSIONS).optional(), pose: z.enum(POSES).optional() }))
+    .array(
+      z.object({
+        atSentence: z.number().int().min(1),
+        intent: z.enum(INTENT_NAMES).optional(),
+        expression: z.enum(EXPRESSIONS).optional(),
+        pose: z.enum(POSES).optional(),
+      }),
+    )
     .default([]),
   // key words: camera shake + caption accent when spoken
   emphasis: z.array(z.string()).default([]),
@@ -101,3 +112,14 @@ export type ScriptT = z.infer<typeof Script>;
 export type SceneT = z.infer<typeof Scene>;
 
 export const narrationText = (s: ScriptT) => s.scenes.map((sc) => sc.narration.trim()).join(' ');
+
+// sentence index of each word in a narration (split after . ? !)
+export const sentenceOfWords = (narration: string) => {
+  const ws = narration.trim().split(/\s+/).filter(Boolean);
+  let s = 0;
+  return ws.map((w, i) => {
+    const cur = s;
+    if (/[.?!]$/.test(w) && i < ws.length - 1) s++;
+    return cur;
+  });
+};

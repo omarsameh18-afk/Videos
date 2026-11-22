@@ -2,9 +2,9 @@
 // elbow and wrist. The screen-right arm is mirrored, so positive angles always mean
 // "outward / away from the body" for both arms.
 export type HandShape = 'fist' | 'point' | 'one' | 'thumbsUp' | 'open' | 'shaker' | 'hidden';
-export type PoseName = 'idle' | 'pointing' | 'flexing' | 'armsCrossed' | 'facepalm' | 'thumbsUp' | 'fingerUp';
+export type PoseName = 'idle' | 'pointing' | 'flexing' | 'armsCrossed' | 'facepalm' | 'thumbsUp' | 'fingerUp' | 'thinking';
 
-export const POSE_NAMES: PoseName[] = ['pointing', 'flexing', 'armsCrossed', 'facepalm', 'thumbsUp', 'fingerUp'];
+export const POSE_NAMES: PoseName[] = ['pointing', 'flexing', 'armsCrossed', 'facepalm', 'thumbsUp', 'fingerUp', 'thinking'];
 
 export interface ArmDef {
   shoulder: number;
@@ -21,8 +21,9 @@ const hang = (hand: HandShape = 'shaker'): ArmDef => ({ shoulder: 16, elbow: -14
 
 export const POSES: Record<PoseName, PoseDef> = {
   idle: { left: hang('fist'), right: hang('shaker') },
-  // points sideways (screen-left) at on-screen text: arm near horizontal, finger horizontal
-  pointing: { left: { shoulder: 66, elbow: 24, wrist: 0, hand: 'point' }, right: hang('shaker'), lean: -2 },
+  // compact "look there" point: forearm rises 45 deg up-and-out so it aims at a card
+  // beside/above him without the arm ever reaching into the card (Max is mirrored next to cards)
+  pointing: { left: { shoulder: -15, elbow: 150, wrist: 0, hand: 'point', front: true }, right: hang('shaker') },
   flexing: {
     left: { shoulder: 100, elbow: 105, wrist: 10, hand: 'fist' },
     right: { shoulder: 100, elbow: 105, wrist: 10, hand: 'shaker' },
@@ -40,6 +41,8 @@ export const POSES: Record<PoseName, PoseDef> = {
     lean: 3,
   },
   thumbsUp: { left: { shoulder: 52, elbow: 116, wrist: 0, hand: 'thumbsUp' }, right: hang('shaker') },
+  // question: fist under the chin
+  thinking: { left: { shoulder: -24, elbow: -130, wrist: -10, hand: 'fist', front: true }, right: hang('shaker') },
   // index finger raised beside the head ("one thing...")
   fingerUp: { left: { shoulder: 22, elbow: 150, wrist: 6, hand: 'one' }, right: hang('shaker') },
 };

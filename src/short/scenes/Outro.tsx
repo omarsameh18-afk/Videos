@@ -6,7 +6,7 @@ import { CONTENT } from '../layout';
 import { headline } from './common';
 import { SceneProps } from './types';
 
-// <= 1.5 s: handle only. The narration ends on a line that loops back into the hook.
+// <= 1.5 s: handle only. The narration's last sentence finishes fully (+0.4 s tail).
 export const Outro: React.FC<SceneProps> = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();

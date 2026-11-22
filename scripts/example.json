@@ -20,41 +20,36 @@
   "scenes": [
     {
       "type": "Hook",
+      "intent": "question",
       "narration": "Not sore after training? Does that mean it didn't work?",
-      "expression": "thinking",
-      "pose": "fingerUp",
       "onScreenText": ["SORE = GROWTH?"],
-      "moves": [{ "atWord": 4, "expression": "shocked", "pose": "facepalm" }],
+      "moves": [{ "atSentence": 1, "intent": "question", "expression": "shocked" }],
       "emphasis": ["didn't"]
     },
     {
       "type": "WrongVsRight",
+      "intent": "myth",
       "narration": "Nope. Soreness just means the move was new to your muscle. It's not a growth meter.",
-      "expression": "smug",
-      "pose": "armsCrossed",
       "sourceIndex": 0,
       "moves": [
-        { "atWord": 1, "expression": "neutral", "pose": "pointing" },
-        { "atWord": 11, "expression": "smug", "pose": "thumbsUp" }
+        { "atSentence": 1, "intent": "reveal" },
+        { "atSentence": 2, "intent": "myth" }
       ],
       "emphasis": ["new", "not"],
-      "props": { "wrong": "Sore = growth", "right": "Progress = growth" }
+      "props": { "wrong": "Sore = growth", "right": "Sore = new move" }
     },
     {
       "type": "StatCard",
+      "intent": "stat",
       "narration": "One study: real growth only showed up after week three, once soreness faded.",
-      "expression": "thinking",
-      "pose": "fingerUp",
       "sourceIndex": 1,
-      "moves": [{ "atWord": 7, "expression": "smug", "pose": "flexing" }],
       "emphasis": ["after"],
-      "props": { "value": 3, "prefix": "WEEK ", "label": ["Growth came AFTER soreness faded"] }
+      "props": { "value": 3, "prefix": "WEEK ", "label": ["Growth came", "AFTER soreness", "faded"] }
     },
     {
       "type": "Outro",
-      "narration": "So next time you're",
-      "expression": "laughing",
-      "pose": "thumbsUp"
+      "intent": "ending",
+      "narration": "You still grew."
     }
   ]
 }

@@ -71,7 +71,8 @@ export function sceneTimings(script, words, audioSec, fps, { leadFrames = 3, tai
     starts.push(i === 0 ? 0 : Math.max(0, Math.round(w.start * fps) - leadFrames));
     wi += c;
   });
-  const endFrame = Math.ceil((audioSec + tailSec) * fps);
+  // the last sentence always finishes fully: end = last word end + tail (never cut mid-sentence)
+  const endFrame = Math.round((Math.min(audioSec, words[words.length - 1].end + tailSec) > 0 ? words[words.length - 1].end + tailSec : audioSec) * fps);
   return starts.map((from, i) => ({
     from,
     durationInFrames: (i + 1 < starts.length ? starts[i + 1] : endFrame) - from,

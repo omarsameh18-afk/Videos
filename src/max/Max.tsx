@@ -1,10 +1,12 @@
 import React from 'react';
-import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
+import { Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { MaxFigure } from './MaxFigure';
 import { Brow, ExpressionName, EXPRESSIONS } from './expressions';
 import { blendPose, PoseDef, PoseName, POSES } from './poses';
 import { blinkAmount } from './blink';
 import { CharTiming, mouthAt } from './lipsync';
+
+export const POSE_TWEEN_FRAMES = 7;
 
 export interface Key<T> { at: number; value: T } // `at` = frame (local to this component)
 
@@ -55,7 +57,8 @@ export const Max: React.FC<MaxProps> = ({
   // pose: arms spring between poses
   const pKeys = toKeys(pose);
   const pi = activeIndex(pKeys, frame);
-  const pt = pi > 0 ? spring({ frame: frame - pKeys[pi].at, fps, config: { damping: 14, stiffness: 160 } }) : 1;
+  // pose changes: short eased tween (POSE_TWEEN_FRAMES), never a snap or a bouncy spring
+  const pt = pi > 0 ? interpolate(frame - pKeys[pi].at, [0, POSE_TWEEN_FRAMES], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic) }) : 1;
   const poseDef: PoseDef = blendPose(POSES[pi > 0 ? pKeys[pi - 1].value : pKeys[pi].value], POSES[pKeys[pi].value], pt);
 
   return (

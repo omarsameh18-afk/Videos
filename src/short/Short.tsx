@@ -1,5 +1,6 @@
 import React from 'react';
-import { AbsoluteFill, Audio, CalculateMetadataFunction, Sequence, staticFile, useCurrentFrame } from 'remotion';
+import { AbsoluteFill, Audio, CalculateMetadataFunction, Sequence, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
+import { pulseAt } from './camera';
 import { Background } from './Background';
 import { Captions } from './Captions';
 import { MaxLayer } from './MaxLayer';
@@ -17,15 +18,17 @@ const SCENES: Record<string, React.FC<SceneProps>> = { Hook, WrongVsRight, StatC
 
 export const Short: React.FC<ShortProps> = (props) => {
   waitForFonts();
-  const { script, scenes, pages, words, audioSrc, shakes, emphasisWords } = props;
+  const { script, scenes, pages, words, audioSrc, shakes, emphasisWords, zoomKeys } = props;
   const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const pulse = pulseAt(zoomKeys, frame, fps);
   // camera shake on key words: decaying jitter over 8 frames
   const sh = [...shakes].reverse().find((s) => s <= frame && frame - s < 8);
   const k = sh === undefined ? 0 : (8 - (frame - sh)) / 8;
   const shake = `translate(${Math.sin(frame * 3.1) * 14 * k}px, ${Math.cos(frame * 2.3) * 10 * k}px)`;
   return (
     <AbsoluteFill style={{ transform: shake }}>
-      <Background />
+      <Background zoomKeys={zoomKeys} />
       <MaxLayer {...props} />
       {/* scene text + cards sit above Max so his zooms never cover them */}
       {scenes.map((t, i) => {
@@ -33,7 +36,7 @@ export const Short: React.FC<ShortProps> = (props) => {
         const Comp = SCENES[sc.type];
         return (
           <Sequence key={i} from={t.from} durationInFrames={t.durationInFrames} name={`${i} ${sc.type}`}>
-            <Comp scene={sc} timing={t} script={script} />
+            <Comp scene={sc} timing={t} script={script} pulse={pulse} />
           </Sequence>
         );
       })}

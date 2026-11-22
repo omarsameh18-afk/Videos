@@ -60,7 +60,7 @@ console.log(`✓ voice tightened: ${ed.sourceSec.toFixed(2)}s -> ${ed.editedSec.
 // 4. timing + pacing
 const { amplitude, durationSec } = computeAmplitude(voiceWav, FPS);
 const words = alignmentToWords(ed.alignment);
-const scenes = sceneTimings(script, words, durationSec, FPS, { tailSec: 0.12, leadFrames: 2 });
+const scenes = sceneTimings(script, words, durationSec, FPS, { tailSec: 0.4, leadFrames: 1 });
 const pacing = buildPacing(script, scenes, words, FPS);
 const pages = captionPages(words, scenes, { maxWords: 3 });
 const chars = ed.alignment.characters.map((c, i) => ({
@@ -77,6 +77,7 @@ const outroSec = scenes.at(-1).durationInFrames / FPS;
 if (hookSec > HOOK_MAX_SEC) problems.push(`hook narration lasts ${hookSec.toFixed(2)}s (max ${HOOK_MAX_SEC}s)`);
 if (script.scenes.at(-1).type === 'Outro' && outroSec > OUTRO_MAX_SEC) problems.push(`outro lasts ${outroSec.toFixed(2)}s (max ${OUTRO_MAX_SEC}s)`);
 if (pacing.longestGapSec > MAX_GAP_SEC + 1e-6) problems.push(`longest gap without a visual change ${pacing.longestGapSec.toFixed(2)}s (max ${MAX_GAP_SEC}s)`);
+problems.push(...pacing.layoutErrors);
 if (durSec > MAX_SEC) problems.push(`video is ${durSec.toFixed(1)}s (max ${MAX_SEC}s)`);
 const tgt = script.meta.targetSec;
 if (tgt && (durSec < tgt[0] || durSec > tgt[1])) problems.push(`video is ${durSec.toFixed(2)}s, target ${tgt[0]}-${tgt[1]}s`);
@@ -96,7 +97,8 @@ console.log(`✓ mix: voice ${mix.voiceLufs.toFixed(1)} LUFS, music ${mix.musicG
 mkdirSync('.cache/props', { recursive: true });
 mkdirSync('out', { recursive: true });
 const propsFile = `.cache/props/${id}.json`;
-writeFileSync(propsFile, JSON.stringify({ script, audioSrc, durationInFrames, scenes, words, pages, chars, amplitude, ...pacing }));
+const { layoutErrors, changes, longestGapSec, ...visual } = pacing;
+writeFileSync(propsFile, JSON.stringify({ script, audioSrc, durationInFrames, scenes, words, pages, chars, amplitude, ...visual }));
 const out = `out/${id}.mp4`;
 const extra = process.env.FRAMES ? [`--frames=${process.env.FRAMES}`] : [];
 execFileSync('npx', ['remotion', 'render', 'src/index.ts', 'Short', out, `--props=${propsFile}`, ...extra], { stdio: ['ignore', 'ignore', 'inherit'] });

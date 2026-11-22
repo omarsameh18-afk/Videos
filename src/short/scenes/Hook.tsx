@@ -6,7 +6,7 @@ import { fitSize, headline } from './common';
 import { SceneProps } from './types';
 
 // Big bold text slams in on frame 0 (Max, shocked, is drawn by MaxLayer).
-export const Hook: React.FC<SceneProps> = ({ scene }) => {
+export const Hook: React.FC<SceneProps> = ({ scene, pulse }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const lines = scene.onScreenText;
@@ -23,7 +23,7 @@ export const Hook: React.FC<SceneProps> = ({ scene }) => {
               style={{
                 ...headline(fitSize(l, i === lines.length - 1 ? 150 : 124, CONTENT.width), i === lines.length - 1 ? C.accent : '#fff'),
                 whiteSpace: 'nowrap',
-                transform: `translateX(${shake}px) scale(${interpolate(s, [0, 1], [2.2, 1])})`,
+                transform: `translateX(${shake}px) scale(${interpolate(s, [0, 1], [2.2, 1]) * (1 + 0.06 * pulse)})`,
                 opacity: Math.min(1, s * 2),
               }}
             >

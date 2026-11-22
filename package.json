@@ -9,7 +9,8 @@
     "rig-test": "node scripts/rig-test.mjs",
     "validate": "node --no-warnings scripts/validate.mjs",
     "render": "node --no-warnings scripts/render.mjs",
-    "import-voice": "node --no-warnings scripts/import-voice.mjs"
+    "import-voice": "node --no-warnings scripts/import-voice.mjs",
+    "measure-poses": "rm -rf .cache/probe && remotion render src/index.ts PoseProbe .cache/probe --sequence --image-format=png >/dev/null && python3 scripts/measure-poses.py .cache/probe"
   },
   "repository": {
     "type": "git",
