@@ -19,3 +19,5 @@
 - TTS voice: up to 1,000 ElevenLabs credits per video without asking. Prefer re-using recorded sentences
   (`scripts/splice-voice.mjs`) and recording only the new lines.
 - Image/video generation, or anything above 1,000 credits: ask Omar first (estimate with `estimate_only`).
+- Budget until Dec 1: 50K total, never touch the last 16K of the account; log every video in docs/budget.md and
+  report the running total in every GATE.

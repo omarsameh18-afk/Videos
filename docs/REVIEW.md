@@ -138,3 +138,18 @@ All earlier rules (pacing, animation, visual, v5, US audience) still apply.
 6. **Zero-credit edits:** re-use recorded sentences with `node scripts/splice-voice.mjs <script>` (exact sentence match
    on cached ElevenLabs recordings) and render with `npm run render -- <script> voice/<id>.mp3`.
    If a wanted line was never recorded, use the closest recorded one and put the exact wording on screen.
+
+## SOLO FORMAT RULE (permanent, default from "skip-leg-day" on)
+1. **ONE Max, full frame, visible transformation over time.** No split-screen by default (versus only when a video
+   truly compares two subjects and Omar asks for it). Layout: ClipScene `layout: "solo"`.
+2. His whole body (head to feet) sits between the top band and the caption band; a blurred copy of the same clip fills
+   the frame edge to edge. Time counter (`unit` MONTH/WEEK) in the top band, one value per scene, whoosh on every change.
+3. Transformation must be visible: `upper` scales only the body above the waist (feathered, no box edges), `bodyMeters`
+   show what grows and what stays at 0, swap to the changed-body clip when the story says so.
+4. Every claim on screen must match the cited paper's wording; if the exact figure can't be verified, use the verified
+   wording instead and say so at the GATE.
+5. No single clip > 4 s in a row; phrase captions (split at commas before mid-phrase); source from the claim to the end.
+
+## BUDGET (until Dec 1)
+- BrainPump budget = 50K ElevenLabs credits total; never touch the last 16K of the account (reserved).
+- Ledger: docs/budget.md (account usage before/after each video). Report the running total in every GATE.

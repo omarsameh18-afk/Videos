@@ -167,7 +167,47 @@
       "generationId": "g1tSFbfJXMJpnCCJaQ0B",
       "credits": 2121,
       "prompt": "from pose-average: struggling curl, arm shakes, fails halfway, drops arm, shaker gripped, no tears"
+    },
+    {
+      "name": "pose-chicken-legs",
+      "file": "assets/clips/pose-chicken-legs.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "OXIx2agun8yDrH5LJvwU",
+      "credits": 609,
+      "prompt": "MASTER ref; CHICKEN LEGS: huge upper body on stick-thin legs, wobbly stance, shaker in right hand"
+    },
+    {
+      "name": "pose-rack",
+      "file": "assets/clips/pose-rack.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "8KxzdeCU2OGP6mlYzmZo",
+      "credits": 609,
+      "prompt": "MASTER ref; walking past a squat rack on the right, dismissive glance, shaker in right hand"
+    },
+    {
+      "name": "chicken-wobble",
+      "file": "assets/clips/chicken-wobble.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "0YGWxSQaMo7O2ZLDaniW",
+      "credits": 2121,
+      "prompt": "from pose-chicken-legs: skinny legs wobble, knees knock, torso sways, shaker gripped"
+    },
+    {
+      "name": "chicken-squat-fail",
+      "file": "assets/clips/chicken-squat-fail.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "Lqhfi6EdAvtpEN8BLcgU",
+      "credits": 2121,
+      "prompt": "from pose-chicken-legs: bodyweight squat, legs shake, gives out, plops down, shaker gripped"
+    },
+    {
+      "name": "rack-nah",
+      "file": "assets/clips/rack-nah.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "OOdIhHiOhNRMQh9AqEsH",
+      "credits": 2121,
+      "prompt": "from pose-rack: walks to squat rack, shakes head nah, waves it off, walks away, shaker gripped"
     }
   ],
-  "totalCredits": 35266
+  "totalCredits": 42847
 }

@@ -1,0 +1,62 @@
+{
+  "meta": {
+    "id": "skip-leg-day",
+    "title": "What Happens If You Skip Leg Day for 1 Year?",
+    "topic": "skipping leg training; lower-body muscle mass",
+    "targetSec": [22, 26],
+    "sources": [
+      {
+        "label": "Janssen et al., 2000",
+        "citation": "Janssen I, Heymsfield SB, Wang ZM, Ross R. Skeletal muscle mass and distribution in 468 men and women aged 18-88 yr. J Appl Physiol. 2000;89(1):81-88."
+      }
+    ],
+    "seed": 12
+  },
+  "voice": { "voiceId": "TX3LPaxmHKxFdv7VOQHJ", "modelId": "eleven_multilingual_v2", "speed": 1.0, "maxGapSec": 0.3 },
+  "scenes": [
+    {
+      "type": "ClipScene", "background": "gym",
+      "narration": "This guy skipped leg day for a whole year.",
+      "emphasis": ["leg"],
+      "props": { "layout": "solo", "clip": "chicken-wobble", "seqLeft": ["chicken-wobble"], "segSec": 4, "lines": ["He skipped leg day", "for 1 year"] }
+    },
+    {
+      "type": "ClipScene", "background": "gym",
+      "narration": "Month one: chest day, arm day... more arm day.",
+      "emphasis": ["arm"],
+      "props": { "layout": "solo", "clip": "bicep-curl", "seqLeft": ["bicep-curl", "celebrate"], "segSec": 1.5, "unit": "MONTH", "week": { "from": 1, "to": 1 }, "upper": { "from": 1, "to": 1.04 }, "bodyMeters": { "upper": [10, 25], "legs": [0, 0] } }
+    },
+    {
+      "type": "ClipScene", "background": "gym",
+      "narration": "Leg day? He's \"doing cardio.\"",
+      "emphasis": ["cardio"],
+      "props": { "layout": "solo", "clip": "rack-nah", "seqLeft": ["rack-nah"], "segSec": 4, "unit": "MONTH", "week": { "from": 3, "to": 3 }, "bodyMeters": { "upper": [25, 45], "legs": [0, 0] } }
+    },
+    {
+      "type": "ClipScene", "background": "gym",
+      "narration": "His upper body keeps growing. His legs... don't.",
+      "emphasis": ["growing"],
+      "props": { "layout": "solo", "clip": "celebrate", "seqLeft": ["celebrate", "bicep-curl", "sip-shaker"], "segSec": 1.3, "unit": "MONTH", "week": { "from": 6, "to": 6 }, "upper": { "from": 1.04, "to": 1.2 }, "bodyMeters": { "upper": [45, 90], "legs": [0, 0] } }
+    },
+    {
+      "type": "ClipScene", "background": "gym",
+      "narration": "By month twelve, a bodyweight squat beats him.",
+      "emphasis": ["squat"],
+      "props": { "layout": "solo", "clip": "chicken-squat-fail", "seqLeft": ["chicken-squat-fail"], "segSec": 4, "clipStart": 36, "unit": "MONTH", "week": { "from": 12, "to": 12 }, "bodyMeters": { "upper": [100, 100], "legs": [0, 0] } }
+    },
+    {
+      "type": "ClipScene", "background": "lab",
+      "narration": "The problem? With age, most muscle loss hits your legs. He skipped his biggest muscles.",
+      "emphasis": ["legs"],
+      "sourceIndex": 0,
+      "props": { "layout": "solo", "clip": "chicken-wobble", "silhouette": true, "showWeek": false, "lines": ["Aging drains", "the lower body"] }
+    },
+    {
+      "type": "ClipScene", "background": "gym",
+      "narration": "Don't skip leg day.",
+      "emphasis": ["leg"],
+      "sourceIndex": 0,
+      "props": { "layout": "solo", "clip": "chicken-wobble", "seqLeft": ["chicken-wobble"], "segSec": 4, "lines": ["Don't be", "this guy."] }
+    }
+  ]
+}

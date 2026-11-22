@@ -111,6 +111,7 @@ export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
     if (!closes(last) && !particle && DANGLING.has(bare(last))) c += 20;
     if (!closes(last) && /-/.test(last)) c += 20; // 'three-minute' needs its noun
     if (ch.length === 1 && DANGLING.has(bare(last))) c += 30;
+    if (ch.slice(0, -1).some((w) => /,$/.test(w))) c += 8; // a comma inside a chunk: 'WITH AGE, MOST MUSCLE | LOSS' -> split at the comma
     return c;
   };
   const out = [];
