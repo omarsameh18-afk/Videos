@@ -2,7 +2,7 @@ import React from 'react';
 import { interpolate, useCurrentFrame } from 'remotion';
 import { FONT_BODY } from './fonts';
 import { CONTENT, FOOTER_Y } from './layout';
-import { maxMode, SIDE_CAPTION, SIDE_FOOTER_Y } from './geometry';
+import { maxMode, SIDE_CAPTION, SIDE_FOOTER_Y, EXP_FOOTER_Y } from './geometry';
 
 // Small source line at the bottom of any scene that makes a claim.
 export const SourceFooter: React.FC<{ label: string; sceneType: string }> = ({ label, sceneType }) => {
@@ -13,7 +13,7 @@ export const SourceFooter: React.FC<{ label: string; sceneType: string }> = ({ l
       style={{
         position: 'absolute',
         left: side ? SIDE_CAPTION.x : CONTENT.x,
-        top: side ? SIDE_FOOTER_Y : FOOTER_Y,
+        top: side ? SIDE_FOOTER_Y : maxMode(sceneType) === 'none' ? EXP_FOOTER_Y : FOOTER_Y,
         maxWidth: side ? SIDE_CAPTION.w : CONTENT.width,
         opacity: interpolate(f, [4, 14], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
         fontFamily: FONT_BODY,

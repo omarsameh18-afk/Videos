@@ -15,8 +15,10 @@ import { MuscleHighlight } from './scenes/MuscleHighlight';
 import { SceneProps } from './scenes/types';
 import { AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber } from './scenes/Visuals';
 import type { BackgroundName } from '../config';
+import { SubjectsLayer } from './experiment/SubjectsLayer';
+import { DayCounter, GymSet, Reveal, SplitClone } from './experiment/Overlays';
 
-const SCENES: Record<string, React.FC<SceneProps>> = { Hook, WrongVsRight, StatCard, Outro, MuscleHighlight, AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber };
+const SCENES: Record<string, React.FC<SceneProps>> = { Hook, WrongVsRight, StatCard, Outro, MuscleHighlight, AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber, SplitClone, GymSet, DayCounter, Reveal };
 
 export const Short: React.FC<ShortProps> = (props) => {
   waitForFonts();
@@ -36,6 +38,7 @@ export const Short: React.FC<ShortProps> = (props) => {
         </Sequence>
       ))}
       <MaxLayer {...props} />
+      <SubjectsLayer {...props} />
       {/* scene text + cards sit above Max so his zooms never cover them */}
       {scenes.map((t, i) => {
         const sc = script.scenes[i];

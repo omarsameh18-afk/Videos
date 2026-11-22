@@ -157,13 +157,37 @@ const Fx: React.FC<{ fx?: string; frame: number }> = ({ fx, frame }) => {
   }
 };
 
+// exhaustion: droopy lids over both eyes, flushed cheeks, sweat drops running down
+const Fatigue: React.FC<{ level: number; frame: number }> = ({ level, frame }) => {
+  const lid = Math.min(1, level * 1.2) * 16; // px of eyelid droop
+  return (
+    <g>
+      {[EYE_L, EYE_R].map((e, i) => (
+        <g key={i}>
+          <path d={`M ${e.x - 26} ${e.y - 30} L ${e.x + 26} ${e.y - 30} L ${e.x + 26} ${e.y - 20 + lid} Q ${e.x} ${e.y - 14 + lid} ${e.x - 26} ${e.y - 20 + lid} Z`} fill={C.skin} />
+          <path d={`M ${e.x - 21} ${e.y - 19 + lid} Q ${e.x} ${e.y - 13 + lid} ${e.x + 21} ${e.y - 19 + lid}`} fill="none" {...line} strokeWidth={4} />
+        </g>
+      ))}
+      <g opacity={Math.min(0.6, level * 0.7)}>
+        <ellipse cx={336} cy={262} rx={20} ry={11} fill={C.anger} />
+        <ellipse cx={464} cy={262} rx={20} ry={11} fill={C.anger} />
+      </g>
+      {[[318, 150, 0], [486, 140, 9], [350, 120, 17], [472, 200, 26]].slice(0, Math.ceil(level * 4)).map(([x, y, ph], i) => {
+        const t = ((frame + ph * 3) % 40) / 40;
+        return <path key={i} transform={`translate(${x} ${y + t * 90})`} d="M 0 -14 Q 10 2 6 9 Q 0 15 -6 9 Q -10 2 0 -14 Z" fill={C.sweat} {...line} strokeWidth={3} opacity={1 - t * 0.6} />;
+      })}
+    </g>
+  );
+};
+
 export const Head: React.FC<{
   expression: ExpressionName;
   mouth?: MouthShape;
   blink?: number;
   frame?: number;
   brows?: { browL: Brow; browR: Brow }; // animated brows (springs) override the expression's
-}> = ({ expression, mouth, blink = 0, frame = 0, brows }) => {
+  fatigue?: number; // 0-1: sweat, droopy eyelids, flushed cheeks
+}> = ({ expression, mouth, blink = 0, frame = 0, brows, fatigue = 0 }) => {
   const e = { ...EXPRESSIONS[expression], ...brows };
   return (
     <g>
@@ -215,6 +239,7 @@ export const Head: React.FC<{
       <path d="M 400 232 Q 392 250 398 256 Q 404 258 410 254" fill="none" stroke={C.skinShade} strokeWidth={6} strokeLinecap="round" />
       <Mouth shape={mouth ?? e.mouth} />
       <Fx fx={e.fx} frame={frame} />
+      {fatigue > 0.05 && <Fatigue level={fatigue} frame={frame} />}
     </g>
   );
 };

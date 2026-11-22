@@ -24,6 +24,7 @@ export function sceneSentences(sc) {
 /** rule violations for one scene */
 export function intentErrors(sc, at) {
   const errs = [];
+  if (['SplitClone', 'GymSet', 'DayCounter', 'Reveal'].includes(sc.type)) return errs; // subjects, no narrator pose
   const nSent = sentenceOfWords(sc.narration).at(-1) + 1;
   const seen = new Set();
   for (const m of sc.moves) {

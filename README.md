@@ -20,6 +20,10 @@ scripts/lib/amplitude.mjs   per-frame loudness from the MP3 (ffmpeg)
 src/dev/               ProofSheet + RigTest compositions
 ```
 
+## Main format: "What happens if…" experiments
+Two Max test subjects whose bodies change over the weeks (`SplitClone`, `GymSet`, `DayCounter`, `Reveal`).
+Example: `scripts/rest-1-vs-3.json` (1 vs 3 minutes rest, Schoenfeld et al., 2016). Rig sliders: src/max/body.ts.
+
 ## Scene types
 Hook (optional gauge interrupt), AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber, Outro
 (+ older card scenes: WrongVsRight, StatCard, MuscleHighlight). Each scene/sentence has an `intent` that picks Max's pose.

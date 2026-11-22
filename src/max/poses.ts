@@ -2,7 +2,7 @@
 // elbow and wrist. The screen-right arm is mirrored, so positive angles always mean
 // "outward / away from the body" for both arms.
 export type HandShape = 'fist' | 'point' | 'one' | 'thumbsUp' | 'open' | 'shaker' | 'hidden';
-export type PoseName = 'idle' | 'pointing' | 'flexing' | 'armsCrossed' | 'facepalm' | 'thumbsUp' | 'fingerUp' | 'thinking';
+export type PoseName = 'idle' | 'pointing' | 'flexing' | 'armsCrossed' | 'facepalm' | 'thumbsUp' | 'fingerUp' | 'thinking' | 'pressDown' | 'pressUp' | 'sip';
 
 export const POSE_NAMES: PoseName[] = ['pointing', 'flexing', 'armsCrossed', 'facepalm', 'thumbsUp', 'fingerUp', 'thinking'];
 
@@ -43,6 +43,12 @@ export const POSES: Record<PoseName, PoseDef> = {
   thumbsUp: { left: { shoulder: 52, elbow: 116, wrist: 0, hand: 'thumbsUp' }, right: hang('shaker') },
   // question: fist under the chin
   thinking: { left: { shoulder: -24, elbow: -130, wrist: -10, hand: 'fist', front: true }, right: hang('shaker') },
+  // overhead press (barbell drawn between the fists by MaxFigure)
+  // bar behind the neck: upper arms out, so the rep path never sweeps wider than the lockout
+  pressDown: { left: { shoulder: 90, elbow: 154, wrist: 0, hand: 'fist' }, right: { shoulder: 90, elbow: 154, wrist: 0, hand: 'fist' } },
+  pressUp: { left: { shoulder: 160, elbow: 12, wrist: 0, hand: 'fist' }, right: { shoulder: 160, elbow: 12, wrist: 0, hand: 'fist' } },
+  // resting: sips from the shaker (screen-right hand at the mouth)
+  sip: { left: hang('fist'), right: { shoulder: -30, elbow: -128, wrist: 0, hand: 'shaker', front: true } },
   // index finger raised beside the head ("one thing...")
   fingerUp: { left: { shoulder: 22, elbow: 150, wrist: 6, hand: 'one' }, right: hang('shaker') },
 };
@@ -63,3 +69,13 @@ export const blendPose = (a: PoseDef, b: PoseDef, t: number): PoseDef => ({
   lean: lerp(a.lean ?? 0, b.lean ?? 0, t),
   frontArm: t < 0.5 ? a.frontArm : b.frontArm,
 });
+
+// forward kinematics: fist centre of the screen-left ('left') or screen-right arm in canvas units
+const rad = (d: number) => (d * Math.PI) / 180;
+const step = (x: number, y: number, ang: number, len: number) => [x - Math.sin(rad(ang)) * len, y + Math.cos(rad(ang)) * len];
+export const fistPos = (def: ArmDef, side: 'left' | 'right', pivotX = 222): [number, number] => {
+  let [x, y] = step(pivotX, 372, def.shoulder, 175);
+  [x, y] = step(x, y, def.shoulder + def.elbow, 158);
+  [x, y] = step(x, y, def.shoulder + def.elbow + def.wrist, 48);
+  return side === 'left' ? [x, y] : [800 - x, y];
+};

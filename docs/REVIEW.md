@@ -94,3 +94,20 @@ Dev check for visuals not used in a Short: `VisualGallery` composition (review/v
   (`VOICE_LOCK` in src/config.ts; validator rejects any other voiceId).
 - US spelling; lbs / inches only. US gym slang is fine (leg day, PR, pre-workout).
 - Validator rejects "kg", "cm", "colour", "programme" and other UK/metric forms (config/usAudience.json, with the US replacement).
+
+## EXPERIMENT FORMAT RULES (main format: "What happens if…", Max is the test subject)
+1. **Rig sliders** (`body` per subject, src/max/body.ts): chest, shoulders, arms, back, abs, legs 0.8-1.4 (`all` sets
+   every muscle), belly 0-1, fatigue 0-1 (sweat, droopy lids, flushed cheeks, heavy breathing / panting).
+   Each scene's `body` is the target at the END of the scene; bodies ease there smoothly from the previous scene.
+2. **Scenes:** `SplitClone` (two Maxes side by side, labels on top; `timersCenter` flies the timers to centre for the loop),
+   `GymSet` (squat racks, barbell press reps, rest-timer rings, optional meters), `DayCounter` ("WEEK 1 → 8" ticker =
+   story spine, a pop per tick), `Reveal` (flash + zoom on the focus subject + 1-3 tags).
+3. **Activities:** `train` = sets of quick press reps + a rest whose length follows the subject's timer (1 MIN vs 3 MIN
+   is visible); tired subjects gasp, fresh ones sip the shaker. `lift`, `rest`, `idle`, `flex` also available.
+4. **Layout:** subjects ~34% of frame height, feet on y 1290, never overlapping each other (bar path never sweeps wider
+   than the lockout); labels/ticker/meters stacked above without overlap; captions just below their feet (~68-75%);
+   source line under the captions. The reveal zoom keeps the focus subject fully in frame.
+5. **Story:** hook = both subjects + the two timers slamming in on frame 1; the spine is the week ticker; the twist is a
+   Reveal; payoff carries the source; the last line loops back to the two timers (timers fly back to centre).
+6. **Tags / meter labels must not repeat the narration** (validator) — e.g. "+ MUSCLE" while the VO says "bigger".
+All earlier rules (pacing, animation, visual, v5, US audience) still apply.

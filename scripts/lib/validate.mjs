@@ -90,6 +90,11 @@ export function validateScript(raw) {
       ...(sc.type === 'BigNumber' ? [sc.props.label] : []),
       ...(sc.type === 'AnimatedChart' && sc.props.marker ? [sc.props.marker.label] : []),
     ];
+    if (['SplitClone', 'GymSet', 'DayCounter', 'Reveal'].includes(sc.type)) {
+      for (const side of ['left', 'right']) vis.push([sc.props[side].label, 380]);
+      if (sc.type === 'GymSet' && sc.props.meters) { vis.push([sc.props.meters.label, VIS_MAIN.w]); headlines.push(sc.props.meters.label); }
+      if (sc.type === 'Reveal') sc.props.tags.forEach((x) => { vis.push([x, VIS_MAIN.w]); headlines.push(x); });
+    }
     for (const h of headlines) if (repeats(h, sc.narration)) errors.push(`${at}: label "${h}" repeats the caption - drop the label or reword it`);
     for (const [text, w] of vis) {
       const n = words(text.replace(/=/g, ' ')).length;
@@ -109,9 +114,9 @@ export function validateScript(raw) {
   }
   if (s.voice.voiceId !== VOICE_LOCK.voiceId) errors.push(`voice.voiceId must be the locked Max voice ${VOICE_LOCK.voiceId} (${VOICE_LOCK.name})`);
 
-  if (s.scenes[0].type !== 'Hook') errors.push('scenes[0] must be a Hook');
+  if (!['Hook', 'SplitClone'].includes(s.scenes[0].type)) errors.push('scenes[0] must be a Hook (or a SplitClone experiment hook)');
   const hookSec = words(s.scenes[0].narration).length / (WORDS_PER_SEC * s.voice.speed);
-  if (s.scenes[0].type === 'Hook' && hookSec > HOOK_MAX_SEC) {
+  if (hookSec > HOOK_MAX_SEC) {
     errors.push(`scenes[0] (Hook): narration ~${hookSec.toFixed(1)}s, must be <= ${HOOK_MAX_SEC}s (shorten it)`);
   }
   if (s.voice.text !== undefined && s.voice.text.trim() !== narrationText(s)) {

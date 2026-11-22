@@ -133,7 +133,42 @@ export const OutroScene = z.object({
   props: z.object({}).default({}),
 });
 
+// ---- "What happens if..." experiments: two Max test subjects whose bodies change over time
+const Slider = z.number().min(0.8).max(1.4);
+export const BodyTarget = z.object({
+  chest: Slider.optional(), shoulders: Slider.optional(), arms: Slider.optional(), back: Slider.optional(),
+  abs: Slider.optional(), legs: Slider.optional(), all: Slider.optional(), // all = every muscle slider at once
+  belly: z.number().min(0).max(1).optional(), fatigue: z.number().min(0).max(1).optional(),
+});
+export const ACTIVITIES = ['idle', 'lift', 'train', 'rest', 'flex'] as const;
+export const Subject = z.object({
+  label: z.string().min(1), // big label on top, e.g. "1 MIN"
+  timer: z.number().int().min(5).max(600).optional(), // rest between sets (s); drives the rest-timer ring
+  activity: z.enum(ACTIVITIES).default('idle'), // train = auto cycle of sets + rests (rest length follows timer)
+  expression: z.enum(EXPRESSIONS).optional(),
+  body: BodyTarget.default({}), // reached by the END of the scene (smoothly animated from the previous scene)
+});
+const Stage = { left: Subject, right: Subject };
+export const SplitCloneScene = z.object({ type: z.literal('SplitClone'), ...SceneBase, props: z.object({ ...Stage, timersCenter: z.boolean().default(false) }) });
+export const GymSetScene = z.object({
+  type: z.literal('GymSet'),
+  ...SceneBase,
+  props: z.object({ ...Stage, meters: z.object({ label: z.string().min(1), left: z.number().min(0).max(100), right: z.number().min(0).max(100) }).optional() }),
+});
+export const DayCounterScene = z.object({
+  type: z.literal('DayCounter'),
+  ...SceneBase,
+  props: z.object({ ...Stage, unit: z.string().default('WEEK'), from: z.number().int().min(0), to: z.number().int().min(0) }),
+});
+export const RevealScene = z.object({
+  type: z.literal('Reveal'),
+  ...SceneBase,
+  props: z.object({ ...Stage, focus: z.enum(['left', 'right']), tags: z.array(z.string().min(1)).max(3).default([]) }),
+});
+export const EXPERIMENT_TYPES = ['SplitClone', 'GymSet', 'DayCounter', 'Reveal'];
+
 export const Scene = z.discriminatedUnion('type', [
+  SplitCloneScene, GymSetScene, DayCounterScene, RevealScene,
   HookScene, MuscleHighlightScene, WrongVsRightScene, StatCardScene, OutroScene,
   AnimatedChartScene, GaugeScene, MuscleZoomScene, SplitVersusScene, BigNumberScene,
 ]);

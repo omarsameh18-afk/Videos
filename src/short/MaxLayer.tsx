@@ -3,7 +3,7 @@ import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { Max, Key } from '../max/Max';
 import { ExpressionName } from '../max/expressions';
 import { PoseName } from '../max/poses';
-import { feetYFor } from './geometry';
+import { feetYFor, maxMode } from './geometry';
 import { punchAt } from './camera';
 import { ShortProps } from './types';
 
@@ -16,6 +16,7 @@ export const MaxLayer: React.FC<ShortProps> = ({ script, scenes, amplitude, char
   const { fps } = useVideoConfig();
   let si = 0;
   while (si + 1 < scenes.length && scenes[si + 1].from <= frame) si++;
+  if (maxMode(script.scenes[si].type) === 'none') return null; // experiment scenes: the subjects are the cast
   const cur = scenes[si].placement;
   const prev = si > 0 ? scenes[si - 1].placement : cur;
   const move = si > 0 ? spring({ frame: frame - scenes[si].from, fps, config: { damping: 18, stiffness: 240 } }) : 1;

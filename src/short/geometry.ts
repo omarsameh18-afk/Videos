@@ -55,9 +55,13 @@ export const maxRect = (p: Placement, b: Bounds, zoom = 1): Rect => {
 const right = (r: Rect) => r.x + r.w;
 
 /** Place Max for a scene: as big as MAX_SCALE allows, flipped toward a card, zoom capped to fit. */
-export type MaxMode = 'reactor' | 'end' | 'side' | 'big';
+export type MaxMode = 'reactor' | 'end' | 'side' | 'big' | 'none';
+export const EXPERIMENT_SCENES = ['SplitClone', 'GymSet', 'DayCounter', 'Reveal'];
+// experiment scenes: subjects stand on y 1290; captions just below their feet (~68-75% height), source under them
+export const EXP_CAPTION_Y = 1300;
+export const EXP_FOOTER_Y = 1470;
 export const maxMode = (sceneType: string): MaxMode =>
-  VISUAL_TYPES.includes(sceneType) || sceneType === 'Hook' ? 'reactor' : sceneType === 'Outro' ? 'end' : CARD_RECT[sceneType] ? 'side' : 'big';
+  EXPERIMENT_SCENES.includes(sceneType) ? 'none' : VISUAL_TYPES.includes(sceneType) || sceneType === 'Hook' ? 'reactor' : sceneType === 'Outro' ? 'end' : CARD_RECT[sceneType] ? 'side' : 'big';
 export const feetYFor = (sceneType: string) => {
   const m = maxMode(sceneType);
   return m === 'reactor' ? REACTOR.feetY : m === 'end' ? END.feetY : FEET_Y;

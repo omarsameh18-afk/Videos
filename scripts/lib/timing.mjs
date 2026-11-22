@@ -87,7 +87,7 @@ export const DANGLING = new Set([
   'with', 'and', 'but', 'or', 'nor', 'is', 'are', 'was', 'were', 'be', "it's", "that's", 'that', 'this',
   'these', 'those', 'after', 'before', 'into', 'than', 'as', 'by', 'so', 'if', 'very', 'really', 'no', 'one',
   'more', 'most', 'some', 'any', 'every', "isn't", "don't", "doesn't", 'can', 'will', 'would', 'should',
-  'means', 'mean', 'makes', 'make', 'gets', 'get',
+  'means', 'mean', 'makes', 'make', 'gets', 'get', 'let', 'out',
 ]);
 const PARTICLES = new Set(['in', 'up', 'to', 'on', 'off', 'out', 'down', 'over']);
 const bare = (w) => w.toLowerCase().replace(/[^a-z0-9']/g, '');
@@ -98,13 +98,16 @@ const closes = (w) => /[.,;:?!]$/.test(w);
  * or a scene boundary. Dynamic programming over each punctuation-delimited segment.
  */
 export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
-  const cost = (ch) => {
+  const cost = (ch, firstIdx) => {
     const last = ch[ch.length - 1];
+    // never split a verb from its particle ("ended | up")
+    const splitParticle = firstIdx > 0 && PARTICLES.has(bare(ch[0])) && /(ed|ing)$/.test(bare(texts[firstIdx - 1]));
     const before = ch.length > 1 ? bare(ch[ch.length - 2]) : '';
     // "kicked in", "used to", "showed up": a particle after a verb completes the phrase
     const particle = PARTICLES.has(bare(last)) && /(ed|ing)$/.test(before);
     let c = ch.length === 1 ? 5 : ch.length === 2 ? 0.6 : 0;
     if (ch.join(' ').length > maxChars && ch.length > 1) c += 50;
+    if (splitParticle) c += 15;
     if (!closes(last) && !particle && DANGLING.has(bare(last))) c += 20;
     if (ch.length === 1 && DANGLING.has(bare(last))) c += 30;
     return c;
@@ -118,7 +121,7 @@ export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
     for (let i = 1; i <= n; i++) {
       best[i] = Infinity;
       for (let j = 1; j <= Math.min(maxWords, i); j++) {
-        const c = best[i - j] + cost(seg.slice(i - j, i).map((k) => texts[k]));
+        const c = best[i - j] + cost(seg.slice(i - j, i).map((k) => texts[k]), seg[i - j]);
         if (c < best[i]) {
           best[i] = c;
           prev[i] = j;
