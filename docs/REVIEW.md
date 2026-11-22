@@ -125,3 +125,16 @@ All earlier rules (pacing, animation, visual, v5, US audience) still apply.
 4. **Assembly:** `ClipScene` (full or split panels) + overlays: question in the top band on frame 1, week ticker,
    rep counters, meters, reveal flash/zoom, tags in the top band (never over the character), timers for the loop.
    Captions sit below the panels; all earlier rules apply.
+
+## AI-CLIP v3 RULES (versus format)
+1. **Full-frame versus:** each Max fills his half edge-to-edge (y 10%-78%), no boxed cards; lime divider; captions at ~80%.
+2. **Result-first hook (0-2 s):** final state on frame 1 (BIG-MAX on the 3-min side, drained Max on the 1-min side) + the claim
+   in the top band; the explanation follows.
+3. **Visible transformation:** the week drives everything - 3-min side grows ~4%/week (anchored at the neck so the
+   head never leaves frame) and swaps to the BIG-MAX clip from week 6; 1-min side stays the same size and drains
+   (desaturates/darkens) week by week.
+4. **Rep counters:** ONE number per week (pops when it changes), never live counting from 0.
+5. **Payoff <= 5 s:** one line + source. End: frozen halves + both timers + a question that loops to the hook.
+6. **Zero-credit edits:** re-use recorded sentences with `node scripts/splice-voice.mjs <script>` (exact sentence match
+   on cached ElevenLabs recordings) and render with `npm run render -- <script> voice/<id>.mp3`.
+   If a wanted line was never recorded, use the closest recorded one and put the exact wording on screen.

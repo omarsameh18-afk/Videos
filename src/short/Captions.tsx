@@ -29,7 +29,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
         justifyContent: 'center',
         flexWrap: 'wrap',
         alignContent: 'center',
-        gap: '0 26px',
+        gap: '0 30px',
         transform: `scale(${interpolate(pageIn, [0, 1], [0.85, 1])})`,
       }}
     >
@@ -54,7 +54,9 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
               paintOrder: 'stroke fill',
               textShadow: '0 6px 0 rgba(0,0,0,0.45)',
               display: 'inline-block',
-              transform: `scale(${active ? interpolate(pop, [0, 1], [1.1, 1.04]) : 1})`,
+              padding: '0 4px',
+              transformOrigin: 'center bottom',
+              transform: `scale(${active ? interpolate(pop, [0, 1], [1.06, 1]) : 1})`,
             }}
           >
             {w.text}

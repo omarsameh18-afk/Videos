@@ -96,7 +96,7 @@ console.log(`✓ mix: voice ${mix.voiceLufs.toFixed(1)} LUFS, music ${mix.musicG
 // 6. render (AI clips are served from public/clips)
 if (script.scenes.some((x) => x.type === 'ClipScene')) {
   mkdirSync('public/clips', { recursive: true });
-  for (const x of script.scenes.filter((y) => y.type === 'ClipScene')) for (const c of [x.props.clip, x.props.clipRight].filter(Boolean)) copyFileSync(`assets/clips/${c}.mp4`, `public/clips/${c}.mp4`);
+  for (const x of script.scenes.filter((y) => y.type === 'ClipScene')) for (const c of [x.props.clip, x.props.clipRight, x.props.swapRight?.clip].filter(Boolean)) copyFileSync(`assets/clips/${c}.mp4`, `public/clips/${c}.mp4`);
 }
 mkdirSync('.cache/props', { recursive: true });
 mkdirSync('out', { recursive: true });

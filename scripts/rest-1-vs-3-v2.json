@@ -1,0 +1,67 @@
+{
+  "meta": {
+    "id": "rest-1-vs-3-v2",
+    "title": "What Happens If You Rest 1 Minute vs 3 Minutes Between Sets?",
+    "topic": "rest intervals and hypertrophy",
+    "targetSec": [25, 35],
+    "sources": [
+      {
+        "label": "Schoenfeld et al., 2016",
+        "citation": "Schoenfeld BJ, Pope ZK, Benik FM, et al. Longer Interset Rest Periods Enhance Muscle Strength and Hypertrophy in Resistance-Trained Men. J Strength Cond Res. 2016;30(7):1805-1812."
+      }
+    ],
+    "seed": 11
+  },
+  "voice": { "voiceId": "TX3LPaxmHKxFdv7VOQHJ", "modelId": "eleven_multilingual_v2", "speed": 1.1, "maxGapSec": 0.15 },
+  "scenes": [
+    {
+      "type": "ClipScene",
+      "background": "gym",
+      "narration": "Same workout. Same weights. Only the rest is different.",
+      "emphasis": ["rest"],
+      "props": { "layout": "split", "clip": "bicep-curl", "clipRight": "bicep-curl", "mirrorRight": true, "question": "Which rest wins?", "labels": ["1 min", "3 min"] }
+    },
+    {
+      "type": "ClipScene",
+      "background": "lab",
+      "narration": "Week one. One-minute Max rushes back, gasping. Three-minute Max sips his shake and fully recovers.",
+      "emphasis": ["recovers"],
+      "props": { "layout": "split", "clip": "exhausted", "clipRight": "sip-shaker", "labels": ["1 min", "3 min"], "week": { "from": 1, "to": 4 }, "reps": { "left": 8, "right": 12 } }
+    },
+    {
+      "type": "ClipScene",
+      "background": "gym",
+      "narration": "By week eight, one-minute Max feels like he is working harder. But three-minute Max lifts more every single set.",
+      "emphasis": ["more"],
+      "props": { "layout": "split", "clip": "exhausted", "clipRight": "bicep-curl", "mirrorRight": true, "labels": ["1 min", "3 min"], "week": { "from": 5, "to": 8 }, "reps": { "left": 6, "right": 11 } }
+    },
+    {
+      "type": "ClipScene",
+      "background": "chalkboard",
+      "narration": "So who actually grew more?",
+      "props": { "layout": "full", "clip": "thinking", "question": "Week 8 results" }
+    },
+    {
+      "type": "ClipScene",
+      "background": "lab",
+      "narration": "Three-minute Max. Bigger and stronger.",
+      "sourceIndex": 0,
+      "emphasis": ["stronger"],
+      "props": { "layout": "full", "clip": "bigmax-flex", "reveal": true, "tags": ["+ Muscle", "+ Strength"] }
+    },
+    {
+      "type": "ClipScene",
+      "background": "gym",
+      "narration": "Longer rest let him lift more weight every set. More total work, more growth. Real study: the three-minute group gained more strength and more muscle.",
+      "sourceIndex": 0,
+      "emphasis": ["growth"],
+      "props": { "layout": "split", "clip": "shocked", "clipRight": "bigmax-flex", "labels": ["1 min", "3 min"], "question": "Volume lifted", "meters": { "label": "Volume lifted", "left": 62, "right": 100 } }
+    },
+    {
+      "type": "ClipScene",
+      "background": "lab",
+      "narration": "Pick your timer.",
+      "props": { "layout": "full", "clip": "celebrate", "timers": true }
+    }
+  ]
+}

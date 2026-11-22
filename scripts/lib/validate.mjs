@@ -93,11 +93,14 @@ export function validateScript(raw) {
     if (sc.type === 'ClipScene') {
       const p = sc.props;
       if (p.question) { vis.push([p.question, 972]); headlines.push(p.question); }
+      p.lines.forEach((x) => { vis.push([x, 1000]); headlines.push(x); });
+      if (p.repsByWeek && p.week) for (const side of ['left', 'right']) if (p.repsByWeek[side].length < p.week.to) errors.push(`${at}: repsByWeek.${side} needs ${p.week.to} weeks`);
+      if (p.swapRight) p.clipRight = p.clipRight ?? p.clip;
       (p.labels ?? []).forEach((x) => vis.push([x, 380]));
       p.tags.forEach((x) => { vis.push([x, 972]); headlines.push(x); });
       if (p.meters) { vis.push([p.meters.label, 972]); headlines.push(p.meters.label); }
       const man = existsSync('assets/clips/manifest.json') ? JSON.parse(readFileSync('assets/clips/manifest.json', 'utf8')).items.map((x) => x.name) : [];
-      for (const c of [p.clip, p.clipRight].filter(Boolean)) if (!man.includes(c)) errors.push(`${at}: clip "${c}" is not in assets/clips/manifest.json`);
+      for (const c of [p.clip, p.clipRight, p.swapRight?.clip].filter(Boolean)) if (!man.includes(c)) errors.push(`${at}: clip "${c}" is not in assets/clips/manifest.json`);
     }
     if (['SplitClone', 'GymSet', 'DayCounter', 'Reveal'].includes(sc.type)) {
       for (const side of ['left', 'right']) vis.push([sc.props[side].label, 380]);

@@ -68,7 +68,9 @@ export const CLIP = {
 };
 // experiment scenes: subjects stand on y 1290; captions just below their feet (~68-75% height), source under them
 export const EXP_CAPTION_Y = 1300;
-export const captionYFor = (t: string) => (t === 'ClipScene' ? 1220 : 1300);
+export const captionYFor = (t: string) => (t === 'ClipScene' ? 1505 : 1300);
+// versus layout: each Max fills his half edge-to-edge, y 10%..78%; captions ~80%
+export const VERSUS = { top: 192, bottom: 1498, half: 540, captionY: 1505, footerY: 1650 };
 export const EXP_FOOTER_Y = 1470;
 export const maxMode = (sceneType: string): MaxMode =>
   EXPERIMENT_SCENES.includes(sceneType) ? 'none' : VISUAL_TYPES.includes(sceneType) || sceneType === 'Hook' ? 'reactor' : sceneType === 'Outro' ? 'end' : CARD_RECT[sceneType] ? 'side' : 'big';

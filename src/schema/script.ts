@@ -173,7 +173,7 @@ export const ClipScene = z.object({
   type: z.literal('ClipScene'),
   ...SceneBase,
   props: z.object({
-    layout: z.enum(['full', 'split']).default('full'),
+    layout: z.enum(['full', 'split', 'versus']).default('full'),
     clip: z.string().min(1), // manifest name (left clip in split)
     clipRight: z.string().optional(),
     mirrorRight: z.boolean().default(false),
@@ -185,6 +185,14 @@ export const ClipScene = z.object({
     tags: z.array(z.string().min(1)).max(3).default([]),
     reveal: z.boolean().default(false), // flash + zoom on the clip
     timers: z.boolean().default(false), // big "1 MIN / 3 MIN" timers (loop ending)
+    // ---- versus layout (edge-to-edge halves)
+    lines: z.array(z.string().min(1)).max(3).default([]), // top-band text, one entry per line
+    showWeek: z.boolean().default(true), // week ticker (week = story time, also drives growth)
+    repsByWeek: z.object({ left: z.array(z.number().int()), right: z.array(z.number().int()) }).optional(), // index = week-1
+    grow: z.object({ left: z.number().default(0), right: z.number().default(0) }).optional(), // scale per week
+    swapRight: z.object({ atWeek: z.number().int(), clip: z.string(), scale: z.number().default(1) }).optional(),
+    drainLeft: z.boolean().default(false), // left side desaturates/darkens week by week
+    freeze: z.boolean().default(false), // freeze the clips (end card)
   }),
 });
 
