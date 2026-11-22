@@ -10,7 +10,8 @@ const caps = JSON.parse(fs.readFileSync(capsPath, 'utf8'));
 const clean = (w) => w.replace(/\.\.\.|…/g, '').replace(/[.،,:]$/g, ''); // same as Captions.tsx clean()
 const cards = []; let i = 0;
 caps.sizes.forEach((n, k) => {
-  const ws = words.slice(i, i + n).map(clean); i += n;
+  const txt = caps.cards?.[k]?.text; // a hook card may show its own text over these words (episode 11)
+  const ws = (txt ? txt.split(' ') : words.slice(i, i + n)).map(clean); i += n;
   const br = caps.cards?.[k]?.br;
   const cuts = [0, ...(br === undefined ? [] : [].concat(br)), ws.length];
   cards.push(cuts.slice(1).map((c, j) => ws.slice(cuts[j], c).join(' ')));

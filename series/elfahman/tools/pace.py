@@ -90,7 +90,7 @@ for b, rs in by_b.items():
              'mid': min(own, A.mid_max)}[k]
         if r is main and b in SET: L = min(SET[b], own) if SET[b] < own else SET[b]
         edits.append((r[0], r[1], L))
-        if r is main: gaps.append({'b': b, 'kind': k, 'own': round(own, 3), 'len': round(L, 3)})
+        if r is main: gaps.append({'b': b, 'kind': k, 'own': round(own, 3), 'len': round(L, 3), 't0': r[0]})
 edits.sort()
 # build the new audio
 out, pos, mp = [], int(first * SR), []    # mp: (old_t, new_t) anchor points
@@ -107,6 +107,8 @@ for t0, t1, L in edits:
     else:                                    # lengthen: the run, plus digital silence in its middle
         h = (i1 - i0) // 2; emit(a[i0:i0 + h]); emit(np.zeros(k - (i1 - i0), np.float32)); emit(a[i0 + h:i1])
     mp.append((t1, newt)); pos = i1
+    for g in gaps:
+        if g.get('t0') == t0: g['at'] = round(newt - L, 3)
 mp.append((pos / SR, newt)); emit(a[pos:int(last_end * SR)]); mp.append((last_end, newt))
 emit(np.zeros(int(A.tail * SR), np.float32))
 y = np.concatenate(out)
@@ -119,7 +121,7 @@ def T(t):  # old -> new time (inside an edited gap: clamped onto it)
 keep = [k for k in range(len(W)) if not (cut and cut[0] <= k <= cut[1])]
 NW = [{**W[k], 'start': round(T(W[k]['start']), 3), 'end': round(T(W[k]['end']), 3)} for k in keep]
 json.dump({'words': NW}, open(A.out_scribe, 'w'), ensure_ascii=False)
-for g in gaps: g['after'] = script[g['b']]
+for g in gaps: g['after'] = script[g['b']]; g.pop('t0', None)
 gaps.sort(key=lambda g: g['b'])
 L = len(y) / SR
 info = {'take': round(dur, 3), 'length': round(L, 3), 'speed': 1.0, 'lead_trimmed': round(first, 3), 'speech_end': round(L - A.tail, 3),

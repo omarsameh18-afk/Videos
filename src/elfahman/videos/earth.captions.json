@@ -1,0 +1,13 @@
+{
+  "note": "Episode 11. caption groups: words per caption, in script order (max 3 words). Hook caption rule: card 0 shows 'الأرض وقفت!' (the brief's caption 1, own text over the hook words 0-5) from frame 0, big, filling the width; card 1 'ثانية واحدة بس؟' (caption 2, own text) on the onset of 'ثانية'. cards: per-card options (text, br, fs, x / maxW, style). w100 = measured width at 100 px (scripts/captionsizes.mjs).",
+  "sizes": [6, 1, 3, 2, 3, 3, 2, 3, 3, 3, 2, 3, 3, 3, 3, 3, 3, 2, 2, 3, 2, 2, 3, 3, 2, 2, 3, 2, 2, 3, 3, 2, 2, 3, 3, 2, 2, 3, 3, 3, 2, 2, 2, 1, 1, 2, 2, 2, 2, 2, 1, 3, 3, 3, 2, 3, 2, 3, 2, 3, 3, 2, 2, 3, 3, 2],
+  "hook": 6,
+  "hook_cards": 2,
+  "hook_biggest": true,
+  "allow": [],
+  "cta": [61, 62, 63, 64],
+  "base": {"normal": 96, "big": 118, "gold": 118},
+  "cards": {"0": {"style": "hook", "text": "الأرض وقفت!", "fs": 200, "x": 540, "maxW": 950}, "1": {"style": "hook", "text": "ثانية واحدة بس؟", "br": 2, "fs": 140, "x": 540, "maxW": 900},
+            "2": {"br": 2}, "7": {"br": 1}, "26": {"br": 2}, "29": {"br": 1}, "30": {"br": 2}, "34": {"br": 1}, "44": {"style": "big", "fs": 122}, "50": {"style": "big"}, "61": {"style": "big"}, "62": {"style": "big"}, "63": {"style": "big", "br": 1}, "64": {"style": "big", "br": 1}},
+  "w100": [602, 528.1, 631.7, 646.2, 715.4, 754.1, 647.6, 797.1, 730.5, 709.7, 620.8, 730.5, 657.3, 675.8, 810.7, 674.2, 837.1, 531.9, 613.8, 581.2, 538.8, 508, 579.6, 791.1, 570.9, 626.1, 447.5, 447.4, 547.6, 566, 588.7, 621.8, 427.5, 802.6, 621.1, 632.8, 720, 823.3, 441.7, 749.4, 470.7, 575, 559.3, 301.7, 72.3, 565.6, 437.6, 538.2, 650.5, 492, 310.2, 701.4, 762.2, 747.9, 580.1, 715.7, 470.1, 569.6, 818, 697.5, 773.9, 361.1, 392.4, 570.9, 644.7, 724.9]
+}

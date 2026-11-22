@@ -185,7 +185,26 @@ The price was checked first with `estimate_only` (1,116.89 credits, nothing char
 **Video 10 v2 (re-paced): 0 credits.** The same voice take was re-edited in code (`tools/pace.py`: natural sentence/comma gaps,
 0.8 s mystery pause, one sentence cut) and the same visuals were re-synced. No new voice, Scribe or pictures.
 
-## Grand total (library + videos 01–10): 13,569 credits
+## Video 11: what if the Earth stopped for one second (لو الأرض وقفت ثانية)
+
+Flow "Elfahman 11 Earth stops" (`nmE5Z13tvbn1ESboXJzI`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), 1 take, 68.2 s, script without the [وقفة غموض] marker; tashkeel on `بتلِفّ` (x2) and `بتبطّأ`; an inline `[relaxed, unhurried storytelling]` tag after the hook (eleven_v4 on this connector has no speed setting, so the requested 0.95 speed was asked for with the tag; nothing was slowed or stretched afterwards) | | a1tg7VuqJs2D3IydN1gd | 941 |
+| Word timing: Scribe v1 | | ewoByaHO4LRyOksZYQl0 | 0 |
+| Pause edit: the same take at 1.0x (`tools/pace.py`, per-gap `--set` from `tools/pacecheck.py` measurements): sentence gaps 0.38–0.40 s, comma gaps 0.18 s, 0.8 s mystery pause, hook and "استنى ده الغريب جاي!" straight through, 0.4 s after the last word (68.2 s -> 65.1 s) | no new generation | – | 0 |
+| Picture: Earth globe (Africa/Europe/Egypt facing), magenta background, keyed | gpt-image-2.5-sunburst, 1K, high, 1:1, 1 generation | eOAMBpnJEK0ZduP4HrUy | 337 |
+| Picture: one huge curling ocean wave, magenta background, keyed | gpt-image-2.5-sunburst, 1K, high, 1:1, 1 generation | Aq10177FnEKCXhxGfxZb | 337 |
+| Picture: sauropod dinosaur silhouette, magenta background, keyed | gpt-image-2.5-sunburst, 1K, high, 1:1, 1 generation | DLZCtzFVAlEwKFJwojhY | 337 |
+| Music: curious bed, record scratch on "استنى", held low note in the mystery pause, shimmer for the slow-down part, resolves on "الفهمان" (`tools/curious_bed.py`) | | – | 0 |
+| Sound effects: brake/tyre screech, wind gust, wave crash synthesized in code (`tools/earth_sfx.py`) + the library | | – | 0 |
+| Drawn in code: speed arcs, the speedometer 1670 -> 1450 km/h, equator line and Egypt pin, the plane race, air/sea/house/person riding the Earth, the STOP sign and brake, people and cars thrown east, wind lines, bending trees, the hurricane, the city flooded, the 1-second stopwatch, the question mark, the huge red "لأ", the empty battery, the sunset rainbow slow-down board with the snail and the clock gaining a sliver, the prehistoric sunset and volcano, the "-½ ساعة" badge, the comment bubble | | – | 0 |
+| **Video 11 total** | | | **1,952** |
+
+Prices were checked first with `estimate_only` (voice 940.91, 3 pictures 1,012.34, Scribe 0), then each was run once.
+
+## Grand total (library + videos 01–11): 15,521 credits
 
 No picture or voice was regenerated. Video 02's hook line was a late script addition: only that line was generated
 (61 credits) and joined to the existing take, instead of a new full take (~640). Videos 03, 04, 05, 06, 07, 08, 09 and 10 used one voice take

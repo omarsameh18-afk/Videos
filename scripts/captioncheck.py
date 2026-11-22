@@ -24,7 +24,9 @@ ok = words == script and sum(sizes) == len(words)
 i = 0; fss = []
 for k, n in enumerate(sizes):
     g = words[i:i + n]; i += n
-    is_hook = k == 0 and hook and n == hook
+    if cards.get(str(k), {}).get('text'):   # a hook card showing its own text over these words (episode 11)
+        g = cards[str(k)]['text'].split(); n = len(g)
+    is_hook = k == 0 and hook and (n == hook or bool(cards.get('0', {}).get('text')))
     if k == 0 and caps.get('hook_cards', 1) == 2 and n > 4: flag_h = True; ok = False; print('   <-- hook caption 1 has more than 4 words')
     flag = '' if 1 <= n <= 3 or is_hook else '   (allowed exception: more than 3 words)' if k in allow else '   <-- more than 3 words'
     if flag and k not in allow: ok = False

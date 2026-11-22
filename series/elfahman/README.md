@@ -229,3 +229,31 @@ The pacing rule changed after episode 10: relaxed and natural, never rushed, nev
 - `--cut a:b` drops a whole sentence (its words and gaps); the boundary that remains gets a sentence gap. Write `script_v2.txt`
   without it, then `timing.py`, a new captions file (drop that sentence's cards) and the episode code with the word indices shifted.
 - Body pace for episode 10 v2: 2.62 words/s (target 2.5–2.8).
+
+## "What if" science episodes with generated props (from episode 11, `Earth.tsx`)
+
+Episode 11 ("لو الأرض وقفت ثانية") follows the relaxed pacing rule, with 3 generated pictures (Earth, a wave, a dinosaur silhouette):
+
+- **Speed**: eleven_v4 on the connector has no speed setting (only stability / similarity). A slower read is asked for with an inline
+  tag after the hook (`[relaxed, unhurried storytelling]`); Scribe returns the tag's words (`[relaxed,`, `unhurried`, `storytelling]`),
+  so drop all three before `pace.py`. Never slow the audio afterwards.
+- **Pacing to a words/s target** (`tools/pacecheck.py`, new): `pace.py` now writes each edited gap's new position (`at`) into
+  `<scribe>.pauses.json`; `pacecheck.py <vo.mp3> <pauses.json> [--json out]` measures every gap as heard (silencedetect -40 dB, blips
+  under 70 ms merged), prints sentence / comma / mystery ranges, the longest silence outside the mystery pause, and flags any sentence
+  gap outside 0.35–0.5 s or comma gap outside 0.15–0.25 s. To land on a target, rerun `pace.py` with `--set b:len` per gap, where
+  len = old len − (measured − target) (episode 11: sentence target 0.385, comma 0.18, `--mid-max 0.12`; body pace 2.46 -> 2.52 words/s).
+- **Scribe drift**: near the end of a long sentence Scribe can be ~0.3 s late, so a real sentence gap gets matched to the boundary
+  before it (episode 11: the gap after "ده." was treated as "بالشكل|ده" and cut to 0.15 s). Check `pacecheck.py` output for a "mid"
+  gap that measures like a sentence gap, and fix it with `--set`.
+- **Hook cards with their own text**: a caption card may show text from the brief instead of the spoken words (`"text"` in
+  `<topic>.captions.json` cards; `captionsizes.mjs` measures it and `captioncheck.py` counts its words). Episode 11: card 0
+  "الأرض وقفت!" (fills the width, `maxW` 950) over the spoken hook words, card 1 "ثانية واحدة بس؟" (two lines) on "ثانية".
+  Keep a hook card's `maxW` <= 950: the caption pops to 1.1x for a moment.
+- **Generated props in SVG**: `useProps()` preloads the keyed PNGs once with `delayRender`, then `<image href>` draws them inside the
+  board (`EarthPic` rotates the globe; `Pic` places the wave / dinosaur by their bottom centre).
+- **Freeze on a word**: the hook globe spins at 360° / onset of "وقفت" so it stops upright exactly on the word; the loop scene runs
+  the same spin with `t - END`, reaching the frame-0 angle on the last frame.
+- Drawing kit added: `Gauge` (speedometer with a digital readout), `Plane`, `Car`, `House`, `Swirl` (air), `SeaWave`, `Tree` (bends
+  in the wind), the hurricane spiral, a flooding city, `Stopwatch` (one sweep = one second), `Clock` with an `extra` sliver, the STOP
+  octagon, a snail, a battery, `SpinArcs` (speed arcs around a spinning globe), `Stars`.
+- Sounds added (`tools/earth_sfx.py`, 0 credits): `earth/sfx/screech.wav`, `wind.wav`, `crash.wav`.
