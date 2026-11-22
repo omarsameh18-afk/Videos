@@ -56,7 +56,8 @@ export const AnimatedChartScene = z.object({
   props: z.object({
     kind: z.enum(['line', 'bar']).default('line'),
     xTicks: z.array(z.string()).min(2), // e.g. ["0", "1", ... "10"] (weeks)
-    xLabel: z.string().default(''),
+    xLabel: z.string().default('Weeks'),
+    yLabel: z.string().default('Level'),
     series: z
       .array(z.object({ label: z.string().min(1), color: Color, points: z.array(z.number().min(0).max(100)).min(2) }))
       .min(1)
@@ -154,7 +155,7 @@ export const Script = z.object({
     seed: z.number().int().default(1),
   }),
   voice: z.object({
-    voiceId: z.string().min(1),
+    voiceId: z.string().min(1).default('TX3LPaxmHKxFdv7VOQHJ'), // locked: see VOICE_LOCK in src/config.ts
     modelId: z.string().default('eleven_multilingual_v2'),
     // optional full voice-over; if given it must equal the scene narrations joined with spaces
     text: z.string().optional(),

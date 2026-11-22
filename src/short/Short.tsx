@@ -46,12 +46,12 @@ export const Short: React.FC<ShortProps> = (props) => {
           </Sequence>
         );
       })}
-      <Captions pages={pages} words={words} emphasis={emphasisWords} />
+      <Captions pages={pages} words={words} emphasis={emphasisWords} sceneType={script.scenes[Math.max(0, scenes.findLastIndex((t) => t.from <= frame))].type} />
       {scenes.map((t, i) => {
         const si = script.scenes[i].sourceIndex;
         return si === undefined ? null : (
           <Sequence key={`src${i}`} from={t.from} durationInFrames={t.durationInFrames}>
-            <SourceFooter label={script.meta.sources[si].label} />
+            <SourceFooter label={script.meta.sources[si].label} sceneType={script.scenes[i].type} />
           </Sequence>
         );
       })}

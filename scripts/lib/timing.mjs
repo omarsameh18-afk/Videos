@@ -81,21 +81,69 @@ export function sceneTimings(script, words, audioSec, fps, { leadFrames = 3, tai
   }));
 }
 
-/** Caption pages: <= maxWords words, never across a scene boundary, break after . ? ! */
-export function captionPages(words, scenes, { maxWords = 4 } = {}) {
-  const pages = [];
-  for (const sc of scenes) {
-    let page = [];
-    for (let i = sc.firstWord; i < sc.firstWord + sc.wordCount && i < words.length; i++) {
-      page.push(i);
-      const endOfSentence = /[.?!]$/.test(words[i].text);
-      const softBreak = /[,;:]$/.test(words[i].text) && page.length >= 2;
-      if (page.length >= maxWords || endOfSentence || softBreak) {
-        pages.push(page);
-        page = [];
+// words that must never END a caption chunk (they dangle: "A MOVE YOUR", "FROM A")
+export const DANGLING = new Set([
+  'a', 'an', 'the', 'your', 'my', 'our', 'their', 'his', 'her', 'its', 'to', 'of', 'from', 'in', 'on', 'at', 'for',
+  'with', 'and', 'but', 'or', 'nor', 'is', 'are', 'was', 'were', 'be', "it's", "that's", 'that', 'this',
+  'these', 'those', 'after', 'before', 'into', 'than', 'as', 'by', 'so', 'if', 'very', 'really', 'no', 'one',
+  'more', 'most', 'some', 'any', 'every', "isn't", "don't", "doesn't", 'can', 'will', 'would', 'should',
+  'means', 'mean', 'makes', 'make', 'gets', 'get',
+]);
+const PARTICLES = new Set(['in', 'up', 'to', 'on', 'off', 'out', 'down', 'over']);
+const bare = (w) => w.toLowerCase().replace(/[^a-z0-9']/g, '');
+const closes = (w) => /[.,;:?!]$/.test(w);
+
+/**
+ * CAPTION RULE: chunk by phrase/meaning, 1-3 words, never end on a dangling word, never across punctuation
+ * or a scene boundary. Dynamic programming over each punctuation-delimited segment.
+ */
+export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
+  const cost = (ch) => {
+    const last = ch[ch.length - 1];
+    const before = ch.length > 1 ? bare(ch[ch.length - 2]) : '';
+    // "kicked in", "used to", "showed up": a particle after a verb completes the phrase
+    const particle = PARTICLES.has(bare(last)) && /(ed|ing)$/.test(before);
+    let c = ch.length === 1 ? 5 : ch.length === 2 ? 0.6 : 0;
+    if (ch.join(' ').length > maxChars && ch.length > 1) c += 50;
+    if (!closes(last) && !particle && DANGLING.has(bare(last))) c += 20;
+    if (ch.length === 1 && DANGLING.has(bare(last))) c += 30;
+    return c;
+  };
+  const out = [];
+  let seg = [];
+  const flush = () => {
+    const n = seg.length;
+    const best = [0];
+    const prev = [0];
+    for (let i = 1; i <= n; i++) {
+      best[i] = Infinity;
+      for (let j = 1; j <= Math.min(maxWords, i); j++) {
+        const c = best[i - j] + cost(seg.slice(i - j, i).map((k) => texts[k]));
+        if (c < best[i]) {
+          best[i] = c;
+          prev[i] = j;
+        }
       }
     }
-    if (page.length) pages.push(page);
+    const chunks = [];
+    for (let i = n; i > 0; i -= prev[i]) chunks.unshift(seg.slice(i - prev[i], i));
+    out.push(...chunks);
+    seg = [];
+  };
+  texts.forEach((w, k) => {
+    seg.push(k);
+    if (/[.;:?!]$/.test(w) || (/,$/.test(w) && seg.length >= 2)) flush();
+  });
+  if (seg.length) flush();
+  return out;
+}
+
+/** Caption pages from phrase chunks, never across a scene boundary. */
+export function captionPages(words, scenes, opts = {}) {
+  const pages = [];
+  for (const sc of scenes) {
+    const idx = Array.from({ length: sc.wordCount }, (_, k) => sc.firstWord + k).filter((i) => i < words.length);
+    for (const ch of chunkWords(idx.map((i) => words[i].text), opts)) pages.push(ch.map((k) => idx[k]));
   }
   return pages.map((idx, p) => ({
     words: idx,

@@ -74,3 +74,23 @@ Self-review: `scripts/review-frames.sh <id> <frames...>` -> review/<id>/sheet.pn
 5. **Hook = visual interrupt on frame 1** (e.g. gauge needle slams to 0 + white flash + Max shocked) with the question text.
 
 Dev check for visuals not used in a Short: `VisualGallery` composition (review/visual-gallery.png).
+
+## v5 RULES (permanent)
+1. **Hook gauge:** the needle SLAMS from max to the target in < 0.4 s (lands on frame 6) with camera shake + a thud SFX,
+   then wobbles and settles. Max never covers the gauge (render check).
+2. **Captions by phrase:** 1-3 words with complete sense, chunked at punctuation; never end a chunk on a dangling word
+   ("A MOVE YOUR", "FROM A", "TO."). Verb particles stay with their verb ("kicked in", "used to").
+   Chunker: `chunkWords` in scripts/lib/timing.mjs.
+3. **No fake-science decoration:** background decoration is abstract (dots, lines, shapes) and never text.
+4. **Composition:** the main visual is big and fills the upper frame (972x1000 panel, ~52% of frame height,
+   full width); Max is a ~30%-tall reactor bottom-left (render fails under 27%); captions in the column beside his
+   head at ~65% height; source line under them. No empty bottom half.
+5. **No label that repeats the caption** (validator: a headline label whose words appear contiguously in the narration).
+6. **Charts have simple axis labels** (`xLabel` "Weeks", `yLabel` "Level"); schematic charts say "schematic" in the source line.
+7. **End card:** the loop line is the hero (huge); `@brainpump_us` small at the bottom; captions hidden on the end card.
+
+## US AUDIENCE RULES (permanent)
+- Max's voice is locked to ONE American male ElevenLabs voice: **Liam, voiceId `TX3LPaxmHKxFdv7VOQHJ`**
+  (`VOICE_LOCK` in src/config.ts; validator rejects any other voiceId).
+- US spelling; lbs / inches only. US gym slang is fine (leg day, PR, pre-workout).
+- Validator rejects "kg", "cm", "colour", "programme" and other UK/metric forms (config/usAudience.json, with the US replacement).

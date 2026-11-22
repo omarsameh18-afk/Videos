@@ -3,7 +3,7 @@ import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { Max, Key } from '../max/Max';
 import { ExpressionName } from '../max/expressions';
 import { PoseName } from '../max/poses';
-import { FEET_Y } from './geometry';
+import { feetYFor } from './geometry';
 import { punchAt } from './camera';
 import { ShortProps } from './types';
 
@@ -21,6 +21,7 @@ export const MaxLayer: React.FC<ShortProps> = ({ script, scenes, amplitude, char
   const move = si > 0 ? spring({ frame: frame - scenes[si].from, fps, config: { damping: 18, stiffness: 240 } }) : 1;
   const cx = lerp(prev.cx, cur.cx, move);
   const scale = lerp(prev.scale, cur.scale, move);
+  const feetY = lerp(feetYFor(script.scenes[Math.max(0, si - 1)].type), feetYFor(script.scenes[si].type), si > 0 ? move : 1);
   const zoom = 1 + (cur.maxZoom - 1) * punchAt(zoomKeys, frame, fps);
   const sway = Math.sin(frame / 38) * 0.7; // degrees, around the feet
   const enter = spring({ frame, fps, config: { damping: 14, stiffness: 240 } });
@@ -32,11 +33,11 @@ export const MaxLayer: React.FC<ShortProps> = ({ script, scenes, amplitude, char
       style={{
         position: 'absolute',
         left: cx - W / 2,
-        top: FEET_Y - 999 * s + (1 - enter) * 200,
+        top: feetY - 999 * s + (1 - enter) * 200,
         width: W,
         height: Hh,
         transformOrigin: '50% 99.9%',
-        transform: `rotate(${sway}deg) scaleX(${cur.flip ? -1 : 1})`,
+        transform: `rotate(${sway}deg) scaleX(${(si > 0 && move < 0.5 ? prev.flip : cur.flip) ? -1 : 1})`,
       }}
     >
       <Max

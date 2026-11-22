@@ -3,7 +3,6 @@ import { AbsoluteFill, useCurrentFrame, useVideoConfig } from 'remotion';
 import { C } from '../max/theme';
 import type { BackgroundName } from '../config';
 import { punchAt } from './camera';
-import { FONT_BODY } from './fonts';
 
 // VISUAL RULE 3: several backgrounds per Short (lab, gym floor, chalkboard). All zoom on camera punch-ins.
 
@@ -57,28 +56,21 @@ const Gym: React.FC<{ f: number }> = ({ f }) => (
   </AbsoluteFill>
 );
 
-const CHALK = ['F = m · a', 'ATP → ADP', 'MPS ↑', '∆ fibre', 'week 1 → 3', 'Σ volume'];
+// abstract chalk marks only (no text, no fake science)
 const Chalkboard: React.FC<{ f: number }> = ({ f }) => (
   <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 40%, #2C5240 0%, #1C3A2C 60%, #12271D 100%)' }}>
     <AbsoluteFill style={{ border: '26px solid #6B4A2B', boxShadow: 'inset 0 0 60px rgba(0,0,0,0.6)' }} />
-    {CHALK.map((t, i) => (
-      <div
-        key={i}
-        style={{
-          position: 'absolute',
-          left: 70 + ((i * 337) % 760),
-          top: 210 + i * 270 + Math.sin(f / 40 + i) * 4,
-          transform: `rotate(${(i % 2 ? -1 : 1) * 6}deg)`,
-          fontFamily: FONT_BODY,
-          fontStyle: 'italic',
-          fontWeight: 700,
-          fontSize: 54,
-          color: 'rgba(255,255,255,0.13)',
-        }}
-      >
-        {t}
-      </div>
-    ))}
+    <svg width={1080} height={1920} style={{ position: 'absolute', opacity: 0.14 }} fill="none" stroke="#fff" strokeLinecap="round">
+      {[[140, 300], [880, 520], [190, 1300], [860, 1650], [520, 1820]].map(([x, y], i) => (
+        <g key={i} transform={`translate(${x} ${y + Math.sin(f / 40 + i) * 4})`}>
+          <path d={`M -70 ${i % 2 ? 10 : -10} C -30 -40 30 40 70 ${i % 2 ? -10 : 10}`} strokeWidth={6} />
+          <circle cx={i % 2 ? 40 : -40} cy={50} r={10} strokeWidth={5} />
+        </g>
+      ))}
+      {Array.from({ length: 26 }, (_, i) => (
+        <circle key={`d${i}`} cx={(i * 211) % 1040 + 20} cy={(i * 467) % 1880 + 20} r={4} fill="#fff" stroke="none" />
+      ))}
+    </svg>
     <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 30% 70%, rgba(255,255,255,0.05) 0%, transparent 40%)' }} />
   </AbsoluteFill>
 );

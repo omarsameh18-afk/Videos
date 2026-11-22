@@ -4,7 +4,7 @@
 // - Max placement per scene + layout checks (no crop, no overlap with cards, >= 45% tall)
 import { readFileSync } from 'node:fs';
 import { sceneSentences } from './intents.mjs';
-import { placeMax, maxRect, unionBounds, overlaps, CARD_RECT, MARGIN, UI_RIGHT, FEET_Y, FRAME, MAX_ZOOM, VISUAL_TYPES, VIS_MAIN, VIS_LOW, HOOK_GAUGE, HOOK_TEXT } from '../../src/short/geometry.ts';
+import { placeMax, maxRectAt, feetYFor, maxMode, unionBounds, overlaps, CARD_RECT, MARGIN, FRAME, MAX_ZOOM, VIS_MAIN, HOOK_GAUGE, HOOK_TEXT, SIDE_CAPTION, END_TEXT } from '../../src/short/geometry.ts';
 import { chartMarkerFrame, GAUGE_SLAM, NUMBER_LAND } from '../../src/short/visualTiming.ts';
 import { BACKGROUNDS } from '../../src/config.ts';
 
@@ -50,17 +50,21 @@ export function buildPacing(script, scenes, words, fps) {
     const poses = [...new Set(t.sentences.map((s) => s.pose))];
     const b = unionBounds(poses.map((p) => BOUNDS[p]));
     t.placement = placeMax(sc.type, b);
-    const r = maxRect(t.placement, b, t.placement.maxZoom);
+    const feetY = feetYFor(sc.type);
+    const mode = maxMode(sc.type);
+    const r = maxRectAt(t.placement, b, feetY, t.placement.maxZoom);
     const at = `scene ${i} (${sc.type})`;
-    if (r.x < MARGIN.x - 0.5 || r.x + r.w > UI_RIGHT + 0.5 || r.y < MARGIN.y - 0.5) layoutErrors.push(`${at}: Max leaves the safe margin`);
+    if (r.x < MARGIN.x - 0.5 || r.x + r.w > FRAME.w - MARGIN.x + 0.5 || r.y < MARGIN.y - 0.5 || feetY > FRAME.h - MARGIN.y) layoutErrors.push(`${at}: Max leaves the 5% margin`);
     const card = CARD_RECT[sc.type];
     if (card && overlaps(r, card)) layoutErrors.push(`${at}: Max overlaps the card`);
-    const corner = VISUAL_TYPES.includes(sc.type);
-    if (corner && (overlaps(r, VIS_MAIN) || overlaps(r, VIS_LOW))) layoutErrors.push(`${at}: Max overlaps the visual`);
-    if (sc.type === 'Hook' && (r.y < HOOK_GAUGE.cy || overlaps(r, HOOK_TEXT))) layoutErrors.push(`${at}: Max overlaps the hook gauge/text`);
-    const big = !corner && sc.type !== 'Hook';
-    if (big && maxRect(t.placement, b).h < 0.45 * FRAME.h * 0.97) layoutErrors.push(`${at}: Max is only ${(maxRect(t.placement, b).h / FRAME.h * 100).toFixed(0)}% of frame height`);
-    if (r.y + r.h > FEET_Y + 12) layoutErrors.push(`${at}: Max reaches into the caption band`);
+    if (mode === 'reactor') {
+      const visual = sc.type === 'Hook' ? [HOOK_TEXT, { x: HOOK_GAUGE.cx - HOOK_GAUGE.r - 80, y: HOOK_GAUGE.cy - HOOK_GAUGE.r - 80, w: 2 * HOOK_GAUGE.r + 160, h: HOOK_GAUGE.r + 120 }] : [VIS_MAIN];
+      if (visual.some((v) => overlaps(r, v))) layoutErrors.push(`${at}: Max overlaps the visual`);
+      if (overlaps(r, SIDE_CAPTION)) layoutErrors.push(`${at}: Max overlaps the caption column`);
+      const hh = maxRectAt(t.placement, b, feetY).h / FRAME.h;
+      if (hh < 0.27) layoutErrors.push(`${at}: Max reactor is only ${(hh * 100).toFixed(0)}% tall (want ~30%)`);
+    }
+    if (mode === 'end' && overlaps(r, END_TEXT)) layoutErrors.push(`${at}: Max overlaps the end-card text`);
 
     // emphasis words: shake + caption accent
     const emph = new Set(sc.emphasis.map(norm));
@@ -96,7 +100,7 @@ export function buildPacing(script, scenes, words, fps) {
     if (sc.type === 'BigNumber') beats.push(NUMBER_LAND);
     for (const bt of beats) {
       changes.push({ frame: t.from + bt, kind: 'card' });
-      sfx.push({ t: (t.from + bt) / fps, sfx: 'pop' });
+      sfx.push({ t: (t.from + bt) / fps, sfx: bt === GAUGE_SLAM && ((sc.type === 'Hook' && sc.props.gauge) || sc.type === 'Gauge') ? 'thud' : 'pop' });
     }
   });
   const bgs = new Set(scenes.map((t) => t.background));

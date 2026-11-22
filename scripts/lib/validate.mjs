@@ -2,8 +2,18 @@
 import { readFileSync } from 'node:fs';
 import { Script, narrationText } from '../../src/schema/script.ts';
 import { intentErrors } from './intents.mjs';
-import { VISUAL_TEXT } from '../../src/config.ts';
-import { VIS_MAIN, VIS_LOW, HOOK_TEXT } from '../../src/short/geometry.ts';
+import { VISUAL_TEXT, VOICE_LOCK } from '../../src/config.ts';
+import { VIS_MAIN, HOOK_TEXT } from '../../src/short/geometry.ts';
+
+const us = JSON.parse(readFileSync(new URL('../../config/usAudience.json', import.meta.url), 'utf8'));
+const bareW = (w) => w.toLowerCase().replace(/[^a-z0-9']/g, '');
+// label repeats the caption: all of its words appear, in order and adjacent, in the narration
+const repeats = (label, narration) => {
+  const l = label.replace(/=/g, ' ').split(/\s+/).map(bareW).filter(Boolean);
+  const n = narration.split(/\s+/).map(bareW).filter(Boolean);
+  for (let i = 0; i + l.length <= n.length; i++) if (l.every((w, k) => n[i + k] === w)) return true;
+  return false;
+};
 
 // VISUAL RULE 4: visual text <= 4 words and fits on one line at >= 64px (Anton ~0.47em per char)
 const fits = (text, width) => text.length * 0.47 * VISUAL_TEXT.minPx <= width;
@@ -35,10 +45,12 @@ export function validateScript(raw) {
     const at = `scenes[${i}] (${sc.type})`;
     texts.push([`${at}.narration`, sc.narration]);
     sc.onScreenText.forEach((l, j) => texts.push([`${at}.onScreenText[${j}]`, l]));
-    for (const [k, v] of Object.entries(sc.props)) {
-      if (typeof v === 'string') texts.push([`${at}.props.${k}`, v]);
-      if (Array.isArray(v)) v.forEach((x, j) => typeof x === 'string' && texts.push([`${at}.props.${k}[${j}]`, x]));
-    }
+    const walk = (v, path) => {
+      if (typeof v === 'string') texts.push([path, v]);
+      else if (Array.isArray(v)) v.forEach((x, j) => walk(x, `${path}[${j}]`));
+      else if (v && typeof v === 'object') for (const [k, x] of Object.entries(v)) walk(x, `${path}.${k}`);
+    };
+    walk(sc.props, `${at}.props`);
 
     // on-screen lines: max 6 words
     const lines = [...sc.onScreenText];
@@ -59,17 +71,26 @@ export function validateScript(raw) {
     if (sc.type === 'Gauge') vis.push([sc.props.label, 520]);
     if (sc.type === 'AnimatedChart') {
       sc.props.series.forEach((x) => vis.push([x.label, VIS_MAIN.w / 2 - 40]));
-      if (sc.props.marker) vis.push([sc.props.marker.label, VIS_LOW.w]);
-      if (sc.props.xLabel) vis.push([sc.props.xLabel, VIS_LOW.w]);
+      if (sc.props.marker) vis.push([sc.props.marker.label, 560]);
+      vis.push([sc.props.xLabel, 700], [sc.props.yLabel, 600]);
       if (sc.props.marker && sc.props.marker.at >= sc.props.xTicks.length) errors.push(`${at}: marker.at is past the last x tick`);
       sc.props.series.forEach((x) => x.points.length !== sc.props.xTicks.length && errors.push(`${at}: series "${x.label}" needs ${sc.props.xTicks.length} points`));
     }
-    if (sc.type === 'MuscleZoom') sc.props.steps.forEach((x) => vis.push([x, VIS_LOW.w]));
+    if (sc.type === 'MuscleZoom') sc.props.steps.forEach((x) => vis.push([x, VIS_MAIN.w - 60]));
     if (sc.type === 'SplitVersus') [sc.props.wrong, sc.props.right].forEach((x) => x.split('=').forEach((p, k) => vis.push([(k ? '= ' : '') + p.trim(), (VIS_MAIN.w - 24) / 2 - 130])));
     if (sc.type === 'BigNumber') {
-      vis.push([sc.props.label, VIS_LOW.w]);
+      vis.push([sc.props.label, VIS_MAIN.w - 60]);
       if (words(sc.props.label).length > 3) errors.push(`${at}: BigNumber label must be <= 3 words`);
     }
+    // no on-screen label that just repeats the caption (headline-type labels; chart/gauge data labels exempt)
+    const headlines = [
+      ...(sc.type === 'Hook' ? sc.onScreenText : []),
+      ...(sc.type === 'MuscleZoom' ? sc.props.steps : []),
+      ...(sc.type === 'SplitVersus' ? [sc.props.wrong, sc.props.right] : []),
+      ...(sc.type === 'BigNumber' ? [sc.props.label] : []),
+      ...(sc.type === 'AnimatedChart' && sc.props.marker ? [sc.props.marker.label] : []),
+    ];
+    for (const h of headlines) if (repeats(h, sc.narration)) errors.push(`${at}: label "${h}" repeats the caption - drop the label or reword it`);
     for (const [text, w] of vis) {
       const n = words(text.replace(/=/g, ' ')).length;
       if (n > VISUAL_TEXT.maxWords) errors.push(`${at}: visual text "${text}" has ${n} words (max ${VISUAL_TEXT.maxWords})`);
@@ -80,7 +101,13 @@ export function validateScript(raw) {
 
   for (const [where, t] of texts) {
     for (const { w, re } of bannedRes) if (re.test(t)) errors.push(`${where}: banned word "${w}"`);
+    for (const w of t.split(/[\s/]+/)) {
+      const b = bareW(w);
+      if (us.banned[b]) errors.push(`${where}: "${w}" is not US style - use "${us.banned[b]}"`);
+      if (/^\d+(\.\d+)?(kg|cm|km|m)$/i.test(b)) errors.push(`${where}: "${w}" - US audience uses lbs/inches`);
+    }
   }
+  if (s.voice.voiceId !== VOICE_LOCK.voiceId) errors.push(`voice.voiceId must be the locked Max voice ${VOICE_LOCK.voiceId} (${VOICE_LOCK.name})`);
 
   if (s.scenes[0].type !== 'Hook') errors.push('scenes[0] must be a Hook');
   const hookSec = words(s.scenes[0].narration).length / (WORDS_PER_SEC * s.voice.speed);

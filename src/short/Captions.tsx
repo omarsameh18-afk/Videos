@@ -3,29 +3,32 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { C } from '../max/theme';
 import { FONT_BODY } from './fonts';
 import { CAPTION_H, CAPTION_Y, CONTENT } from './layout';
+import { maxMode, SIDE_CAPTION } from './geometry';
 import { CaptionPage, Word } from './types';
 
 // Word-by-word captions: one short page at a time, the spoken word highlighted in lime.
-export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis: number[] }> = ({ pages, words, emphasis }) => {
+export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis: number[]; sceneType: string }> = ({ pages, words, emphasis, sceneType }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
   const page = pages.find((p) => t >= p.start - 0.05 && t < p.end);
-  if (!page) return null;
+  const mode = maxMode(sceneType);
+  if (!page || mode === 'end') return null; // end card: the hero text is the caption
+  const box = mode === 'reactor' ? SIDE_CAPTION : { x: CONTENT.x, y: CAPTION_Y, w: CONTENT.width, h: CAPTION_H };
   const pageIn = spring({ frame: frame - Math.round(page.start * fps), fps, config: { damping: 14, stiffness: 260 } });
   return (
     <div
       style={{
         position: 'absolute',
-        left: CONTENT.x,
-        width: CONTENT.width,
-        top: CAPTION_Y,
-        height: CAPTION_H,
+        left: box.x,
+        width: box.w,
+        top: box.y,
+        height: box.h,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         flexWrap: 'wrap',
-        alignContent: 'flex-start',
+        alignContent: 'center',
         gap: '0 26px',
         transform: `scale(${interpolate(pageIn, [0, 1], [0.85, 1])})`,
       }}
@@ -41,7 +44,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
             style={{
               fontFamily: FONT_BODY,
               fontWeight: 900,
-              fontSize: 70,
+              fontSize: mode === 'reactor' ? 66 : 70,
               lineHeight: 1.12,
               textTransform: 'uppercase',
               // VISUAL RULE 4: lime only on the one key word

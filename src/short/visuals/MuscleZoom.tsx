@@ -1,7 +1,7 @@
 import React from 'react';
 import { Easing, interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { C } from '../../max/theme';
-import { VIS_LOW, VIS_MAIN } from '../geometry';
+import { VIS_MAIN } from '../geometry';
 import { VisualText } from './VisualText';
 
 const TEAR = { x: 470, y: 380 }; // tear cluster in muscle-art units (900 x 700)
@@ -27,7 +27,7 @@ export const MuscleZoomVisual: React.FC<{ steps: string[]; stepAt: number[]; mus
   return (
     <div style={{ position: 'absolute', inset: 0 }}>
       <div style={{ position: 'absolute', left: VIS_MAIN.x, top: VIS_MAIN.y, width: VIS_MAIN.w, height: VIS_MAIN.h, borderRadius: 36, overflow: 'hidden', background: 'rgba(8,10,26,0.72)', border: '4px solid rgba(255,255,255,0.18)', opacity: enter, transform: `scale(${(0.85 + 0.15 * enter) * (1 + 0.03 * pulse)})` }}>
-        <svg width={VIS_MAIN.w} height={VIS_MAIN.h} viewBox="0 0 900 700">
+        <svg width={VIS_MAIN.w} height={VIS_MAIN.h - 170} viewBox="0 0 900 700">
           <defs>
             <filter id="tearGlow" x="-50%" y="-50%" width="200%" height="200%">
               <feGaussianBlur stdDeviation="9" result="b" />
@@ -64,8 +64,8 @@ export const MuscleZoomVisual: React.FC<{ steps: string[]; stepAt: number[]; mus
           </g>
         </svg>
       </div>
-      <div style={{ position: 'absolute', left: VIS_LOW.x, top: VIS_LOW.y, width: VIS_LOW.w, transform: `scale(${interpolate(stepPop, [0, 1], [0.5, 1])})`, transformOrigin: 'left center' }}>
-        <VisualText text={(steps[Math.min(step, steps.length - 1)] ?? '').toUpperCase()} width={VIS_LOW.w} max={120} color={step === 0 ? '#FFFFFF' : C.accent} style={{ textAlign: 'left' }} />
+      <div style={{ position: 'absolute', left: VIS_MAIN.x, top: VIS_MAIN.y + VIS_MAIN.h - 160, width: VIS_MAIN.w, transform: `scale(${interpolate(stepPop, [0, 1], [0.5, 1])})` }}>
+        <VisualText text={(steps[Math.min(step, steps.length - 1)] ?? '').toUpperCase()} width={VIS_MAIN.w - 60} max={120} color={step === 0 ? '#FFFFFF' : C.accent} style={{ margin: '0 auto' }} />
       </div>
     </div>
   );

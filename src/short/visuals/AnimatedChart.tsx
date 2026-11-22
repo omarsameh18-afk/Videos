@@ -2,7 +2,7 @@ import React from 'react';
 import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { C } from '../../max/theme';
 import { FONT_HEAD } from '../fonts';
-import { VIS_LOW, VIS_MAIN } from '../geometry';
+import { VIS_MAIN } from '../geometry';
 import { CHART } from '../visualTiming';
 import { VisualText } from './VisualText';
 
@@ -10,12 +10,12 @@ const COLORS: Record<string, string> = { lime: C.accent, pink: C.accent2, white:
 interface Series { label: string; color: string; points: number[] }
 
 // Line (or bar) chart that draws itself; series labels ride the line ends; optional marker.
-export const ChartVisual: React.FC<{ kind: 'line' | 'bar'; xTicks: string[]; xLabel: string; series: Series[]; marker?: { at: number; label: string }; duration: number; pulse: number }> = ({
-  kind, xTicks, xLabel, series, marker, duration, pulse,
+export const ChartVisual: React.FC<{ kind: 'line' | 'bar'; xTicks: string[]; xLabel: string; yLabel: string; series: Series[]; marker?: { at: number; label: string }; duration: number; pulse: number }> = ({
+  kind, xTicks, xLabel, yLabel, series, marker, duration, pulse,
 }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const P = { x: VIS_MAIN.x + 30, y: VIS_MAIN.y + 150, w: VIS_MAIN.w - 60, h: VIS_MAIN.h - 200 };
+  const P = { x: VIS_MAIN.x + 130, y: VIS_MAIN.y + 170, w: VIS_MAIN.w - 190, h: VIS_MAIN.h - 330 };
   const n = xTicks.length;
   const X = (i: number) => P.x + (i / (n - 1)) * P.w;
   const Y = (v: number) => P.y + P.h - (v / 100) * P.h;
@@ -49,14 +49,20 @@ export const ChartVisual: React.FC<{ kind: 'line' | 'bar'; xTicks: string[]; xLa
             });
           }
           const d = s.points.map((v, i) => `${i ? 'L' : 'M'} ${X(i)} ${Y(v)}`).join(' ');
+          // dash length must follow x-progress (not path length) so the line and its moving dot stay together
+          const seg = s.points.slice(1).map((v, i) => Math.hypot(X(i + 1) - X(i), Y(v) - Y(s.points[i])));
+          const total = seg.reduce((a, b) => a + b, 0);
+          const xi = p * (s.points.length - 1);
+          const full = Math.floor(xi);
+          const drawn = (seg.slice(0, full).reduce((a, b) => a + b, 0) + (full < seg.length ? seg[full] * (xi - full) : 0)) / total;
           const k = Math.min(s.points.length - 1, Math.floor(p * (s.points.length - 1)));
           const frac = p * (s.points.length - 1) - k;
           const hx = k < s.points.length - 1 ? X(k) + (X(k + 1) - X(k)) * frac : X(k);
           const hy = k < s.points.length - 1 ? Y(s.points[k]) + (Y(s.points[k + 1]) - Y(s.points[k])) * frac : Y(s.points[k]);
           return (
             <g key={si}>
-              <path d={d} pathLength={1} stroke="#0B0C1C" strokeWidth={26} fill="none" strokeDasharray={`${p} 1`} strokeLinecap="round" strokeLinejoin="round" />
-              <path d={d} pathLength={1} stroke={col} strokeWidth={14} fill="none" strokeDasharray={`${p} 1`} strokeLinecap="round" strokeLinejoin="round" />
+              <path d={d} pathLength={1} stroke="#0B0C1C" strokeWidth={26} fill="none" strokeDasharray={`${drawn} 1`} strokeLinecap="round" strokeLinejoin="round" />
+              <path d={d} pathLength={1} stroke={col} strokeWidth={14} fill="none" strokeDasharray={`${drawn} 1`} strokeLinecap="round" strokeLinejoin="round" />
               {p > 0 && <circle cx={hx} cy={hy} r={18} fill={col} stroke="#0B0C1C" strokeWidth={6} />}
             </g>
           );
@@ -68,15 +74,19 @@ export const ChartVisual: React.FC<{ kind: 'line' | 'bar'; xTicks: string[]; xLa
           {s.label.toUpperCase()}
         </div>
       ))}
-      {/* marker label + x label in the lower-left label area */}
-      <div style={{ position: 'absolute', left: VIS_LOW.x, top: VIS_LOW.y, width: VIS_LOW.w }}>
-        {marker && markerOn && (
-          <div style={{ transform: `scale(${interpolate(markerT, [0, 1], [0.4, 1])})`, transformOrigin: 'left center' }}>
-            <VisualText text={marker.label.toUpperCase()} width={VIS_LOW.w} max={120} color="#FFC23D" style={{ textAlign: 'left' }} />
-          </div>
-        )}
-        {xLabel && !markerOn && <VisualText text={xLabel.toUpperCase()} width={VIS_LOW.w} max={80} color="#C9D0FF" style={{ textAlign: 'left' }} />}
+      {/* axis labels */}
+      <div style={{ position: 'absolute', left: P.x, width: P.w, top: P.y + P.h + 34, opacity: axisIn }}>
+        <VisualText text={(xLabel || 'Weeks').toUpperCase()} width={P.w} max={72} color="#C9D0FF" />
       </div>
+      <div style={{ position: 'absolute', left: VIS_MAIN.x + 72 - P.h / 2, top: P.y + P.h / 2 - 40, width: P.h, transform: 'rotate(-90deg)', opacity: axisIn }}>
+        <VisualText text={(yLabel || 'Level').toUpperCase()} width={P.h} max={72} color="#C9D0FF" />
+      </div>
+      {/* marker label beside the top of the marker line */}
+      {marker && markerOn && (
+        <div style={{ position: 'absolute', left: X(marker.at) + 22, top: P.y + 6, transform: `scale(${interpolate(markerT, [0, 1], [0.4, 1])})`, transformOrigin: 'left center' }}>
+          <VisualText text={marker.label.toUpperCase()} width={P.x + P.w - X(marker.at) - 30} max={110} color="#FFC23D" style={{ textAlign: 'left' }} />
+        </div>
+      )}
     </div>
   );
 };

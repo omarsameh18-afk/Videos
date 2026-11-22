@@ -56,6 +56,18 @@ function pop(sec = 0.11) {
   return out;
 }
 
+// thud: low impact for a needle slam
+function thud(sec = 0.35) {
+  const n = Math.floor(sec * SR), out = new Float32Array(n), f = svf();
+  let ph = 0;
+  for (let i = 0; i < n; i++) {
+    const t = i / SR;
+    ph += (2 * Math.PI * (48 + 90 * Math.exp(-t * 30))) / SR;
+    out[i] = Math.sin(ph) * Math.exp(-t * 11) + f(rnd(), 900, 0.8).low * Math.exp(-t * 40) * 0.8;
+  }
+  return out;
+}
+
 // music bed: 112 BPM, 8 bars, Am-F-C-G; kick, offbeat hats, bass, soft pad
 function bed() {
   const bpm = 112, beat = 60 / bpm, bars = 8, n = Math.floor(bars * 4 * beat * SR);
@@ -90,5 +102,6 @@ function bed() {
 mkdirSync('assets/audio', { recursive: true });
 wav('assets/audio/whoosh.wav', whoosh());
 wav('assets/audio/pop.wav', pop());
+wav('assets/audio/thud.wav', thud());
 wav('assets/audio/music-bed.wav', bed());
-console.log('assets/audio: whoosh.wav pop.wav music-bed.wav');
+console.log('assets/audio: whoosh.wav pop.wav thud.wav music-bed.wav');

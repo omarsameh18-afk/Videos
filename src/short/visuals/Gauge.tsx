@@ -2,6 +2,7 @@ import React from 'react';
 import { spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { C } from '../../max/theme';
 import { FONT_HEAD } from '../fonts';
+import { GAUGE_SLAM } from '../visualTiming';
 
 // Big meter; the needle slams from `from` to `to` (0-100) and settles with a bounce.
 export const GaugeDial: React.FC<{ label: string; from: number; to: number; cx: number; cy: number; r: number; start?: number; pulse?: number }> = ({
@@ -9,8 +10,11 @@ export const GaugeDial: React.FC<{ label: string; from: number; to: number; cx: 
 }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const t = spring({ frame: f - start, fps, config: { damping: 7, stiffness: 260, mass: 0.7 } });
-  const v = Math.max(-4, from + (to - from) * t); // can kick slightly past the stop
+  // SLAM: max -> target in < 0.4 s (stiff spring), then a decaying wobble around the target
+  const t = spring({ frame: f - start, fps, config: { damping: 9, stiffness: 520, mass: 0.6 } });
+  const since = Math.max(0, f - start - GAUGE_SLAM) / fps;
+  const wobble = f - start > GAUGE_SLAM ? Math.sin(since * 22) * 7 * Math.exp(-since * 2.2) : 0;
+  const v = Math.max(-5, from + (to - from) * t + Math.abs(wobble));
   const ang = Math.PI - (v / 100) * Math.PI; // 0 -> left, 100 -> right
   const zones = [
     { a: 0, b: 33, c: '#FF2E4D' },
@@ -23,7 +27,8 @@ export const GaugeDial: React.FC<{ label: string; from: number; to: number; cx: 
     const [x2, y2] = pt(b, rr);
     return `M ${x1} ${y1} A ${rr} ${rr} 0 0 1 ${x2} ${y2}`;
   };
-  const shake = f - start < 14 && f >= start + 5 ? Math.sin(f * 2.7) * (14 - (f - start)) * 1.2 : 0;
+  const k = f - start - GAUGE_SLAM;
+  const shake = k >= 0 && k < 12 ? Math.sin(f * 2.9) * (12 - k) * 2.2 : 0;
   return (
     <svg width={1080} height={1920} style={{ position: 'absolute', left: 0, top: 0, overflow: 'visible' }}>
       <g transform={`translate(${shake} 0) translate(${cx} ${cy}) scale(${1 + 0.04 * pulse}) translate(${-cx} ${-cy})`}>
@@ -36,7 +41,7 @@ export const GaugeDial: React.FC<{ label: string; from: number; to: number; cx: 
           const [x2, y2] = pt(i * 10, r - (i % 5 === 0 ? 92 : 72));
           return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#fff" strokeWidth={i % 5 === 0 ? 10 : 6} strokeLinecap="round" />;
         })}
-        <text x={cx} y={cy - r * 0.38} textAnchor="middle" fontFamily={FONT_HEAD} fontSize={80} fill="#fff" stroke="#0B0C1C" strokeWidth={10} paintOrder="stroke">
+        <text x={cx} y={cy - r * 0.38} textAnchor="middle" fontFamily={FONT_HEAD} fontSize={Math.round(r * 0.2)} fill="#fff" stroke="#0B0C1C" strokeWidth={10} paintOrder="stroke">
           {label.toUpperCase()}
         </text>
         <g transform={`rotate(${(-ang * 180) / Math.PI} ${cx} ${cy})`}>

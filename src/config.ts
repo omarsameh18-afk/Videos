@@ -5,6 +5,9 @@ export const CHANNEL = {
   catchphrase: 'Pump your brain.',
 };
 
+// US AUDIENCE RULE: Max's voice is locked to ONE American male ElevenLabs voice.
+export const VOICE_LOCK = { voiceId: 'TX3LPaxmHKxFdv7VOQHJ', name: 'Liam (ElevenLabs premade, young American male)' };
+
 export const CHARACTER = {
   name: 'Max',
   // Max never says/shows doctor, scientist, coach or PT and never gives medical advice.

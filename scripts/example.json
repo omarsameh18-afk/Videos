@@ -26,7 +26,7 @@
       "narration": "No soreness after training means no gains, right?",
       "onScreenText": ["No soreness = no gains?"],
       "emphasis": ["gains"],
-      "props": { "gauge": { "label": "Soreness", "from": 92, "to": 0 } }
+      "props": { "gauge": { "label": "Soreness", "from": 100, "to": 0 } }
     },
     {
       "type": "MuscleZoom",
@@ -39,7 +39,7 @@
         { "atSentence": 2, "intent": "myth" }
       ],
       "emphasis": ["damage"],
-      "props": { "muscle": "biceps", "steps": ["Wrong!", "Sore = new move", "Not growth"] }
+      "props": { "muscle": "biceps", "steps": ["Myth busted", "Sore = new move", "Not growth"] }
     },
     {
       "type": "AnimatedChart",
@@ -52,6 +52,7 @@
         "kind": "line",
         "xTicks": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
         "xLabel": "Weeks",
+        "yLabel": "Level",
         "series": [
           { "label": "Soreness", "color": "pink", "points": [70, 95, 55, 22, 10, 6, 5, 4, 4, 3, 3] },
           { "label": "Growth", "color": "lime", "points": [0, 1, 2, 3, 10, 20, 31, 42, 54, 66, 78] }

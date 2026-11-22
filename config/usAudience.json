@@ -1,0 +1,11 @@
+{
+  "note": "US audience: US spelling, lbs/inches only. US gym slang is fine (leg day, PR, pre-workout).",
+  "banned": {
+    "kg": "lbs", "kgs": "lbs", "kilo": "lbs", "kilos": "lbs", "kilogram": "pounds", "kilograms": "pounds",
+    "cm": "inches", "centimetre": "inches", "centimetres": "inches", "centimeter": "inches", "centimeters": "inches",
+    "metre": "feet", "metres": "feet",
+    "colour": "color", "colours": "colors", "programme": "program", "programmes": "programs",
+    "centre": "center", "fibre": "fiber", "fibres": "fibers", "litre": "liter", "favourite": "favorite",
+    "behaviour": "behavior", "optimise": "optimize", "optimised": "optimized"
+  }
+}
