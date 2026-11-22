@@ -6,7 +6,7 @@ import { CAPTION_H, CAPTION_Y, CONTENT } from './layout';
 import { CaptionPage, Word } from './types';
 
 // Word-by-word captions: one short page at a time, the spoken word highlighted in lime.
-export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[] }> = ({ pages, words }) => {
+export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis: number[] }> = ({ pages, words, emphasis }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
@@ -25,7 +25,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[] }> = ({ pa
         alignItems: 'center',
         justifyContent: 'center',
         flexWrap: 'wrap',
-        alignContent: 'flex-end',
+        alignContent: 'flex-start',
         gap: '0 22px',
         transform: `scale(${interpolate(pageIn, [0, 1], [0.85, 1])})`,
       }}
@@ -44,7 +44,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[] }> = ({ pa
               fontSize: 70,
               lineHeight: 1.12,
               textTransform: 'uppercase',
-              color: active ? C.accent : '#FFFFFF',
+              color: active ? (emphasis.includes(wi) ? C.accent2 : C.accent) : '#FFFFFF',
               opacity: said ? 1 : 0.55,
               WebkitTextStroke: '14px #0B0C1C',
               paintOrder: 'stroke fill',

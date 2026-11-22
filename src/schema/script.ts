@@ -16,6 +16,12 @@ const SceneBase = {
   pose: z.enum(POSES).default('idle'),
   onScreenText: z.array(Line).default([]), // one entry per line
   sourceIndex: z.number().int().min(0).optional(), // -> meta.sources[i], shown as a source footer
+  // mid-scene changes, keyed to a word of this scene's narration (0-based)
+  moves: z
+    .array(z.object({ atWord: z.number().int().min(0), expression: z.enum(EXPRESSIONS).optional(), pose: z.enum(POSES).optional() }))
+    .default([]),
+  // key words: camera shake + caption accent when spoken
+  emphasis: z.array(z.string()).default([]),
 };
 
 export const HookScene = z.object({
@@ -77,6 +83,7 @@ export const Script = z.object({
     topic: z.string().min(1),
     sources: z.array(Source).min(1, 'at least one source is required'),
     variant: z.string().optional(),
+    targetSec: z.tuple([z.number(), z.number()]).optional(), // allowed final length [min, max]
     seed: z.number().int().default(1),
   }),
   voice: z.object({
@@ -84,6 +91,8 @@ export const Script = z.object({
     modelId: z.string().default('eleven_multilingual_v2'),
     // optional full voice-over; if given it must equal the scene narrations joined with spaces
     text: z.string().optional(),
+    speed: z.number().min(0.8).max(1.3).default(1.1), // tempo change, pitch kept
+    maxGapSec: z.number().min(0).default(0.15), // silences between words are cut down to this
   }),
   scenes: z.array(Scene).min(2),
 });

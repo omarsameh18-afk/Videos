@@ -1,18 +1,21 @@
 // npm run render -- <script.json> [audio.mp3]
-// - validates the script
-// - voice: given MP3 (+ <name>.timestamps.json next to it), else ElevenLabs TTS with timestamps (cached)
-// - times scenes from the audio, builds captions, renders out/<id>.mp4
+// 1 validate  2 voice (+timestamps next to the MP3)  3 tighten voice (gaps <= maxGap, speed)
+// 4 time scenes + pacing events  5 mix music/SFX to -14 LUFS  6 render out/<id>.mp4
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
-import { basename } from 'node:path';
 import { validateScript, HOOK_MAX_SEC } from './lib/validate.mjs';
 import { synthesize } from './lib/tts.mjs';
 import { computeAmplitude } from './lib/amplitude.mjs';
 import { alignmentToWords, captionPages, sceneTimings } from './lib/timing.mjs';
+import { editVoice } from './lib/voiceEdit.mjs';
+import { buildPacing, MAX_GAP_SEC } from './lib/pacing.mjs';
+import { mixAudio, measureLufs } from './lib/mix.mjs';
 import { narrationText } from '../src/schema/script.ts';
 
 const FPS = 30;
 const MAX_SEC = 60;
+const OUTRO_MAX_SEC = 1.5;
+const problems = [];
 const die = (m) => {
   console.error(`✗ ${m}`);
   process.exit(1);
@@ -28,7 +31,7 @@ const script = v.script;
 const id = script.meta.id;
 console.log(`✓ script valid: ${id}`);
 
-// 2. voice + timestamps (saved next to the MP3 in voice/)
+// 2. raw voice + timestamps (kept next to the MP3 in voice/)
 mkdirSync('voice', { recursive: true });
 let mp3;
 let tsFile;
@@ -47,43 +50,57 @@ if (audioArg) {
 const ts = JSON.parse(readFileSync(tsFile, 'utf8'));
 if (ts.text && ts.text.trim() !== narrationText(script)) console.warn('warning: timestamps text differs from the script narration');
 
-// 3. timing
-const { amplitude, durationSec } = computeAmplitude(mp3, FPS);
-const words = alignmentToWords(ts.alignment);
-const scenes = sceneTimings(script, words, durationSec, FPS);
-for (const t of scenes) {
-  const ws = words.slice(t.firstWord, t.firstWord + t.wordCount);
-  t.beats = ws
-    .map((w, k) => (k === 0 || /[.?!]$/.test(ws[k - 1].text) ? Math.max(0, Math.round(w.start * FPS) - t.from) : null))
-    .filter((b) => b !== null);
-  t.beats[0] = 0;
-}
+// 3. tighten the voice
+mkdirSync('.cache/edit', { recursive: true });
+const voiceWav = `.cache/edit/${id}.voice.wav`;
+const ed = editVoice(mp3, ts.alignment, voiceWav, { maxGap: script.voice.maxGapSec, speed: script.voice.speed });
+writeFileSync(`.cache/edit/${id}.timestamps.json`, JSON.stringify({ alignment: ed.alignment }));
+console.log(`✓ voice tightened: ${ed.sourceSec.toFixed(2)}s -> ${ed.editedSec.toFixed(2)}s (cut ${ed.removedSec.toFixed(2)}s of silence, x${script.voice.speed})`);
+
+// 4. timing + pacing
+const { amplitude, durationSec } = computeAmplitude(voiceWav, FPS);
+const words = alignmentToWords(ed.alignment);
+const scenes = sceneTimings(script, words, durationSec, FPS, { tailSec: 0.12, leadFrames: 2 });
+const pacing = buildPacing(script, scenes, words, FPS);
 const pages = captionPages(words, scenes, { maxWords: 3 });
-const chars = ts.alignment.characters.map((c, i) => ({
+const chars = ed.alignment.characters.map((c, i) => ({
   char: c,
-  start: ts.alignment.character_start_times_seconds[i],
-  end: ts.alignment.character_end_times_seconds[i],
+  start: ed.alignment.character_start_times_seconds[i],
+  end: ed.alignment.character_end_times_seconds[i],
 }));
 const durationInFrames = scenes.at(-1).from + scenes.at(-1).durationInFrames;
+const durSec = durationInFrames / FPS;
 
 const hook = scenes[0];
 const hookSec = words[hook.firstWord + hook.wordCount - 1].end;
-if (hookSec > HOOK_MAX_SEC) die(`hook narration lasts ${hookSec.toFixed(2)}s (max ${HOOK_MAX_SEC}s)`);
-if (durationInFrames / FPS > MAX_SEC) die(`video is ${(durationInFrames / FPS).toFixed(1)}s (max ${MAX_SEC}s)`);
-console.log(`✓ ${scenes.length} scenes, ${words.length} words, ${(durationInFrames / FPS).toFixed(2)}s, hook ${hookSec.toFixed(2)}s`);
+const outroSec = scenes.at(-1).durationInFrames / FPS;
+if (hookSec > HOOK_MAX_SEC) problems.push(`hook narration lasts ${hookSec.toFixed(2)}s (max ${HOOK_MAX_SEC}s)`);
+if (script.scenes.at(-1).type === 'Outro' && outroSec > OUTRO_MAX_SEC) problems.push(`outro lasts ${outroSec.toFixed(2)}s (max ${OUTRO_MAX_SEC}s)`);
+if (pacing.longestGapSec > MAX_GAP_SEC + 1e-6) problems.push(`longest gap without a visual change ${pacing.longestGapSec.toFixed(2)}s (max ${MAX_GAP_SEC}s)`);
+if (durSec > MAX_SEC) problems.push(`video is ${durSec.toFixed(1)}s (max ${MAX_SEC}s)`);
+const tgt = script.meta.targetSec;
+if (tgt && (durSec < tgt[0] || durSec > tgt[1])) problems.push(`video is ${durSec.toFixed(2)}s, target ${tgt[0]}-${tgt[1]}s`);
+console.log(
+  `✓ ${scenes.length} scenes, ${words.length} words, ${durSec.toFixed(2)}s, hook ${hookSec.toFixed(2)}s, outro ${outroSec.toFixed(2)}s, ` +
+    `${pacing.changes.length} visual changes, longest gap ${pacing.longestGapSec.toFixed(2)}s`,
+);
+if (problems.length) die(`pacing rules failed:\n  - ${problems.join('\n  - ')}`);
 
-// 4. render
+// 5. audio mix
 mkdirSync('public/renders', { recursive: true });
+const audioSrc = `renders/${id}.wav`;
+const mix = mixAudio({ voice: voiceWav, events: pacing.sfx, durSec, out: `public/${audioSrc}` });
+console.log(`✓ mix: voice ${mix.voiceLufs.toFixed(1)} LUFS, music ${mix.musicGainDb.toFixed(1)} dB, ${pacing.sfx.length} SFX, final ${mix.finalLufs.toFixed(1)} LUFS`);
+
+// 6. render
 mkdirSync('.cache/props', { recursive: true });
 mkdirSync('out', { recursive: true });
-const audioSrc = `renders/${id}.mp3`;
-copyFileSync(mp3, `public/${audioSrc}`);
 const propsFile = `.cache/props/${id}.json`;
-writeFileSync(propsFile, JSON.stringify({ script, audioSrc, durationInFrames, scenes, words, pages, chars, amplitude }));
+writeFileSync(propsFile, JSON.stringify({ script, audioSrc, durationInFrames, scenes, words, pages, chars, amplitude, ...pacing }));
 const out = `out/${id}.mp4`;
 const extra = process.env.FRAMES ? [`--frames=${process.env.FRAMES}`] : [];
-execFileSync('npx', ['remotion', 'render', 'src/index.ts', 'Short', out, `--props=${propsFile}`, ...extra], { stdio: 'inherit' });
+execFileSync('npx', ['remotion', 'render', 'src/index.ts', 'Short', out, `--props=${propsFile}`, ...extra], { stdio: ['ignore', 'ignore', 'inherit'] });
 
 const probe = execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'stream=codec_name,pix_fmt,width,height,r_frame_rate:format=duration', '-of', 'compact', out]).toString();
 console.log(probe.trim());
-console.log(`✓ ${out} (${basename(mp3)})`);
+if (!process.env.FRAMES) console.log(`✓ ${out}: ${measureLufs(out).toFixed(1)} LUFS`);

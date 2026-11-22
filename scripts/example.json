@@ -3,6 +3,7 @@
     "id": "myth-sore-to-grow",
     "title": "Myth: you need to feel sore to grow",
     "topic": "muscle soreness vs hypertrophy",
+    "targetSec": [12, 15],
     "sources": [
       {
         "label": "Schoenfeld & Contreras, 2013",
@@ -15,34 +16,43 @@
     ],
     "seed": 7
   },
-  "voice": { "voiceId": "TX3LPaxmHKxFdv7VOQHJ", "modelId": "eleven_multilingual_v2" },
+  "voice": { "voiceId": "TX3LPaxmHKxFdv7VOQHJ", "modelId": "eleven_multilingual_v2", "speed": 1.1, "maxGapSec": 0.15 },
   "scenes": [
     {
       "type": "Hook",
-      "narration": "Not sore? You still grew.",
-      "expression": "shocked",
-      "pose": "pointing",
-      "onScreenText": ["NOT SORE?", "YOU STILL GREW."]
+      "narration": "Not sore after training? Does that mean it didn't work?",
+      "expression": "thinking",
+      "pose": "fingerUp",
+      "onScreenText": ["SORE = GROWTH?"],
+      "moves": [{ "atWord": 4, "expression": "shocked", "pose": "facepalm" }],
+      "emphasis": ["didn't"]
     },
     {
       "type": "WrongVsRight",
-      "narration": "Soreness is just your muscle reacting to something new. It is not a growth meter.",
+      "narration": "Nope. Soreness just means the move was new to your muscle. It's not a growth meter.",
       "expression": "smug",
       "pose": "armsCrossed",
       "sourceIndex": 0,
+      "moves": [
+        { "atWord": 1, "expression": "neutral", "pose": "pointing" },
+        { "atWord": 11, "expression": "smug", "pose": "thumbsUp" }
+      ],
+      "emphasis": ["new", "not"],
       "props": { "wrong": "Sore = growth", "right": "Progress = growth" }
     },
     {
       "type": "StatCard",
-      "narration": "In one study, growth only tracked muscle building from week three, after the soreness faded.",
+      "narration": "One study: real growth only showed up after week three, once soreness faded.",
       "expression": "thinking",
       "pose": "fingerUp",
       "sourceIndex": 1,
-      "props": { "value": 3, "prefix": "WEEK ", "label": ["Growth tracked muscle building", "only after soreness faded"] }
+      "moves": [{ "atWord": 7, "expression": "smug", "pose": "flexing" }],
+      "emphasis": ["after"],
+      "props": { "value": 3, "prefix": "WEEK ", "label": ["Growth came AFTER soreness faded"] }
     },
     {
       "type": "Outro",
-      "narration": "Chase progress, not pain. Pump your brain.",
+      "narration": "So next time you're",
       "expression": "laughing",
       "pose": "thumbsUp"
     }

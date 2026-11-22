@@ -13,7 +13,7 @@ export const Hook: React.FC<SceneProps> = ({ scene }) => {
   const flash = interpolate(f, [0, 6], [0.5, 0], { extrapolateRight: 'clamp' });
   return (
     <AbsoluteFill>
-      <div style={{ position: 'absolute', left: CONTENT.x, width: CONTENT.width, top: CONTENT.top + 30, textAlign: 'center' }}>
+      <div style={{ position: 'absolute', left: CONTENT.x, width: CONTENT.width, top: CONTENT.top, textAlign: 'center' }}>
         {lines.map((l, i) => {
           const s = spring({ frame: f - i * 5, fps, config: { damping: 9, stiffness: 260 } });
           const shake = i === lines.length - 1 && f < 16 ? Math.sin(f * 2.4) * (16 - f) * 0.6 : 0;

@@ -5,7 +5,7 @@ import { Script, narrationText } from '../../src/schema/script.ts';
 const banned = JSON.parse(readFileSync(new URL('../../config/bannedWords.json', import.meta.url), 'utf8'));
 export const MAX_WORDS_PER_LINE = 6;
 export const HOOK_MAX_SEC = 3;
-export const WORDS_PER_SEC = 2.7; // pre-voice estimate; the real hook length is re-checked after TTS
+export const WORDS_PER_SEC = 3.2; // pre-voice estimate at 1.0x; the real hook length is re-checked after the voice edit
 
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const bannedRes = [
@@ -44,6 +44,10 @@ export function validateScript(raw) {
     if (sc.sourceIndex !== undefined && sc.sourceIndex >= s.meta.sources.length) {
       errors.push(`${at}: sourceIndex ${sc.sourceIndex} but only ${s.meta.sources.length} source(s)`);
     }
+    const n = words(sc.narration).length;
+    for (const m of sc.moves) if (m.atWord >= n) errors.push(`${at}: move atWord ${m.atWord} but narration has ${n} words`);
+    const said = words(sc.narration).map((w) => w.toLowerCase().replace(/[^a-z0-9']/g, ''));
+    for (const e of sc.emphasis) if (!said.includes(e.toLowerCase().replace(/[^a-z0-9']/g, ''))) errors.push(`${at}: emphasis word "${e}" is not in the narration`);
     if (sc.type === 'StatCard' && sc.sourceIndex === undefined) errors.push(`${at}: StatCard needs a sourceIndex`);
   });
 
@@ -52,7 +56,7 @@ export function validateScript(raw) {
   }
 
   if (s.scenes[0].type !== 'Hook') errors.push('scenes[0] must be a Hook');
-  const hookSec = words(s.scenes[0].narration).length / WORDS_PER_SEC;
+  const hookSec = words(s.scenes[0].narration).length / (WORDS_PER_SEC * s.voice.speed);
   if (s.scenes[0].type === 'Hook' && hookSec > HOOK_MAX_SEC) {
     errors.push(`scenes[0] (Hook): narration ~${hookSec.toFixed(1)}s, must be <= ${HOOK_MAX_SEC}s (shorten it)`);
   }

@@ -18,7 +18,7 @@ export const RemotionRoot: React.FC = () => (
       fps={VIDEO.fps}
       durationInFrames={1}
       calculateMetadata={calculateShortMetadata}
-      defaultProps={{ durationInFrames: 1, scenes: [], words: [], pages: [], chars: [], amplitude: [], audioSrc: '' } as unknown as ShortProps}
+      defaultProps={{ durationInFrames: 1, scenes: [], words: [], pages: [], chars: [], amplitude: [], audioSrc: '', exprKeys: [], poseKeys: [], zoomKeys: [], shakes: [], emphasisWords: [] } as unknown as ShortProps}
     />
     <Composition id="ProofSheet" component={ProofSheet} {...PROOF_SIZE} fps={VIDEO.fps} durationInFrames={1} />
     <Composition

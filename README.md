@@ -33,6 +33,11 @@ npm run render   -- scripts/example.json            # ElevenLabs TTS with timest
 npm run render   -- scripts/example.json voice/x.mp3  # use an existing MP3; needs voice/x.timestamps.json next to it
 npm run import-voice -- script.json voice/x.mp3 scribe-words.json  # word timings (ElevenLabs Scribe) -> timestamps JSON
 ```
+Render steps: validate -> voice (+timestamps next to the MP3) -> tighten voice (gaps <= `voice.maxGapSec`, tempo `voice.speed`)
+-> scene timing + pacing events (`scripts/lib/pacing.mjs`: a visual change every <= 1.5 s) -> mix (music bed ~20 dB under voice,
+whoosh/pop SFX on cuts/cards, -14 LUFS; `scripts/lib/mix.mjs`) -> render. SFX/music: `assets/audio/` (regenerate with
+`node scripts/make-audio-assets.mjs`, or drop in your own licensed files with the same names). Pacing rules: `docs/REVIEW.md`.
+
 Output: `out/<meta.id>.mp4` (1080x1920, 30 fps, H.264 yuv420p, AAC, <= 60 s). Script format: `src/schema/script.ts`.
 Review stills: `scripts/review-frames.sh <id> <frame>...` -> `review/<id>/sheet.png`. Checklist: `docs/REVIEW.md`.
 
