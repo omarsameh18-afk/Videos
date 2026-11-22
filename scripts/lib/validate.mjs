@@ -1,5 +1,5 @@
 // Script validation: schema + content rules. Used by `npm run validate` and `npm run render`.
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { Script, narrationText } from '../../src/schema/script.ts';
 import { intentErrors } from './intents.mjs';
 import { VISUAL_TEXT, VOICE_LOCK } from '../../src/config.ts';
@@ -90,6 +90,15 @@ export function validateScript(raw) {
       ...(sc.type === 'BigNumber' ? [sc.props.label] : []),
       ...(sc.type === 'AnimatedChart' && sc.props.marker ? [sc.props.marker.label] : []),
     ];
+    if (sc.type === 'ClipScene') {
+      const p = sc.props;
+      if (p.question) { vis.push([p.question, 972]); headlines.push(p.question); }
+      (p.labels ?? []).forEach((x) => vis.push([x, 380]));
+      p.tags.forEach((x) => { vis.push([x, 972]); headlines.push(x); });
+      if (p.meters) { vis.push([p.meters.label, 972]); headlines.push(p.meters.label); }
+      const man = existsSync('assets/clips/manifest.json') ? JSON.parse(readFileSync('assets/clips/manifest.json', 'utf8')).items.map((x) => x.name) : [];
+      for (const c of [p.clip, p.clipRight].filter(Boolean)) if (!man.includes(c)) errors.push(`${at}: clip "${c}" is not in assets/clips/manifest.json`);
+    }
     if (['SplitClone', 'GymSet', 'DayCounter', 'Reveal'].includes(sc.type)) {
       for (const side of ['left', 'right']) vis.push([sc.props[side].label, 380]);
       if (sc.type === 'GymSet' && sc.props.meters) { vis.push([sc.props.meters.label, VIS_MAIN.w]); headlines.push(sc.props.meters.label); }
@@ -114,7 +123,7 @@ export function validateScript(raw) {
   }
   if (s.voice.voiceId !== VOICE_LOCK.voiceId) errors.push(`voice.voiceId must be the locked Max voice ${VOICE_LOCK.voiceId} (${VOICE_LOCK.name})`);
 
-  if (!['Hook', 'SplitClone'].includes(s.scenes[0].type)) errors.push('scenes[0] must be a Hook (or a SplitClone experiment hook)');
+  if (!['Hook', 'SplitClone', 'ClipScene'].includes(s.scenes[0].type)) errors.push('scenes[0] must be a Hook (or a SplitClone experiment hook)');
   const hookSec = words(s.scenes[0].narration).length / (WORDS_PER_SEC * s.voice.speed);
   if (hookSec > HOOK_MAX_SEC) {
     errors.push(`scenes[0] (Hook): narration ~${hookSec.toFixed(1)}s, must be <= ${HOOK_MAX_SEC}s (shorten it)`);

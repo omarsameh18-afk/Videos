@@ -60,7 +60,7 @@ export const SubjectsLayer: React.FC<ShortProps> = ({ script, scenes }) => {
   let si = 0;
   while (si + 1 < scenes.length && scenes[si + 1].from <= frame) si++;
   const sc = script.scenes[si];
-  if (!EXPERIMENT_TYPES.includes(sc.type)) return null;
+  if (!EXPERIMENT_TYPES.includes(sc.type)) return null; // (ClipScene uses AI clips, not the rig)
   const local = frame - scenes[si].from;
   const props = sc.props as Record<string, unknown>;
   const exp = script.scenes.map((s) => (EXPERIMENT_TYPES.includes(s.type) ? s : { type: s.type, props: {} })) as { type: string; props: Record<string, unknown> }[];

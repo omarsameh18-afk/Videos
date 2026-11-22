@@ -3,7 +3,7 @@
     "id": "rest-1-vs-3",
     "title": "What Happens If You Rest 1 Minute vs 3 Minutes Between Sets?",
     "topic": "rest intervals and hypertrophy",
-    "targetSec": [30, 40],
+    "targetSec": [25, 35],
     "sources": [
       {
         "label": "Schoenfeld et al., 2016",
@@ -15,81 +15,53 @@
   "voice": { "voiceId": "TX3LPaxmHKxFdv7VOQHJ", "modelId": "eleven_multilingual_v2", "speed": 1.1, "maxGapSec": 0.15 },
   "scenes": [
     {
-      "type": "SplitClone",
+      "type": "ClipScene",
       "background": "gym",
       "narration": "Same workout. Same weights. Only the rest is different.",
       "emphasis": ["rest"],
-      "props": {
-        "left": { "label": "1 min", "timer": 60, "activity": "lift" },
-        "right": { "label": "3 min", "timer": 180, "activity": "lift" }
-      }
+      "props": { "layout": "split", "clip": "bicep-curl", "clipRight": "bicep-curl", "mirrorRight": true, "question": "Which rest wins?", "labels": ["1 min", "3 min"] }
     },
     {
-      "type": "GymSet",
+      "type": "ClipScene",
       "background": "lab",
-      "narration": "Two Maxes, eight weeks. Left Max rests one minute between sets. Right Max rests three.",
-      "emphasis": ["eight"],
-      "props": {
-        "left": { "label": "1 min", "timer": 60, "activity": "train" },
-        "right": { "label": "3 min", "timer": 180, "activity": "train" }
-      }
-    },
-    {
-      "type": "DayCounter",
-      "background": "gym",
-      "narration": "Week one. One-minute Max rushes back to the bar, sweaty and gasping. Three-minute Max sips his shake and actually recovers.",
+      "narration": "Week one. One-minute Max rushes back, gasping. Three-minute Max sips his shake and fully recovers.",
       "emphasis": ["recovers"],
-      "props": {
-        "unit": "Week", "from": 1, "to": 4,
-        "left": { "label": "1 min", "timer": 60, "activity": "train", "body": { "all": 0.95, "fatigue": 0.85 } },
-        "right": { "label": "3 min", "timer": 180, "activity": "train", "body": { "all": 1.0, "fatigue": 0.1 } }
-      }
+      "props": { "layout": "split", "clip": "exhausted", "clipRight": "sip-shaker", "labels": ["1 min", "3 min"], "week": { "from": 1, "to": 4 }, "reps": { "left": 8, "right": 12 } }
     },
     {
-      "type": "DayCounter",
+      "type": "ClipScene",
       "background": "gym",
-      "narration": "By week eight, one-minute Max swears he is working way harder. His shirt is soaked.",
-      "emphasis": ["harder"],
-      "props": {
-        "unit": "Week", "from": 5, "to": 8,
-        "left": { "label": "1 min", "timer": 60, "activity": "train", "body": { "all": 1.0, "fatigue": 1.0 } },
-        "right": { "label": "3 min", "timer": 180, "activity": "train", "body": { "all": 1.12, "fatigue": 0.15 } }
-      }
+      "narration": "By week eight, one-minute Max feels like he is working harder. But three-minute Max lifts more every single set.",
+      "emphasis": ["more"],
+      "props": { "layout": "split", "clip": "exhausted", "clipRight": "bicep-curl", "mirrorRight": true, "labels": ["1 min", "3 min"], "week": { "from": 5, "to": 8 }, "reps": { "left": 6, "right": 11 } }
     },
     {
-      "type": "Reveal",
+      "type": "ClipScene",
       "background": "chalkboard",
-      "narration": "Plot twist. Three-minute Max ended up bigger and stronger.",
+      "narration": "So who actually grew more?",
+      "props": { "layout": "full", "clip": "thinking", "question": "Week 8 results" }
+    },
+    {
+      "type": "ClipScene",
+      "background": "lab",
+      "narration": "Three-minute Max. Bigger and stronger.",
       "sourceIndex": 0,
       "emphasis": ["stronger"],
-      "props": {
-        "focus": "right",
-        "tags": ["+ Muscle", "+ Strength"],
-        "left": { "label": "1 min", "activity": "idle", "expression": "shocked", "body": { "all": 1.02, "fatigue": 0.3 } },
-        "right": { "label": "3 min", "activity": "flex", "body": { "all": 1.25, "legs": 1.3, "fatigue": 0 } }
-      }
+      "props": { "layout": "full", "clip": "bigmax-flex", "reveal": true, "tags": ["+ Muscle", "+ Strength"] }
     },
     {
-      "type": "GymSet",
-      "background": "lab",
+      "type": "ClipScene",
+      "background": "gym",
       "narration": "Longer rest let him lift more weight every set. More total work, more growth. Real study: the three-minute group gained more strength and more muscle.",
       "sourceIndex": 0,
       "emphasis": ["growth"],
-      "props": {
-        "meters": { "label": "Volume lifted", "left": 62, "right": 100 },
-        "left": { "label": "1 min", "timer": 60, "activity": "lift", "body": { "fatigue": 0.7 } },
-        "right": { "label": "3 min", "timer": 180, "activity": "lift", "body": { "fatigue": 0.1 } }
-      }
+      "props": { "layout": "split", "clip": "shocked", "clipRight": "bigmax-flex", "labels": ["1 min", "3 min"], "question": "Volume lifted", "meters": { "label": "Volume lifted", "left": 62, "right": 100 } }
     },
     {
-      "type": "SplitClone",
-      "background": "gym",
+      "type": "ClipScene",
+      "background": "lab",
       "narration": "Pick your timer.",
-      "props": {
-        "timersCenter": true,
-        "left": { "label": "1 min", "activity": "idle", "body": { "fatigue": 0.2 } },
-        "right": { "label": "3 min", "activity": "idle", "body": { "fatigue": 0 } }
-      }
+      "props": { "layout": "full", "clip": "celebrate", "timers": true }
     }
   ]
 }

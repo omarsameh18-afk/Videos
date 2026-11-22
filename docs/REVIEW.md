@@ -111,3 +111,17 @@ Dev check for visuals not used in a Short: `VisualGallery` composition (review/v
    Reveal; payoff carries the source; the last line loops back to the two timers (timers fly back to centre).
 6. **Tags / meter labels must not repeat the narration** (validator) — e.g. "+ MUSCLE" while the VO says "bigger".
 All earlier rules (pacing, animation, visual, v5, US audience) still apply.
+
+## AI-CLIP FORMAT RULES (character shots = ElevenLabs image -> video, Remotion assembles)
+1. **Budget:** only `gemini-3.1-flash-image` (1K, 9:16) and `kling-2.5-turbo` (5 s, 9:16). Always `estimate_only` first;
+   hard cap per task (default 30K credits) - stop and report when close. Measured: image ~406 (609 with a reference),
+   clip ~2,121.
+2. **Consistency:** one MASTER Max image; every pose image uses it as reference; every clip starts from the MASTER or a
+   pose image. Prompts end with "static camera, no morphing, no logos, no text; the pink shaker stays a shaker" + a
+   negative prompt. Review a 3-frame contact sheet per clip before use (e.g. `flex` lost the shaker -> not used).
+3. **Files:** download every result immediately (signed links expire in hours) to assets/clips/ and record name,
+   model, generation id, prompt and credits in assets/clips/manifest.json (`node scripts/clip-add.mjs`).
+   Video/image files are git-ignored; the manifest is committed.
+4. **Assembly:** `ClipScene` (full or split panels) + overlays: question in the top band on frame 1, week ticker,
+   rep counters, meters, reveal flash/zoom, tags in the top band (never over the character), timers for the loop.
+   Captions sit below the panels; all earlier rules apply.

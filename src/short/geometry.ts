@@ -56,9 +56,19 @@ const right = (r: Rect) => r.x + r.w;
 
 /** Place Max for a scene: as big as MAX_SCALE allows, flipped toward a card, zoom capped to fit. */
 export type MaxMode = 'reactor' | 'end' | 'side' | 'big' | 'none';
-export const EXPERIMENT_SCENES = ['SplitClone', 'GymSet', 'DayCounter', 'Reveal'];
+export const EXPERIMENT_SCENES = ['SplitClone', 'GymSet', 'DayCounter', 'Reveal', 'ClipScene'];
+// AI-clip scenes: clips sit in framed panels; captions in a band below them (~64-72%)
+export const CLIP = {
+  full: { x: 260, y: 200, w: 560, h: 1000 }, // 0.56 ratio (clips are 768x1376)
+  split: [{ x: 54, y: 330, w: 480, h: 860 }, { x: 546, y: 330, w: 480, h: 860 }],
+  topText: { x: 54, y: 70, w: 972, h: 150 },
+  labelY: 250,
+  captionY: 1220,
+  footerY: 1480,
+};
 // experiment scenes: subjects stand on y 1290; captions just below their feet (~68-75% height), source under them
 export const EXP_CAPTION_Y = 1300;
+export const captionYFor = (t: string) => (t === 'ClipScene' ? 1220 : 1300);
 export const EXP_FOOTER_Y = 1470;
 export const maxMode = (sceneType: string): MaxMode =>
   EXPERIMENT_SCENES.includes(sceneType) ? 'none' : VISUAL_TYPES.includes(sceneType) || sceneType === 'Hook' ? 'reactor' : sceneType === 'Outro' ? 'end' : CARD_RECT[sceneType] ? 'side' : 'big';

@@ -17,8 +17,9 @@ import { AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber } from './scen
 import type { BackgroundName } from '../config';
 import { SubjectsLayer } from './experiment/SubjectsLayer';
 import { DayCounter, GymSet, Reveal, SplitClone } from './experiment/Overlays';
+import { ClipSceneView } from './clips/ClipScene';
 
-const SCENES: Record<string, React.FC<SceneProps>> = { Hook, WrongVsRight, StatCard, Outro, MuscleHighlight, AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber, SplitClone, GymSet, DayCounter, Reveal };
+const SCENES: Record<string, React.FC<SceneProps>> = { Hook, WrongVsRight, StatCard, Outro, MuscleHighlight, AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber, SplitClone, GymSet, DayCounter, Reveal, ClipScene: ClipSceneView };
 
 export const Short: React.FC<ShortProps> = (props) => {
   waitForFonts();

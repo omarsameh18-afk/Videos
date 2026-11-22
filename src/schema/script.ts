@@ -167,8 +167,29 @@ export const RevealScene = z.object({
 });
 export const EXPERIMENT_TYPES = ['SplitClone', 'GymSet', 'DayCounter', 'Reveal'];
 
+// ---- AI-clip format: character shots are generated video clips (assets/clips/manifest.json);
+// Remotion only assembles them with captions/overlays.
+export const ClipScene = z.object({
+  type: z.literal('ClipScene'),
+  ...SceneBase,
+  props: z.object({
+    layout: z.enum(['full', 'split']).default('full'),
+    clip: z.string().min(1), // manifest name (left clip in split)
+    clipRight: z.string().optional(),
+    mirrorRight: z.boolean().default(false),
+    question: z.string().optional(), // big text in the top band
+    labels: z.tuple([z.string(), z.string()]).optional(), // split: label above each clip
+    week: z.object({ from: z.number().int(), to: z.number().int() }).optional(),
+    reps: z.object({ left: z.number().int().min(0), right: z.number().int().min(0) }).optional(), // count up during the scene
+    meters: z.object({ label: z.string().min(1), left: z.number().min(0).max(100), right: z.number().min(0).max(100) }).optional(),
+    tags: z.array(z.string().min(1)).max(3).default([]),
+    reveal: z.boolean().default(false), // flash + zoom on the clip
+    timers: z.boolean().default(false), // big "1 MIN / 3 MIN" timers (loop ending)
+  }),
+});
+
 export const Scene = z.discriminatedUnion('type', [
-  SplitCloneScene, GymSetScene, DayCounterScene, RevealScene,
+  ClipScene, SplitCloneScene, GymSetScene, DayCounterScene, RevealScene,
   HookScene, MuscleHighlightScene, WrongVsRightScene, StatCardScene, OutroScene,
   AnimatedChartScene, GaugeScene, MuscleZoomScene, SplitVersusScene, BigNumberScene,
 ]);

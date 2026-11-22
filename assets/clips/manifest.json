@@ -1,0 +1,117 @@
+{
+  "items": [
+    {
+      "name": "master",
+      "file": "assets/clips/master.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "Qc1lHzvtkpaycfRSfMyH",
+      "credits": 406,
+      "prompt": "MASTER Max: flat 2D vector cartoon, bold navy outlines, full body front, brown hair one curl, thick brows, big round black glasses, huge arms, V-torso, open white lab coat rolled sleeves, neon-lime tank six-pack, navy pants, plain white sneakers no logos, pink shaker black lid, dark-navy cartoon gym, lime floor line"
+    },
+    {
+      "name": "pose-shocked",
+      "file": "assets/clips/pose-shocked.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "ci75Exi3uoU65TLk6kBE",
+      "credits": 609,
+      "prompt": "MASTER ref; SHOCKED: jaw dropped, eyes wide, brows high, left hand by face, shaker in right hand"
+    },
+    {
+      "name": "pose-exhausted",
+      "file": "assets/clips/pose-exhausted.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "Cqxw4ml0mRUzVGays27T",
+      "credits": 609,
+      "prompt": "MASTER ref; SWEATY EXHAUSTED: hands on knees, sweat drops, flushed, panting, shaker on floor"
+    },
+    {
+      "name": "pose-thinking",
+      "file": "assets/clips/pose-thinking.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "sZigBmcVMSE1ruOwwWF0",
+      "credits": 609,
+      "prompt": "MASTER ref; THINKING: fist under chin, brow raised, looking up, shaker at side"
+    },
+    {
+      "name": "pose-bigmax",
+      "file": "assets/clips/pose-bigmax.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "fcCdNNNEqFI5BVfu6ayE",
+      "credits": 609,
+      "prompt": "MASTER ref; BIG-MAX +40% muscle, tank stretched tight, double-biceps flex, grin, shaker in raised right fist"
+    },
+    {
+      "name": "bicep-curl",
+      "file": "assets/clips/bicep-curl.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "OOFvEQA8Vupn1UyHx0AN",
+      "credits": 2121,
+      "prompt": "from MASTER: bicep curls with the pink shaker like a dumbbell, 3 slow reps; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "shocked",
+      "file": "assets/clips/shocked.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "zL3uRIgl09bFZQMG7wkF",
+      "credits": 2121,
+      "prompt": "from pose-shocked: double-take, jaw drops; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "exhausted",
+      "file": "assets/clips/exhausted.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "HUSJtfq17lbFwVe965k3",
+      "credits": 2121,
+      "prompt": "from pose-exhausted: heavy panting, sweat, wipes forehead; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "thinking",
+      "file": "assets/clips/thinking.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "Gz4dpfYfIEHfW7jlVfgQ",
+      "credits": 2121,
+      "prompt": "from pose-thinking: taps chin, looks up, nods; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "bigmax-flex",
+      "file": "assets/clips/bigmax-flex.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "GiBaQSm4wSB12hnCLVWU",
+      "credits": 2121,
+      "prompt": "from pose-bigmax (+40% muscle): double-biceps flex, pumps biceps; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "flex",
+      "file": "assets/clips/flex.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "Dt3aIWWvYDu1J7zeBc1w",
+      "credits": 2121,
+      "prompt": "from MASTER: double-biceps flex, shaker in right fist; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "sip-shaker",
+      "file": "assets/clips/sip-shaker.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "VswekHNlBrhSQ1kod7kO",
+      "credits": 2121,
+      "prompt": "from MASTER: relaxed sip from the pink shaker, smug rested smile; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "celebrate",
+      "file": "assets/clips/celebrate.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "1I2aJrllBb6V4uiMpkdT",
+      "credits": 2121,
+      "prompt": "from MASTER: fist pumps, laugh, small hop; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "idle-talk",
+      "file": "assets/clips/idle-talk.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "fkOw0IjgIj4tcZmXV2Ou",
+      "credits": 2121,
+      "prompt": "from MASTER: talks to camera, small left-hand gestures, nods, blinks; static camera, no morphing, no logos, shaker stays a shaker"
+    }
+  ],
+  "totalCredits": 21931
+}

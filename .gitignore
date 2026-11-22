@@ -5,3 +5,8 @@ out
 .cache
 public/renders
 review/*/f*.png
+assets/clips/*.mp4
+assets/clips/*.png
+assets/clips/*.jpg
+assets/clips/*.webp
+public/clips

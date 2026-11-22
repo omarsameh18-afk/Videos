@@ -55,7 +55,23 @@ export function buildPacing(script, scenes, words, fps) {
     const mode = maxMode(sc.type);
     if (mode === 'none') {
       // experiment scene: subject events (sets/rests, reps, ticker, reveal) are the visual changes
-      for (const side of ['left', 'right']) {
+      if (sc.type === 'ClipScene') {
+        const p = sc.props;
+        const dur = t.durationInFrames;
+        if (p.week) {
+          const n = p.week.to - p.week.from + 1;
+          for (let k = 1; k < n; k++) {
+            const fr = t.from + Math.round((k / n) * dur);
+            changes.push({ frame: fr, kind: 'card' });
+            sfx.push({ t: fr / fps, sfx: 'pop' });
+          }
+        }
+        if (p.reps) for (const n of [p.reps.left, p.reps.right]) for (let k = 1; k <= n; k++) changes.push({ frame: t.from + Math.ceil((k * dur * 0.85) / n), kind: 'rep' });
+        if (p.reveal) sfx.push({ t: t.from / fps + 0.03, sfx: 'thud' });
+        if (p.tags.length) p.tags.forEach((_, k) => { const fr = t.from + Math.round(dur * 0.25) + k * 8; changes.push({ frame: fr, kind: 'card' }); sfx.push({ t: fr / fps, sfx: 'pop' }); });
+        if (i === 0) sfx.push({ t: t.from / fps + 0.05, sfx: 'thud' });
+      }
+      for (const side of sc.type === 'ClipScene' ? [] : ['left', 'right']) {
         const subj = sc.props[side];
         for (const fr of activitySwitches(subj, t.durationInFrames)) changes.push({ frame: t.from + fr, kind: 'move' });
         const period = subj.activity === 'train' ? REP.lift : subj.activity === 'lift' ? REP.steady : 0;
@@ -64,7 +80,7 @@ export function buildPacing(script, scenes, words, fps) {
           for (let fr = period; fr < t.durationInFrames; fr += period) if (fr % cyc < LIFT_BLOCK || subj.activity === 'lift') changes.push({ frame: t.from + fr, kind: 'rep' });
         }
       }
-      if (i === 0) {
+      if (i === 0 && sc.type !== 'ClipScene') {
         sfx.push({ t: t.from / fps + 0.05, sfx: 'thud' });
         changes.push({ frame: t.from + 10, kind: 'card' });
       }

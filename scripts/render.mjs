@@ -93,7 +93,11 @@ const audioSrc = `renders/${id}.wav`;
 const mix = mixAudio({ voice: voiceWav, events: pacing.sfx, durSec, out: `public/${audioSrc}` });
 console.log(`✓ mix: voice ${mix.voiceLufs.toFixed(1)} LUFS, music ${mix.musicGainDb.toFixed(1)} dB, ${pacing.sfx.length} SFX, final ${mix.finalLufs.toFixed(1)} LUFS`);
 
-// 6. render
+// 6. render (AI clips are served from public/clips)
+if (script.scenes.some((x) => x.type === 'ClipScene')) {
+  mkdirSync('public/clips', { recursive: true });
+  for (const x of script.scenes.filter((y) => y.type === 'ClipScene')) for (const c of [x.props.clip, x.props.clipRight].filter(Boolean)) copyFileSync(`assets/clips/${c}.mp4`, `public/clips/${c}.mp4`);
+}
 mkdirSync('.cache/props', { recursive: true });
 mkdirSync('out', { recursive: true });
 const propsFile = `.cache/props/${id}.json`;

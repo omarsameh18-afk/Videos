@@ -86,8 +86,8 @@ export const DANGLING = new Set([
   'a', 'an', 'the', 'your', 'my', 'our', 'their', 'his', 'her', 'its', 'to', 'of', 'from', 'in', 'on', 'at', 'for',
   'with', 'and', 'but', 'or', 'nor', 'is', 'are', 'was', 'were', 'be', "it's", "that's", 'that', 'this',
   'these', 'those', 'after', 'before', 'into', 'than', 'as', 'by', 'so', 'if', 'very', 'really', 'no', 'one',
-  'more', 'most', 'some', 'any', 'every', "isn't", "don't", "doesn't", 'can', 'will', 'would', 'should',
-  'means', 'mean', 'makes', 'make', 'gets', 'get', 'let', 'out',
+  'some', 'any', 'every', "isn't", "don't", "doesn't", 'can', 'will', 'would', 'should',
+  'means', 'mean', 'makes', 'make', 'gets', 'get', 'let', 'out', 'single', 'like', 'he', 'she', 'they', 'we', 'i', 'you',
 ]);
 const PARTICLES = new Set(['in', 'up', 'to', 'on', 'off', 'out', 'down', 'over']);
 const bare = (w) => w.toLowerCase().replace(/[^a-z0-9']/g, '');
@@ -109,6 +109,7 @@ export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
     if (ch.join(' ').length > maxChars && ch.length > 1) c += 50;
     if (splitParticle) c += 15;
     if (!closes(last) && !particle && DANGLING.has(bare(last))) c += 20;
+    if (!closes(last) && /-/.test(last)) c += 20; // 'three-minute' needs its noun
     if (ch.length === 1 && DANGLING.has(bare(last))) c += 30;
     return c;
   };

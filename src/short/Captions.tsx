@@ -3,7 +3,7 @@ import { interpolate, spring, useCurrentFrame, useVideoConfig } from 'remotion';
 import { C } from '../max/theme';
 import { FONT_BODY } from './fonts';
 import { CAPTION_H, CAPTION_Y, CONTENT } from './layout';
-import { maxMode, SIDE_CAPTION, EXP_CAPTION_Y } from './geometry';
+import { maxMode, SIDE_CAPTION, captionYFor } from './geometry';
 import { CaptionPage, Word } from './types';
 
 // Word-by-word captions: one short page at a time, the spoken word highlighted in lime.
@@ -14,7 +14,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
   const page = pages.find((p) => t >= p.start - 0.05 && t < p.end);
   const mode = maxMode(sceneType);
   if (!page || mode === 'end') return null; // end card: the hero text is the caption
-  const box = mode === 'reactor' ? SIDE_CAPTION : { x: CONTENT.x, y: mode === 'none' ? EXP_CAPTION_Y : CAPTION_Y, w: CONTENT.width, h: CAPTION_H };
+  const box = mode === 'reactor' ? SIDE_CAPTION : { x: CONTENT.x, y: mode === 'none' ? captionYFor(sceneType) : CAPTION_Y, w: CONTENT.width, h: CAPTION_H };
   const pageIn = spring({ frame: frame - Math.round(page.start * fps), fps, config: { damping: 14, stiffness: 260 } });
   return (
     <div

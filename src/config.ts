@@ -64,6 +64,7 @@ export const DEFAULT_INTENT: Record<string, Intent> = {
   GymSet: 'stat',
   DayCounter: 'stat',
   Reveal: 'reveal',
+  ClipScene: 'stat',
 };
 // "visual is the star" scenes: Max shrinks to the bottom-right corner and reacts
 export const VISUAL_SCENES = ['AnimatedChart', 'Gauge', 'MuscleZoom', 'SplitVersus', 'BigNumber'];

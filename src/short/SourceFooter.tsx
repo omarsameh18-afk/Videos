@@ -13,7 +13,7 @@ export const SourceFooter: React.FC<{ label: string; sceneType: string }> = ({ l
       style={{
         position: 'absolute',
         left: side ? SIDE_CAPTION.x : CONTENT.x,
-        top: side ? SIDE_FOOTER_Y : maxMode(sceneType) === 'none' ? EXP_FOOTER_Y : FOOTER_Y,
+        top: side ? SIDE_FOOTER_Y : maxMode(sceneType) === 'none' ? (sceneType === 'ClipScene' ? 1480 : EXP_FOOTER_Y) : FOOTER_Y,
         maxWidth: side ? SIDE_CAPTION.w : CONTENT.width,
         opacity: interpolate(f, [4, 14], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }),
         fontFamily: FONT_BODY,
