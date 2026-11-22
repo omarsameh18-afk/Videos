@@ -9,7 +9,7 @@ import { TimerBadge } from '../experiment/SubjectsLayer';
 
 const CLIP_FRAMES = 150;
 
-const Half: React.FC<{ side: 'left' | 'right'; clip: string; scale: number; drain: number; freeze: boolean; mirror?: boolean }> = ({ side, clip, scale, drain, freeze, mirror }) => {
+const Half: React.FC<{ side: 'left' | 'right'; clip: string; scale: number; freeze: boolean; mirror?: boolean }> = ({ side, clip, scale, freeze, mirror }) => {
   const video = <OffthreadVideo src={staticFile(`clips/${clip}.mp4`)} muted style={{ width: '100%', height: '100%', objectFit: 'cover' }} />;
   return (
     <div style={{ position: 'absolute', left: side === 'left' ? 0 : VERSUS.half, top: VERSUS.top, width: VERSUS.half, height: VERSUS.bottom - VERSUS.top, overflow: 'hidden' }}>
@@ -19,7 +19,6 @@ const Half: React.FC<{ side: 'left' | 'right'; clip: string; scale: number; drai
           height: '100%',
           transform: `scale(${(mirror ? -1 : 1) * scale}, ${scale})`,
           transformOrigin: '50% 12%', // grows from the neck down: the head never leaves the frame
-          filter: drain > 0 ? `saturate(${1 - 0.55 * drain}) brightness(${1 - 0.25 * drain})` : undefined,
         }}
       >
         {freeze ? <Freeze frame={60}>{video}</Freeze> : <Loop durationInFrames={CLIP_FRAMES}>{video}</Loop>}
@@ -28,7 +27,7 @@ const Half: React.FC<{ side: 'left' | 'right'; clip: string; scale: number; drai
   );
 };
 
-/** Edge-to-edge 1-min vs 3-min halves; week drives growth (right), drain (left) and the per-week rep numbers. */
+/** Edge-to-edge 1-min vs 3-min halves; week drives growth (right; left max +5%) and the per-week rep numbers. */
 export const VersusView: React.FC<SceneProps> = ({ scene, timing, pulse }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -49,7 +48,6 @@ export const VersusView: React.FC<SceneProps> = ({ scene, timing, pulse }) => {
   const growR = 1 + (p.grow?.right ?? 0) * (weekCont - 1);
   const rightScale = swap ? p.swapRight!.scale + (p.grow?.right ?? 0) * 0.5 * (weekCont - p.swapRight!.atWeek) : growR;
   const leftScale = 1 + (p.grow?.left ?? 0) * (weekCont - 1);
-  const drain = p.drainLeft ? Math.min(1, (weekCont - 1) / 7) : 0;
   const reps = p.repsByWeek;
   const repPop = (side: 'left' | 'right') => {
     if (!reps) return 1;
@@ -59,8 +57,8 @@ export const VersusView: React.FC<SceneProps> = ({ scene, timing, pulse }) => {
 
   return (
     <AbsoluteFill style={{ transform: `scale(${1 + 0.02 * pulse})` }}>
-      <Half side="left" clip={p.clip} scale={leftScale} drain={drain} freeze={p.freeze} />
-      <Half side="right" clip={rightClip} scale={rightScale} drain={0} freeze={p.freeze} mirror={p.mirrorRight && !swap} />
+      <Half side="left" clip={p.clip} scale={leftScale} freeze={p.freeze} />
+      <Half side="right" clip={rightClip} scale={rightScale} freeze={p.freeze} mirror={p.mirrorRight && !swap} />
       {/* divider */}
       <div style={{ position: 'absolute', left: VERSUS.half - 4, top: VERSUS.top, width: 8, height: VERSUS.bottom - VERSUS.top, background: C.accent, boxShadow: '0 0 0 4px #0B0C1C' }} />
       {/* side labels (top corners) */}

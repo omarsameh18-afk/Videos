@@ -31,8 +31,7 @@
       ],
       "props": {
         "layout": "versus",
-        "clip": "exhausted",
-        "drainLeft": true,
+        "clip": "avg-exhausted",
         "showWeek": false,
         "lines": [
           "Same workout.",
@@ -52,8 +51,8 @@
           "scale": 1.0
         },
         "grow": {
-          "left": 0,
-          "right": 0.04
+          "left": 0.0071428571428571435,
+          "right": 0.05
         }
       }
     },
@@ -66,10 +65,9 @@
       ],
       "props": {
         "layout": "versus",
-        "clip": "bicep-curl",
-        "clipRight": "bicep-curl",
+        "clip": "avg-idle",
+        "clipRight": "avg-idle",
         "mirrorRight": true,
-        "drainLeft": true,
         "labels": [
           "1 min",
           "3 min"
@@ -101,8 +99,13 @@
           ]
         },
         "grow": {
-          "left": 0,
-          "right": 0.04
+          "left": 0.0071428571428571435,
+          "right": 0.05
+        },
+        "swapRight": {
+          "atWeek": 6,
+          "clip": "bigmax-flex",
+          "scale": 1.0
         }
       }
     },
@@ -115,9 +118,8 @@
       ],
       "props": {
         "layout": "versus",
-        "clip": "exhausted",
-        "clipRight": "sip-shaker",
-        "drainLeft": true,
+        "clip": "avg-exhausted",
+        "clipRight": "avg-idle",
         "labels": [
           "1 min",
           "3 min"
@@ -149,9 +151,15 @@
           ]
         },
         "grow": {
-          "left": 0,
-          "right": 0.04
-        }
+          "left": 0.0071428571428571435,
+          "right": 0.05
+        },
+        "swapRight": {
+          "atWeek": 6,
+          "clip": "bigmax-flex",
+          "scale": 1.0
+        },
+        "mirrorRight": true
       }
     },
     {
@@ -163,10 +171,9 @@
       ],
       "props": {
         "layout": "versus",
-        "clip": "exhausted",
-        "clipRight": "bicep-curl",
+        "clip": "avg-exhausted",
+        "clipRight": "avg-idle",
         "mirrorRight": true,
-        "drainLeft": true,
         "labels": [
           "1 min",
           "3 min"
@@ -203,8 +210,8 @@
           "scale": 1.0
         },
         "grow": {
-          "left": 0,
-          "right": 0.04
+          "left": 0.0071428571428571435,
+          "right": 0.05
         }
       }
     },
@@ -218,8 +225,7 @@
       ],
       "props": {
         "layout": "versus",
-        "clip": "exhausted",
-        "drainLeft": true,
+        "clip": "avg-exhausted",
         "showWeek": false,
         "lines": [
           "More rest = more reps",
@@ -239,8 +245,8 @@
           "scale": 1.0
         },
         "grow": {
-          "left": 0,
-          "right": 0.04
+          "left": 0.0071428571428571435,
+          "right": 0.05
         }
       }
     },
@@ -250,8 +256,7 @@
       "narration": "Which one are you?",
       "props": {
         "layout": "versus",
-        "clip": "exhausted",
-        "drainLeft": true,
+        "clip": "avg-exhausted",
         "showWeek": false,
         "freeze": true,
         "timers": true,
@@ -268,8 +273,8 @@
           "scale": 1.0
         },
         "grow": {
-          "left": 0,
-          "right": 0.04
+          "left": 0.0071428571428571435,
+          "right": 0.05
         }
       }
     }

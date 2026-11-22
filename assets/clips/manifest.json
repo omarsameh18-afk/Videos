@@ -111,7 +111,15 @@
       "generationId": "fkOw0IjgIj4tcZmXV2Ou",
       "credits": 2121,
       "prompt": "from MASTER: talks to camera, small left-hand gestures, nods, blinks; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "pose-average",
+      "file": "assets/clips/pose-average.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "C869pjuRgG22fLUvqF7h",
+      "credits": 609,
+      "prompt": "MASTER ref; AVERAGE build: slim arms, narrow shoulders, no V-torso, flat stomach no six-pack, loose coat; relaxed, shaker in right hand"
     }
   ],
-  "totalCredits": 21931
+  "totalCredits": 22540
 }

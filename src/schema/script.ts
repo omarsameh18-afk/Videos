@@ -191,7 +191,6 @@ export const ClipScene = z.object({
     repsByWeek: z.object({ left: z.array(z.number().int()), right: z.array(z.number().int()) }).optional(), // index = week-1
     grow: z.object({ left: z.number().default(0), right: z.number().default(0) }).optional(), // scale per week
     swapRight: z.object({ atWeek: z.number().int(), clip: z.string(), scale: z.number().default(1) }).optional(),
-    drainLeft: z.boolean().default(false), // left side desaturates/darkens week by week
     freeze: z.boolean().default(false), // freeze the clips (end card)
   }),
 });
