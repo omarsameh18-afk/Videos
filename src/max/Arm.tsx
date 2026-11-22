@@ -22,14 +22,11 @@ export const Arm: React.FC<{ def: ArmDef }> = ({ def }) => {
         {...line}
       />
       <path d="M -30 112 C -48 92 -50 70 -40 50" fill="none" stroke={C.skinShade} strokeWidth={8} strokeLinecap="round" />
-      {/* ripped-off lab-coat sleeve: the top of the shoulder ball, frayed edge across the arm */}
-      <path
-        d="M -63.2 10 A 64 64 0 1 1 63.2 10 L 52 20 L 40 8 L 28 22 L 14 8 L 0 22 L -14 8 L -28 22 L -40 8 L -52 20 Z"
-        fill={C.coat}
-        {...line}
-        strokeWidth={5}
-      />
-      <path d="M -40 -30 A 48 48 0 0 1 36 -34" fill="none" stroke={C.coatShade} strokeWidth={6} strokeLinecap="round" />
+      {/* rolled-up lab-coat sleeve: smooth cap over the shoulder ball + thick rolled cuff */}
+      <path d="M -63 24 A 64 64 0 1 1 63 24 Q 0 38 -63 24 Z" fill={C.coat} {...line} />
+      <path d="M -36 -36 Q -6 -52 30 -42" fill="none" stroke={C.coatShade} strokeWidth={5} strokeLinecap="round" />
+      <path d="M -84 14 Q -8 34 70 14 L 73 50 Q -8 72 -92 50 Z" fill={C.coat} {...line} />
+      <path d="M -86 32 Q -8 52 71 32" fill="none" stroke={C.coatShade} strokeWidth={5} strokeLinecap="round" />
       {/* forearm */}
       <g transform={`translate(0 ${UPPER}) rotate(${def.elbow})`}>
         <circle cx={0} cy={0} r={40} fill={C.skin} {...line} />
@@ -37,7 +34,7 @@ export const Arm: React.FC<{ def: ArmDef }> = ({ def }) => {
         <circle cx={0} cy={0} r={34} fill={C.skin} />
         <path d="M -16 40 C -24 70 -20 100 -14 120" fill="none" stroke={C.skinShade} strokeWidth={6} strokeLinecap="round" />
         <g transform={`translate(0 ${FORE}) rotate(${def.wrist})`}>
-          <Hand shape={def.hand} worldAngle={world} />
+          <Hand shape={def.hand} worldAngle={world} shakerTilt={def.shakerTilt} shakerOffset={def.shakerOffset} />
         </g>
       </g>
     </g>

@@ -14,7 +14,8 @@ export const C = {
   pants: '#2B2F45',
   pantsShade: '#20233A',
   shoe: '#F5F5F5',
-  sole: '#1B1B2F',
+  sole: '#22253A',
+  soleEdge: '#555B82', // keeps the dark sole readable on the dark background
   lens: '#BFE9FF',
   eyeWhite: '#FFFFFF',
   pupil: '#1B1B2F',

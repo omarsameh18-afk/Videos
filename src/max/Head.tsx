@@ -25,16 +25,16 @@ const Eye: React.FC<{ x: number; y: number; style: EyeStyle; look: [number, numb
   if (style === 'happy') {
     return <path d={`M ${x - 17} ${y + 6} Q ${x} ${y - 16} ${x + 17} ${y + 6}`} fill="none" {...line} strokeWidth={7} />;
   }
-  const rx = style === 'wide' ? 24 : 19;
-  const ry = (style === 'wide' ? 27 : 22) * (1 - blink * 0.92);
-  const pr = style === 'wide' ? 6 : 10;
+  const rx = style === 'wide' ? 21 : 17;
+  const ry = (style === 'wide' ? 24 : 19) * (1 - blink * 0.92);
+  const pr = style === 'wide' ? 8.5 : 12.5;
   return (
     <g>
-      <ellipse cx={x} cy={y} rx={rx} ry={Math.max(ry, 1.5)} fill={C.eyeWhite} {...line} strokeWidth={4} />
+      <ellipse cx={x} cy={y} rx={rx} ry={Math.max(ry, 1.5)} fill={C.eyeWhite} {...line} strokeWidth={2.5} />
       {ry > 6 && (
         <g>
           <circle cx={x + lx} cy={y + ly} r={pr} fill={C.pupil} />
-          <circle cx={x + lx + 3} cy={y + ly - 4} r={pr * 0.35} fill="#fff" />
+          <circle cx={x + lx + 3.5} cy={y + ly - 4} r={pr * 0.32} fill="#fff" />
         </g>
       )}
       {style === 'angry' && ry > 6 && (

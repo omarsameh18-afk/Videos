@@ -1,7 +1,7 @@
 // Arm rig. Each arm is drawn pointing straight down, then rotated at the shoulder,
 // elbow and wrist. The screen-right arm is mirrored, so positive angles always mean
 // "outward / away from the body" for both arms.
-export type HandShape = 'fist' | 'point' | 'thumbsUp' | 'open' | 'shaker' | 'hidden';
+export type HandShape = 'fist' | 'point' | 'one' | 'thumbsUp' | 'open' | 'shaker' | 'hidden';
 export type PoseName = 'idle' | 'pointing' | 'flexing' | 'armsCrossed' | 'facepalm' | 'thumbsUp' | 'fingerUp';
 
 export const POSE_NAMES: PoseName[] = ['pointing', 'flexing', 'armsCrossed', 'facepalm', 'thumbsUp', 'fingerUp'];
@@ -12,6 +12,8 @@ export interface ArmDef {
   wrist: number;
   hand: HandShape;
   front?: boolean; // draw above the head (e.g. facepalm)
+  shakerTilt?: number; // extra shaker rotation (deg) when this hand holds it
+  shakerOffset?: [number, number]; // shaker shift in screen-aligned px (x = outward)
 }
 export interface PoseDef { left: ArmDef; right: ArmDef; lean?: number; frontArm?: 'left' | 'right' }
 
@@ -19,14 +21,16 @@ const hang = (hand: HandShape = 'shaker'): ArmDef => ({ shoulder: 16, elbow: -14
 
 export const POSES: Record<PoseName, PoseDef> = {
   idle: { left: hang('fist'), right: hang('shaker') },
-  pointing: { left: { shoulder: 135, elbow: 40, wrist: 0, hand: 'point' }, right: hang('shaker'), lean: -2 },
+  // points sideways (screen-left) at on-screen text: arm near horizontal, finger horizontal
+  pointing: { left: { shoulder: 66, elbow: 24, wrist: 0, hand: 'point' }, right: hang('shaker'), lean: -2 },
   flexing: {
     left: { shoulder: 100, elbow: 105, wrist: 10, hand: 'fist' },
     right: { shoulder: 100, elbow: 105, wrist: 10, hand: 'shaker' },
   },
   armsCrossed: {
     left: { shoulder: -8, elbow: -112, wrist: 0, hand: 'hidden' },
-    right: { shoulder: -14, elbow: -100, wrist: 20, hand: 'shaker', front: false },
+    // shaker hand tucked under the far bicep; the shaker peeks out beside it
+    right: { shoulder: -34, elbow: -66, wrist: 0, hand: 'shaker', shakerTilt: 12, shakerOffset: [-157, 14] },
     frontArm: 'left',
   },
   facepalm: {
@@ -35,7 +39,8 @@ export const POSES: Record<PoseName, PoseDef> = {
     lean: 3,
   },
   thumbsUp: { left: { shoulder: 52, elbow: 116, wrist: 0, hand: 'thumbsUp' }, right: hang('shaker') },
-  fingerUp: { left: { shoulder: 30, elbow: 128, wrist: 0, hand: 'point' }, right: hang('shaker') },
+  // index finger raised beside the head ("one thing...")
+  fingerUp: { left: { shoulder: 22, elbow: 150, wrist: 6, hand: 'one' }, right: hang('shaker') },
 };
 
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -45,6 +50,8 @@ const blendArm = (a: ArmDef, b: ArmDef, t: number): ArmDef => ({
   wrist: lerp(a.wrist, b.wrist, t),
   hand: t < 0.5 ? a.hand : b.hand,
   front: t < 0.5 ? a.front : b.front,
+  shakerTilt: lerp(a.shakerTilt ?? 0, b.shakerTilt ?? 0, t),
+  shakerOffset: [lerp(a.shakerOffset?.[0] ?? 0, b.shakerOffset?.[0] ?? 0, t), lerp(a.shakerOffset?.[1] ?? 0, b.shakerOffset?.[1] ?? 0, t)],
 });
 export const blendPose = (a: PoseDef, b: PoseDef, t: number): PoseDef => ({
   left: blendArm(a.left, b.left, t),

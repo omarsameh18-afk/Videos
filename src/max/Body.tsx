@@ -13,9 +13,13 @@ export const Legs: React.FC = () => (
     <path d="M 304 700 L 496 700 L 508 948 L 414 948 L 400 790 L 386 948 L 292 948 Z" fill={C.pants} {...line} />
     <path d="M 400 760 L 400 800" stroke={C.pantsShade} strokeWidth={6} />
     <Mirror>
-      <path d="M 282 944 L 392 944 Q 398 984 386 990 L 264 990 Q 250 980 262 962 Q 270 948 282 944 Z" fill={C.shoe} {...line} />
-      <path d="M 260 978 L 392 978" stroke={C.sole} strokeWidth={10} strokeLinecap="round" />
-      <path d="M 304 952 L 326 960 M 318 948 L 338 956" stroke={C.tank} strokeWidth={5} strokeLinecap="round" />
+      {/* chunky sneaker: upper, toe cap, lime stripe, laces, white midsole, thick dark outsole */}
+      <path d="M 300 924 L 380 924 Q 394 928 394 958 L 394 972 L 246 972 Q 238 948 262 938 Q 280 932 300 924 Z" fill={C.shoe} {...line} />
+      <path d="M 246 972 Q 238 948 262 938 Q 280 934 292 942 Q 286 960 290 972 Z" fill={C.coatShade} {...line} strokeWidth={4} />
+      <path d="M 302 958 Q 340 954 380 934" fill="none" stroke={C.tank} strokeWidth={10} strokeLinecap="round" />
+      <path d="M 314 930 L 324 940 M 330 926 L 340 936 M 346 924 L 356 934" stroke={C.outline} strokeWidth={4} strokeLinecap="round" />
+      <rect x={238} y={966} width={160} height={14} rx={7} fill="#FFFFFF" {...line} strokeWidth={4} />
+      <rect x={236} y={978} width={164} height={20} rx={10} fill={C.sole} stroke={C.soleEdge} strokeWidth={3} />
     </Mirror>
   </g>
 );

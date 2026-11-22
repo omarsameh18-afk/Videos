@@ -18,13 +18,14 @@ const rowTitle: React.CSSProperties = { ...label, fontSize: 44, color: '#fff', t
 
 const Cell: React.FC<{ title: string; sub: string; children: React.ReactNode; h?: number }> = ({ title, sub, children, h = 500 }) => (
   <div style={{ width: CELL_W, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-    <div style={{ width: CELL_W, height: h, overflow: "hidden" }}>{children}</div>
+    <div style={{ width: CELL_W, height: h, overflow: h < 500 ? "hidden" : "visible" }}>{children}</div>
     <div style={label}>{title}</div>
     <div style={{ ...label, fontSize: 22, color: '#9AA3D9' }}>{sub}</div>
   </div>
 );
 
-export const PROOF_SIZE = { width: CELL_W * 6, height: 1760 };
+const POSE_ROW_PAD = 200; // room for the sideways point
+export const PROOF_SIZE = { width: CELL_W * 6 + POSE_ROW_PAD, height: 1760 };
 
 // Proof that expression, pose and mouth are independent layers.
 export const ProofSheet: React.FC = () => (
@@ -38,7 +39,7 @@ export const ProofSheet: React.FC = () => (
       ))}
     </div>
     <div style={rowTitle}>6 poses · same face (neutral)</div>
-    <div style={{ display: 'flex' }}>
+    <div style={{ display: 'flex', paddingLeft: POSE_ROW_PAD }}>
       {POSE_NAMES.map((p) => (
         <Cell key={p} title={p} sub="face: neutral">
           <MaxFigure expression="neutral" pose={p} />
