@@ -173,7 +173,7 @@ export const ClipScene = z.object({
   type: z.literal('ClipScene'),
   ...SceneBase,
   props: z.object({
-    layout: z.enum(['full', 'split', 'versus', 'solo']).default('full'),
+    layout: z.enum(['full', 'split', 'versus', 'solo', 'fill']).default('full'),
     clip: z.string().min(1), // manifest name (left clip in split)
     clipRight: z.string().optional(),
     mirrorRight: z.boolean().default(false),
@@ -202,6 +202,12 @@ export const ClipScene = z.object({
     upper: z.object({ from: z.number().min(1).max(1.4), to: z.number().min(1).max(1.4) }).optional(),
     bodyMeters: z.object({ upper: z.tuple([z.number().min(0).max(100), z.number().min(0).max(100)]), legs: z.tuple([z.number().min(0).max(100), z.number().min(0).max(100)]) }).optional(),
     silhouette: z.boolean().default(false),
+    // ---- fill layout (clip edge to edge)
+    zoom: z.number().min(1).max(2.5).optional(), // close-up
+    focusY: z.number().min(0).max(1).optional(), // zoom anchor (fraction of clip height)
+    flash: z.number().min(0).max(1).optional(), // white flash strength at scene start
+    clipStarts: z.array(z.number().int().min(0).max(120)).optional(), // per seq entry
+    sfx: z.array(z.object({ at: z.number().min(0), name: z.string() })).default([]), // extra SFX, `at` in seconds from scene start
     bigNumber: z.object({ text: z.string().min(1), label: z.string().min(1) }).optional(), // solo silhouette card: counts up
     clipStart: z.number().int().min(0).max(120).default(0), // solo: frames into the clip where the scene starts
     offsetRight: z.number().int().min(0).default(0), // frames into the right clip (so mirrored twins are not identical)
@@ -233,6 +239,7 @@ export const Script = z.object({
   voice: z.object({
     voiceId: z.string().min(1).default('TX3LPaxmHKxFdv7VOQHJ'), // locked: see VOICE_LOCK in src/config.ts
     modelId: z.string().default('eleven_multilingual_v2'),
+    stability: z.number().min(0).max(1).optional(), // eleven_v3: 0 creative, 0.5 natural, 1 robust
     // optional full voice-over; if given it must equal the scene narrations joined with spaces
     text: z.string().optional(),
     speed: z.number().min(0.8).max(1.3).default(1.1), // tempo change, pitch kept

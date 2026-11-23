@@ -9,6 +9,7 @@ import { VisualText } from '../visuals/VisualText';
 import { TimerBadge } from '../experiment/SubjectsLayer';
 import { VersusView } from './Versus';
 import { SoloView } from './Solo';
+import { FillView } from './Fill';
 
 const CLIP_FRAMES = 150; // 5 s generated clips, looped if the scene is longer
 
@@ -40,6 +41,7 @@ export const ClipSceneView: React.FC<SceneProps> = ({ scene, timing, pulse }) =>
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   if (scene.type !== 'ClipScene') return null;
+  if (scene.props.layout === 'fill') return <FillView scene={scene} timing={timing} script={{} as never} pulse={pulse} />;
   if (scene.props.layout === 'solo') return <SoloView scene={scene} timing={timing} script={{} as never} pulse={pulse} />;
   if (scene.props.layout === 'versus') return <VersusView scene={scene} timing={timing} script={{} as never} pulse={pulse} />;
   const p = scene.props;

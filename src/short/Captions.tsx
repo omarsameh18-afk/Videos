@@ -7,14 +7,14 @@ import { maxMode, SIDE_CAPTION, captionYFor } from './geometry';
 import { CaptionPage, Word } from './types';
 
 // Word-by-word captions: one short page at a time, the spoken word highlighted in lime.
-export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis: number[]; sceneType: string }> = ({ pages, words, emphasis, sceneType }) => {
+export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis: number[]; sceneType: string; fill?: boolean }> = ({ pages, words, emphasis, sceneType, fill }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
   const page = pages.find((p) => t >= p.start - 0.05 && t < p.end);
   const mode = maxMode(sceneType);
   if (!page || mode === 'end') return null; // end card: the hero text is the caption
-  const box = mode === 'reactor' ? SIDE_CAPTION : { x: CONTENT.x, y: mode === 'none' ? captionYFor(sceneType) : CAPTION_Y, w: CONTENT.width, h: sceneType === 'ClipScene' ? 145 : CAPTION_H };
+  const box = fill ? { x: 50, y: 1425, w: 880, h: 140 } : mode === 'reactor' ? SIDE_CAPTION : { x: CONTENT.x, y: mode === 'none' ? captionYFor(sceneType) : CAPTION_Y, w: CONTENT.width, h: sceneType === 'ClipScene' ? 145 : CAPTION_H };
   const pageIn = spring({ frame: frame - Math.round(page.start * fps), fps, config: { damping: 14, stiffness: 260 } });
   return (
     <div
@@ -44,7 +44,7 @@ export const Captions: React.FC<{ pages: CaptionPage[]; words: Word[]; emphasis:
             style={{
               fontFamily: FONT_BODY,
               fontWeight: 900,
-              fontSize: mode === 'reactor' ? 66 : sceneType === 'ClipScene' ? 62 : 70,
+              fontSize: fill ? 72 : mode === 'reactor' ? 66 : sceneType === 'ClipScene' ? 62 : 70,
               lineHeight: 1.12,
               textTransform: 'uppercase',
               // VISUAL RULE 4: lime only on the one key word

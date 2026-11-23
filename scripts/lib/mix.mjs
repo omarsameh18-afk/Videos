@@ -10,7 +10,7 @@ const ffmpegJson = (args) => {
 };
 export const measureLufs = (file) => Number(ffmpegJson(['-hide_banner', '-i', file, '-af', 'loudnorm=print_format=json', '-f', 'null', '-']).input_i);
 
-export const SFX = { whoosh: 'assets/audio/whoosh.wav', pop: 'assets/audio/pop.wav', thud: 'assets/audio/thud.wav' };
+export const SFX = { whoosh: 'assets/audio/whoosh.wav', pop: 'assets/audio/pop.wav', thud: 'assets/audio/thud.wav', boing: 'assets/audio/boing.wav', scratch: 'assets/audio/scratch.wav' };
 export const MUSIC = 'assets/audio/music-bed.wav';
 
 /**

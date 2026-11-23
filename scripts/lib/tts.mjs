@@ -18,12 +18,12 @@ export function loadEnv(file = '.env') {
   }
 }
 
-export const ttsHash = ({ voiceId, modelId, text }) =>
-  createHash('sha256').update(JSON.stringify([voiceId, modelId, text])).digest('hex').slice(0, 16);
+export const ttsHash = ({ voiceId, modelId, text, stability }) =>
+  createHash('sha256').update(JSON.stringify(stability === undefined ? [voiceId, modelId, text] : [voiceId, modelId, text, stability])).digest('hex').slice(0, 16);
 
 /** Returns { mp3, timestamps } file paths. Calls the API only on a cache miss. */
-export async function synthesize({ voiceId, modelId, text }) {
-  const hash = ttsHash({ voiceId, modelId, text });
+export async function synthesize({ voiceId, modelId, text, stability }) {
+  const hash = ttsHash({ voiceId, modelId, text, stability });
   mkdirSync(CACHE_DIR, { recursive: true });
   const mp3 = join(CACHE_DIR, `${hash}.mp3`);
   const timestamps = join(CACHE_DIR, `${hash}.timestamps.json`);
@@ -35,7 +35,7 @@ export async function synthesize({ voiceId, modelId, text }) {
   const res = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/with-timestamps?output_format=mp3_44100_128`, {
     method: 'POST',
     headers: { 'xi-api-key': key, 'content-type': 'application/json' },
-    body: JSON.stringify({ text, model_id: modelId }),
+    body: JSON.stringify({ text, model_id: modelId, ...(stability === undefined ? {} : { voice_settings: { stability } }) }),
   });
   if (!res.ok) throw new Error(`ElevenLabs ${res.status}: ${(await res.text()).slice(0, 300)}`);
   const j = await res.json();

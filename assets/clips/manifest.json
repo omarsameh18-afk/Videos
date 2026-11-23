@@ -207,7 +207,47 @@
       "generationId": "OOdIhHiOhNRMQh9AqEsH",
       "credits": 2121,
       "prompt": "from pose-rack: walks to squat rack, shakes head nah, waves it off, walks away, shaker gripped"
+    },
+    {
+      "name": "pose-chicken-shorts",
+      "file": "assets/clips/pose-chicken-shorts.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "mmqHYGetGes1UUf9DsLg",
+      "credits": 609,
+      "prompt": "MASTER ref; no coat, gym shorts, huge upper body on stick legs, proud grin, headroom framing"
+    },
+    {
+      "name": "pose-chicken-shorts-squat",
+      "file": "assets/clips/pose-chicken-shorts-squat.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "zsUc1byYc9tGZ325Bagj",
+      "credits": 609,
+      "prompt": "MASTER ref; no coat, gym shorts, mid bodyweight squat, stick legs trembling, headroom framing"
+    },
+    {
+      "name": "pose-chicken-flex",
+      "file": "assets/clips/pose-chicken-flex.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "ZAYvV2NK5PRJfZ81VaVv",
+      "credits": 609,
+      "prompt": "ref pose-chicken-shorts-squat; proud double-biceps flex on stick legs, shaker in right fist"
+    },
+    {
+      "name": "pose-chicken-squat",
+      "file": "assets/clips/pose-chicken-squat.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "pYJURHzqsfYxUVO2mSFq",
+      "credits": 609,
+      "prompt": "ref pose-chicken-shorts-squat; mid bodyweight squat, arms forward, stick legs trembling"
+    },
+    {
+      "name": "pose-chicken-proud",
+      "file": "assets/clips/pose-chicken-proud.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "XIAXQx5GNHKawArjnVZI",
+      "credits": 609,
+      "prompt": "edit of pose-chicken-shorts-squat: same stick legs, proud cocky grin, no sweat"
     }
   ],
-  "totalCredits": 42847
+  "totalCredits": 45892
 }

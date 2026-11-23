@@ -40,7 +40,7 @@ if (audioArg) {
   tsFile = audioArg.replace(/\.mp3$/i, '.timestamps.json');
   if (!existsSync(tsFile)) die(`missing ${tsFile} (ElevenLabs timestamps saved next to the MP3)`);
 } else {
-  const r = await synthesize({ voiceId: script.voice.voiceId, modelId: script.voice.modelId, text: narrationText(script) });
+  const r = await synthesize({ voiceId: script.voice.voiceId, modelId: script.voice.modelId, text: narrationText(script), stability: script.voice.stability });
   console.log(`✓ voice ${r.cached ? '(cache hit)' : '(ElevenLabs)'}`);
   mp3 = `voice/${id}.mp3`;
   tsFile = `voice/${id}.timestamps.json`;

@@ -45,7 +45,7 @@ const Body: React.FC<{ clip: string; upper: number; punch: number; start: number
 };
 
 /** Simple front body silhouette; the legs glow (reveal card). */
-const Silhouette: React.FC<{ glow: number; f: number; small?: boolean }> = ({ glow, f, small }) => {
+export const Silhouette: React.FC<{ glow: number; f: number; small?: boolean }> = ({ glow, f, small }) => {
   const pulse = 0.65 + 0.35 * Math.sin(f / 4);
   const up = '#3A4066';
   const legFill = C.accent;

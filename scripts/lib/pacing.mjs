@@ -78,6 +78,7 @@ export function buildPacing(script, scenes, words, fps) {
         if ((p.seqLeft ?? []).length > 1 || (p.seqRight ?? []).length > 1) for (let fr = segF; fr < dur; fr += segF) changes.push({ frame: t.from + fr, kind: 'move' });
         if (p.tags.length) p.tags.forEach((_, k) => { const fr = t.from + Math.round(dur * 0.25) + k * 8; changes.push({ frame: fr, kind: 'card' }); sfx.push({ t: fr / fps, sfx: 'pop' }); });
         if (i === 0) sfx.push({ t: t.from / fps + 0.05, sfx: 'thud' });
+        for (const x of p.sfx ?? []) sfx.push({ t: t.from / fps + x.at, sfx: x.name });
       }
       for (const side of sc.type === 'ClipScene' ? [] : ['left', 'right']) {
         const subj = sc.props[side];
