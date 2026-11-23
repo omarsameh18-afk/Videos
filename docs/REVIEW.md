@@ -160,3 +160,10 @@ All earlier rules (pacing, animation, visual, v5, US audience) still apply.
 - Upper-body growth line sits below the hanging hands (0.64), vertical growth factor 0.3 so the head stays clear.
 - eleven_v3 voice: run `node scripts/desilence.mjs <tts.mp3> <tts.timestamps.json> <id>` (its timestamps smear words
   over pauses), then render with voice/<id>.mp3. Extra SFX per scene via `props.sfx` (boing, scratch).
+
+## CARDS + STT CHECK (from "skip-half")
+- Cards (`props.card`): big, <= 8 words, rows auto-sized per row, "→" drawn as an SVG arrow; `hide: [from,to]` clears a key moment.
+- Hand-written `captionChunks` per scene when the chunker can't make clean phrases (validator: joins to the narration, <= 4 words).
+- FINAL CHECK: transcribe the final MP4 audio (ElevenLabs scribe via the connector, from the public raw file in review/stt/),
+  compare word-for-word with the script, then `node scripts/align-from-stt.mjs <script> <words.json> voice/<id>.timestamps.json`
+  and re-render with `voice.maxGapSec: 2` so the audio stays exactly the transcribed one (captions in sync to ~1 frame).

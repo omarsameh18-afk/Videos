@@ -133,8 +133,11 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
 };
 
 /** Big readable card: pink pill tag + up to 4 rows (last row lime). Stays inside x 40-940 (right 12% clear). */
-const Card: React.FC<{ card: { title?: string; tag?: string; rows: string[]; y: number; check: boolean }; f: number; fps: number; still: boolean }> = ({ card, f, fps, still }) => {
-  const inS = still ? 1 : spring({ frame: f - 3, fps, config: { damping: 13, stiffness: 240, overshootClamping: true } });
+const Card: React.FC<{ card: { title?: string; tag?: string; rows: string[]; y: number; check: boolean; hide?: [number, number] }; f: number; fps: number; still: boolean }> = ({ card, f, fps, still }) => {
+  const inS0 = still ? 1 : spring({ frame: f - 3, fps, config: { damping: 13, stiffness: 240, overshootClamping: true } });
+  const t = f / fps;
+  const hid = card.hide ? interpolate(t, [card.hide[0] - 0.15, card.hide[0], card.hide[1], card.hide[1] + 0.2], [1, 0, 0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) : 1;
+  const inS = inS0 * hid;
   return (
     <div style={{ position: 'absolute', left: 40, width: 900, top: card.y, padding: '22px 30px 26px', borderRadius: 34, background: 'rgba(11,12,28,0.88)', border: `6px solid ${C.accent}`, boxShadow: '0 16px 0 rgba(0,0,0,0.35)', transform: `scale(${interpolate(inS, [0, 1], [0.7, 1])})`, opacity: inS, textAlign: 'center' }}>
       {card.title && <div style={{ ...headline(72, C.accent), marginBottom: 10, whiteSpace: 'nowrap' }}>{card.title}</div>}

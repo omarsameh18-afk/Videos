@@ -210,7 +210,7 @@ export const ClipScene = z.object({
     clipStarts: z.array(z.number().int().min(0).max(120)).optional(), // per seq entry
     sfx: z.array(z.object({ at: z.number().min(0), name: z.string() })).default([]),
     // big readable card (fill layout): optional pill tag, rows (each <= 4 words), y = top of the card
-    card: z.object({ title: z.string().optional(), tag: z.string().optional(), rows: z.array(z.string().min(1)).min(1).max(4), y: z.number().int().min(200).max(1100).default(560), check: z.boolean().default(false), still: z.boolean().default(false) }).optional(), // extra SFX, `at` in seconds from scene start
+    card: z.object({ title: z.string().optional(), tag: z.string().optional(), rows: z.array(z.string().min(1)).min(1).max(4), y: z.number().int().min(200).max(1100).default(560), check: z.boolean().default(false), still: z.boolean().default(false), hide: z.tuple([z.number(), z.number()]).optional() }).optional(), // hide = [from, to] s: get out of the way of a key moment // extra SFX, `at` in seconds from scene start
     bigNumber: z.object({ text: z.string().min(1), label: z.string().min(1) }).optional(), // solo silhouette card: counts up
     clipStart: z.number().int().min(0).max(120).default(0), // solo: frames into the clip where the scene starts
     offsetRight: z.number().int().min(0).default(0), // frames into the right clip (so mirrored twins are not identical)

@@ -32,7 +32,7 @@
   "modelId": "eleven_v3",
   "stability": 0.5,
   "speed": 1.05,
-  "maxGapSec": 0.3
+  "maxGapSec": 2
  },
  "scenes": [
   {
@@ -184,7 +184,11 @@
       "ONLY SQUATS",
       "→ ADD RDLs / LEG CURLS"
      ],
-     "y": 620
+     "y": 980,
+     "hide": [
+      2.45,
+      3.9
+     ]
     }
    },
    "captionChunks": [
