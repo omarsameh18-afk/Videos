@@ -12,6 +12,7 @@
 - Max never says or shows doctor/scientist/coach/PT and never gives medical advice.
 - Banned words: config/bannedWords.json (checked by `npm run validate`).
 - Render spec: 1080x1920, 30 fps, H.264, yuv420p, AAC, max 60 s.
+- Every video gets a thumbnail (docs/REVIEW.md, THUMBNAILS): thumbnails/<id>.png + the same frame as the last 0.3 s of the MP4.
 - Secrets: ELEVENLABS_API_KEY lives in .env only. Never commit .env.
 - In the cloud container set REMOTION_BROWSER=/opt/pw-browsers/chromium_headless_shell.
 

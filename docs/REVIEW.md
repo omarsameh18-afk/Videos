@@ -167,3 +167,12 @@ All earlier rules (pacing, animation, visual, v5, US audience) still apply.
 - FINAL CHECK: transcribe the final MP4 audio (ElevenLabs scribe via the connector, from the public raw file in review/stt/),
   compare word-for-word with the script, then `node scripts/align-from-stt.mjs <script> <words.json> voice/<id>.timestamps.json`
   and re-render with `voice.maxGapSec: 2` so the audio stays exactly the transcribed one (captions in sync to ~1 frame).
+
+## THUMBNAILS (permanent, every video; zero image/video credits)
+Compose from existing stills/clip frames with `python3 scripts/make-thumbnail.py thumbnails/<id>.json`, then
+`bash scripts/append-thumbnail.sh <id>` after the render.
+1. `thumbnails/<id>.png`, 1080x1920. Max BIG (face + key visual, >= 55% of the frame), strong emotion.
+2. 2-4 HUGE words, Anton (bold condensed), white + lime #B6FF2E, thick dark outline; high contrast, simple background.
+3. All text inside the middle 80% (y 192-1728). Must promise what the first 2 s deliver.
+4. The same image is the LAST 0.3 s of the MP4 (after the outro, silent tail, mix unchanged), for the mobile
+   "Edit thumbnail" frame picker. Original render kept as `out/<id>.nothumb.mp4`.

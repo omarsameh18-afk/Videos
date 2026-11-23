@@ -1,0 +1,13 @@
+{
+  "clip": "assets/clips/stick-flex-wave.mp4",
+  "t": 1.0,
+  "scale": 0.8,
+  "x": 0,
+  "y": 398,
+  "stripW": 12,
+  "keep": [-80, 420, 980, 1960],
+  "lines": [
+    { "text": "SKIP LEG DAY?", "size": 182, "color": "white", "y": 196 },
+    { "text": "LOSE 50%", "size": 122, "color": "lime", "y": 394 }
+  ]
+}
