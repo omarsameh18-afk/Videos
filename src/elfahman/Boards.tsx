@@ -36,7 +36,9 @@ const Sun: React.FC<{ cx: number; cy: number; r: number; f: number; o?: number }
         <stop offset="100%" stopColor="#FF9F1C" />
       </radialGradient>
     </defs>
+    <circle cx={cx} cy={cy} r={r * 4.2} fill="url(#sunGlow)" opacity={0.45 + 0.08 * Math.sin(f / 11)} />
     <circle cx={cx} cy={cy} r={r * 2.3} fill="url(#sunGlow)" />
+    <ellipse cx={cx} cy={cy} rx={r * 4} ry={r * 0.07} fill="#FFF6C8" opacity={0.35} />
     <g transform={`rotate(${f * 0.6} ${cx} ${cy})`}>
       {Array.from({ length: 16 }, (_, i) => (
         <path key={i} d={`M${cx} ${cy - r * 1.18} L${cx - r * 0.12} ${cy - r * 1.55} L${cx + r * 0.12} ${cy - r * 1.55} Z`} fill="#FFC93C" transform={`rotate(${i * 22.5} ${cx} ${cy})`} />
@@ -202,7 +204,7 @@ export const B3: React.FC<BoardProps> = ({ f, d }) => {
   return (
     <Scene
       bg="radial-gradient(circle at 80% 35%,#1B2350 0%,#070914 70%)"
-      html={<Label x={560} y={940} text="٨ دقايق" size={84} color="#FFD23F" s={interpolate(f, [10, 22], [0, 1], { ...cl, easing: Easing.back(2) })} />}
+      html={<Label x={520} y={620} text="٨ دقايق" size={84} color="#FFD23F" s={interpolate(f, [10, 22], [0, 1], { ...cl, easing: Easing.back(2) })} />}
     >
       <Stars f={f} />
       <Sun cx={sx} cy={sy} r={120} f={f} />
@@ -239,7 +241,7 @@ export const B4: React.FC<BoardProps> = ({ f, d, ev }) => {
   return (
     <Scene
       bg="radial-gradient(circle at 50% 40%,#141A3A 0%,#05060C 75%)"
-      html={lineK > 0 ? <Label x={540} y={1000} text="خط مستقيم!" size={76} color="#FFD23F" s={lineK} /> : null}
+      html={lineK > 0 ? <Label x={540} y={900} text="خط مستقيم!" size={76} color="#FFD23F" s={lineK} /> : null}
     >
       <Stars f={f} n={70} />
       <circle cx={cx} cy={cy} r={R} fill="none" stroke="#9FB3FF" strokeWidth={5} strokeDasharray="14 16" opacity={0.6} />
@@ -276,10 +278,10 @@ export const B5: React.FC<BoardProps> = ({ f, d }) => {
   return (
     <Scene bg="linear-gradient(180deg,#0E1630 0%,#1C2541 55%,#2B2D42 100%)">
       <Stars f={f} n={50} o={0.6} />
-      <rect x={0} y={1000} width={W} height={H - 1000} fill="#3E2C23" />
-      <rect x={0} y={1000} width={W} height={24} fill="#5A4032" />
+      <rect x={0} y={880} width={W} height={H - 880} fill="#3E2C23" />
+      <rect x={0} y={880} width={W} height={24} fill="#5A4032" />
       {[150, 340, 540, 740, 930].map((x, i) => (
-        <Plant key={i} x={x} y={1010} k={Math.max(0, Math.min(1, k * 1.2 - i * 0.05))} s={1.7 + (i % 2) * 0.3} i={i} f={f} />
+        <Plant key={i} x={x} y={890} k={Math.max(0, Math.min(1, k * 1.2 - i * 0.05))} s={1.7 + (i % 2) * 0.3} i={i} f={f} />
       ))}
     </Scene>
   );
@@ -293,7 +295,7 @@ export const B6: React.FC<BoardProps> = ({ f, d }) => {
     <Scene
       bg="linear-gradient(180deg,#16324F 0%,#28536B 60%,#3D6F8A 100%)"
     >
-      <Thermometer x={500} y={420} h={560} temp={temp} min={-80} max={40} />
+      <Thermometer x={700} y={430} h={440} temp={temp} min={-80} max={40} />
       <Frost k={frost} />
     </Scene>
   );
@@ -336,7 +338,7 @@ export const B8: React.FC<BoardProps> = ({ f, d }) => {
       <path d={nile} fill="none" stroke="#FFFFFF" strokeWidth={50} strokeLinecap="round" pathLength={1} strokeDasharray={`${ice} 1`} strokeDashoffset={0} />
       <path d="M260 440 L700 440 L640 300 L340 320 Z" fill="#2F80ED" opacity={0.25 * (1 - ice)} />
       <g transform="translate(0 -40)">
-        <Thermometer x={200} y={520} h={520} temp={temp} min={-80} max={40} />
+        <Thermometer x={200} y={520} h={400} temp={temp} min={-80} max={40} />
       </g>
     </Scene>
   );
@@ -349,10 +351,10 @@ export const B9: React.FC<BoardProps> = ({ f }) => {
   return (
     <Scene
       bg="linear-gradient(180deg,#0F1B33 0%,#2A3B5C 70%,#DDEBF7 70%,#F4F9FF 100%)"
-      html={<Label x={820} y={1010} text="مخزن أكل" size={60} color="#FFD23F" s={box} />}
+      html={<Label x={820} y={830} text="مخزن أكل" size={60} color="#FFD23F" s={box} />}
     >
       <Stars f={f} n={40} o={0.5} />
-      <g transform={`rotate(${sway} 540 1350)`}>
+      <g transform={`translate(0 -190) rotate(${sway} 540 1350)`}>
         <path d="M470 1350 L490 820 L590 820 L610 1350 Z" fill="#6B4226" />
         <path d="M500 900 L400 760 M580 900 L690 740" stroke="#6B4226" strokeWidth={36} strokeLinecap="round" />
         {[[540, 600, 260], [380, 700, 170], [700, 700, 180], [540, 450, 190]].map(([x, y, r], i) => (
@@ -453,7 +455,7 @@ export const B13: React.FC<BoardProps> = ({ f }) => {
   const glow = 0.75 + Math.sin(f / 6) * 0.2;
   return (
     <Scene bg="linear-gradient(180deg,#05162E 0%,#0A2A4F 50%,#0B3B5E 100%)">
-      <g transform="translate(0 -200)">
+      <g transform="translate(0 -290)">
       <defs>
         <radialGradient id="ventGlow">
           <stop offset="0%" stopColor="#FFF176" stopOpacity={1} />
@@ -465,7 +467,33 @@ export const B13: React.FC<BoardProps> = ({ f }) => {
         <circle key={i} cx={rnd(i) * W} cy={(rnd(i + 30) * 1200 + 200 - f * (0.6 + rnd(i) * 0.8) + 2400) % 1200 + 200} r={3 + rnd(i + 60) * 5} fill={['#00E5FF', '#76FF03', '#E040FB', '#FFEA00'][i % 4]} opacity={0.7} />
       ))}
       <path d={`M0 1180 Q270 1120 540 1170 Q810 1220 1080 1150 L1080 ${H + 300} L0 ${H + 300} Z`} fill="#3E2723" />
+      <defs>
+        <filter id="bloom" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="28" /></filter>
+        <radialGradient id="jelly"><stop offset="0%" stopColor="#fff" stopOpacity={0.9} /><stop offset="100%" stopColor="#E040FB" stopOpacity={0.2} /></radialGradient>
+      </defs>
+      {/* far reef silhouettes (depth layer) */}
+      <path d="M0 1120 Q90 980 170 1060 Q240 940 330 1080 L330 1200 L0 1200 Z" fill="#0E3A5C" />
+      <path d="M760 1090 Q840 960 920 1050 Q990 930 1080 1040 L1080 1200 L760 1200 Z" fill="#0E3A5C" />
+      <circle cx={540} cy={820} r={520 * glow} fill="#FF6D00" opacity={0.22} filter="url(#bloom)" />
       <circle cx={540} cy={760} r={380 * glow} fill="url(#ventGlow)" opacity={0.9} />
+      {/* jellyfish */}
+      {[[180, 560, '#E040FB', 0], [900, 470, '#00E5FF', 1], [760, 700, '#76FF03', 2]].map(([x, y, c, i]) => {
+        const bob = Math.sin(f / 14 + (i as number) * 2) * 22;
+        return (
+          <g key={i as number} transform={`translate(${x} ${(y as number) + bob})`}>
+            <circle r={70} fill={c as string} opacity={0.25} filter="url(#bloom)" />
+            <path d="M-46 0 Q-46 -50 0 -50 Q46 -50 46 0 Q23 12 0 4 Q-23 12 -46 0 Z" fill="url(#jelly)" stroke={c as string} strokeWidth={4} />
+            {[-30, -10, 10, 30].map((dx, k) => <path key={k} d={`M${dx} 6 q ${Math.sin(f / 8 + k) * 10} 30 0 60 q ${-Math.sin(f / 8 + k) * 10} 30 0 60`} stroke={c as string} strokeWidth={4} fill="none" opacity={0.8} />)}
+          </g>
+        );
+      })}
+      {/* corals + anemones in front of the reef */}
+      {[[110, '#FF4081'], [200, '#FFEA00'], [880, '#00E676'], [970, '#FF9100']].map(([x, c], i) => (
+        <g key={i} transform={`translate(${x} 1175)`}>
+          {[-40, -15, 15, 40].map((a, k) => <path key={k} d={`M0 0 Q ${a * 0.6} -60 ${a * 1.4 + Math.sin(f / 16 + k + i) * 6} -130`} stroke={c as string} strokeWidth={14} fill="none" strokeLinecap="round" />)}
+          {[-40, -15, 15, 40].map((a, k) => <circle key={`c${k}`} cx={a * 1.4 + Math.sin(f / 16 + k + i) * 6} cy={-134} r={11} fill="#fff" opacity={0.85} />)}
+        </g>
+      ))}
       {/* smoke plume */}
       {Array.from({ length: 10 }, (_, i) => {
         const t = ((f * 2 + i * 40) % 400) / 400;
@@ -507,8 +535,8 @@ export const B14: React.FC<BoardProps> = ({ f, ev }) => {
   const zz = interpolate(f, [off, off + 12], [0, 1], { ...cl, easing: Easing.back(2) });
   return (
     <Scene bg="linear-gradient(180deg,#000 0%,#05162E 40%,#0A2A4F 100%)">
-      <g transform="translate(0 -200)">
-      <Sun cx={540} cy={560} r={80} f={f} o={sunO} />
+      <g transform="translate(0 -290)">
+      <Sun cx={540} cy={720} r={80} f={f} o={sunO} />
       <line x1={0} y1={520} x2={W} y2={520} stroke="#4FC3F7" strokeWidth={4} strokeDasharray="20 14" opacity={0.6} />
       <path d={`M0 1180 Q270 1120 540 1170 Q810 1220 1080 1150 L1080 ${H + 300} L0 ${H + 300} Z`} fill="#3E2723" />
       <circle cx={600} cy={1000} r={240} fill="#FF9800" opacity={0.3} />

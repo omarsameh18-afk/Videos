@@ -4,11 +4,11 @@ SR = 44100
 def load(p):
     raw = subprocess.run(['ffmpeg','-v','error','-i',p,'-ac','1','-ar',str(SR),'-f','s16le','-'],capture_output=True).stdout
     return np.frombuffer(raw,dtype=np.int16).astype(np.float32)/32768
-def segments(x, thr_db=-40, hop=0.01, min_sil=0.08):
+def segments(x, thr_db=-40, hop=0.01, min_sil=0.08, rel=38):
     n=int(SR*hop); frames=len(x)//n
     rms=np.sqrt(np.mean(x[:frames*n].reshape(frames,n)**2,axis=1)+1e-12)
     db=20*np.log10(rms); peak=db.max()
-    voiced=db>max(thr_db, peak-38)
+    voiced=db>max(thr_db, peak-rel)
     idx=np.where(voiced)[0]
     start,end=idx[0]*hop,(idx[-1]+1)*hop
     sils=[]; i=idx[0]

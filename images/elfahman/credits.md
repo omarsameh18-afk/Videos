@@ -217,3 +217,9 @@ and no pictures at all.
 | Voice, 1 take, ~40–50 s | ~510–700 |
 | 3 props at 1K high (~337 each), only if code can't draw them | ~1,010 |
 | **Per video** | **~600 with every prop drawn in code (video 03), ~1,600 with 3 generated props** (≈ 48 or 18 videos per 30k-credit month) |
+
+## Episode 12 v2 — لو الشمس اختفت (2026-11-23)
+- Voice: re-used the episode 12 v1 recording (16 eleven_v4 sentences, 1 take each, 931 credits spent in v1). Re-edited for v2 with
+  `scripts/elfahman/assemble_voice_v2.py` (1.0x, silence only cut). **0 new credits.**
+- Character: existing library (`public/elfahman/lib/`), no new pictures. Boards drawn in code. Music + SFX synthesized. **0 credits.**
+- Episode total (v1 + v2): 931 credits.
