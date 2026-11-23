@@ -1,0 +1,309 @@
+{
+ "meta": {
+  "id": "skip-half",
+  "title": "Skip Leg Day = Skip Half Your Muscle",
+  "topic": "leg training: lower-body muscle share, hamstrings and squats, weekly volume, frequency",
+  "targetSec": [
+   30,
+   38
+  ],
+  "sources": [
+   {
+    "label": "Janssen et al., 2000",
+    "citation": "Janssen I, Heymsfield SB, Wang ZM, Ross R. Skeletal muscle mass and distribution in 468 men and women aged 18-88 yr. J Appl Physiol. 2000;89(1):81-88."
+   },
+   {
+    "label": "Kubo et al., 2019",
+    "citation": "Kubo K, Ikebukuro T, Yata H. Effects of squat training with different depths on lower limb muscle volumes. Eur J Appl Physiol. 2019;119(9):1933-1942."
+   },
+   {
+    "label": "Schoenfeld et al., 2017",
+    "citation": "Schoenfeld BJ, Ogborn D, Krieger JW. Dose-response relationship between weekly resistance training volume and increases in muscle mass: a systematic review and meta-analysis. J Sports Sci. 2017;35(11):1073-1082."
+   },
+   {
+    "label": "Schoenfeld et al., 2016",
+    "citation": "Schoenfeld BJ, Ogborn D, Krieger JW. Effects of resistance training frequency on measures of muscle hypertrophy: a systematic review and meta-analysis. Sports Med. 2016;46(11):1689-1697."
+   }
+  ],
+  "seed": 14
+ },
+ "voice": {
+  "voiceId": "TX3LPaxmHKxFdv7VOQHJ",
+  "modelId": "eleven_v3",
+  "stability": 0.5,
+  "speed": 1.05,
+  "maxGapSec": 0.3
+ },
+ "scenes": [
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "If you skip leg day, you're not skipping one workout.",
+   "emphasis": [
+    "skip"
+   ],
+   "props": {
+    "layout": "fill",
+    "clip": "stick-flex-wave",
+    "seqLeft": [
+     "stick-flex-wave"
+    ],
+    "segSec": 4,
+    "card": {
+     "rows": [
+      "SKIP LEG DAY =",
+      "SKIP 50%+",
+      "OF YOUR MUSCLE"
+     ],
+     "y": 560
+    }
+   },
+   "captionChunks": [
+    "If you skip",
+    "leg day,",
+    "you're not skipping",
+    "one workout."
+   ]
+  },
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "You're skipping more than half your muscle.",
+   "emphasis": [
+    "half"
+   ],
+   "props": {
+    "layout": "fill",
+    "clip": "stick-squat-collapse",
+    "seqLeft": [
+     "stick-squat-collapse"
+    ],
+    "segSec": 4,
+    "flash": 0.25,
+    "card": {
+     "rows": [
+      "SKIP LEG DAY =",
+      "SKIP 50%+",
+      "OF YOUR MUSCLE"
+     ],
+     "y": 560,
+     "still": true
+    }
+   },
+   "captionChunks": [
+    "You're skipping",
+    "more than half",
+    "your muscle."
+   ]
+  },
+  {
+   "type": "ClipScene",
+   "background": "lab",
+   "narration": "Your lower body holds over half your skeletal muscle.",
+   "emphasis": [
+    "half"
+   ],
+   "sourceIndex": 0,
+   "props": {
+    "layout": "fill",
+    "clip": "stick-flex-wave",
+    "silhouette": true,
+    "showWeek": false,
+    "flash": 0.6,
+    "bigNumber": {
+     "text": "50%+",
+     "label": "of your muscle"
+    },
+    "lines": [
+     "The math:"
+    ]
+   },
+   "captionChunks": [
+    "Your lower body",
+    "holds over half",
+    "your skeletal muscle."
+   ]
+  },
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "That's your biggest growth engine… and Max left it parked.",
+   "emphasis": [
+    "parked"
+   ],
+   "sourceIndex": 0,
+   "props": {
+    "layout": "fill",
+    "clip": "stick-flex-wave",
+    "seqLeft": [
+     "stick-flex-wave"
+    ],
+    "segSec": 4,
+    "clipStart": 20,
+    "zoom": 1.35,
+    "focusY": 0.12
+   },
+   "captionChunks": [
+    "That's your biggest",
+    "growth engine…",
+    "and Max",
+    "left it parked."
+   ]
+  },
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "Mistake one: 'I squat, so I'm good.' Nope. After ten weeks of squats, quads and glutes grew. Hamstrings didn't. Add Romanian deadlifts or leg curls.",
+   "emphasis": [
+    "Nope"
+   ],
+   "sourceIndex": 1,
+   "props": {
+    "layout": "fill",
+    "clip": "stick-squat-collapse",
+    "seqLeft": [
+     "stick-squat-collapse",
+     "stick-flex-wave",
+     "stick-squat-collapse"
+    ],
+    "clipStarts": [
+     0,
+     0,
+     30
+    ],
+    "segSec": 3.3,
+    "sfx": [
+     {
+      "at": 2.75,
+      "name": "boing"
+     }
+    ],
+    "card": {
+     "tag": "MISTAKE #1",
+     "rows": [
+      "ONLY SQUATS",
+      "→ ADD RDLs / LEG CURLS"
+     ],
+     "y": 620
+    }
+   },
+   "captionChunks": [
+    "Mistake one:",
+    "'I squat,",
+    "so I'm good.'",
+    "Nope.",
+    "After ten weeks",
+    "of squats,",
+    "quads and glutes grew.",
+    "Hamstrings didn't.",
+    "Add Romanian deadlifts",
+    "or leg curls."
+   ]
+  },
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "Mistake two: three sets and done. Ten or more hard sets per muscle, every week, grows more than fewer than five.",
+   "emphasis": [
+    "Ten"
+   ],
+   "sourceIndex": 2,
+   "props": {
+    "layout": "fill",
+    "clip": "avg-curl",
+    "seqLeft": [
+     "avg-curl",
+     "bicep-curl",
+     "celebrate"
+    ],
+    "segSec": 2.6,
+    "card": {
+     "tag": "MISTAKE #2",
+     "rows": [
+      "TOO FEW SETS",
+      "→ 10+ HARD SETS/WEEK"
+     ],
+     "y": 980
+    }
+   },
+   "captionChunks": [
+    "Mistake two:",
+    "three sets and done.",
+    "Ten or more",
+    "hard sets per muscle,",
+    "every week,",
+    "grows more",
+    "than fewer than five."
+   ]
+  },
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "Mistake three: one leg day a week. Split it into two. Training a muscle twice a week beats once.",
+   "emphasis": [
+    "twice"
+   ],
+   "sourceIndex": 3,
+   "props": {
+    "layout": "fill",
+    "clip": "rack-nah",
+    "seqLeft": [
+     "rack-nah",
+     "celebrate"
+    ],
+    "segSec": 3,
+    "card": {
+     "tag": "MISTAKE #3",
+     "rows": [
+      "1 LEG DAY",
+      "→ TRAIN LEGS 2x/WEEK"
+     ],
+     "y": 980
+    }
+   },
+   "captionChunks": [
+    "Mistake three:",
+    "one leg day",
+    "a week.",
+    "Split it into two.",
+    "Training a muscle",
+    "twice a week",
+    "beats once."
+   ]
+  },
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "Save this for your next leg day… or end up like Max.",
+   "emphasis": [
+    "Save"
+   ],
+   "props": {
+    "layout": "fill",
+    "clip": "stick-flex-wave",
+    "seqLeft": [
+     "stick-flex-wave"
+    ],
+    "segSec": 4,
+    "clipStart": 70,
+    "card": {
+     "title": "SAVE THIS FOR LEG DAY",
+     "rows": [
+      "SQUATS + RDLs",
+      "10+ SETS",
+      "2x/WEEK"
+     ],
+     "y": 520,
+     "check": true
+    }
+   },
+   "captionChunks": [
+    "Save this",
+    "for your next",
+    "leg day…",
+    "or end up",
+    "like Max."
+   ]
+  }
+ ]
+}

@@ -20,6 +20,7 @@ const SceneBase = {
   pose: z.enum(POSES).optional(),
   onScreenText: z.array(Line).default([]), // one entry per line
   sourceIndex: z.number().int().min(0).optional(), // -> meta.sources[i], shown as a source footer
+  captionChunks: z.array(z.string().min(1)).optional(), // hand-written caption phrases (1-4 words each), joined = narration
   // later sentences of this scene (0-based sentence index): max ONE pose per sentence
   moves: z
     .array(
@@ -207,7 +208,9 @@ export const ClipScene = z.object({
     focusY: z.number().min(0).max(1).optional(), // zoom anchor (fraction of clip height)
     flash: z.number().min(0).max(1).optional(), // white flash strength at scene start
     clipStarts: z.array(z.number().int().min(0).max(120)).optional(), // per seq entry
-    sfx: z.array(z.object({ at: z.number().min(0), name: z.string() })).default([]), // extra SFX, `at` in seconds from scene start
+    sfx: z.array(z.object({ at: z.number().min(0), name: z.string() })).default([]),
+    // big readable card (fill layout): optional pill tag, rows (each <= 4 words), y = top of the card
+    card: z.object({ title: z.string().optional(), tag: z.string().optional(), rows: z.array(z.string().min(1)).min(1).max(4), y: z.number().int().min(200).max(1100).default(560), check: z.boolean().default(false), still: z.boolean().default(false) }).optional(), // extra SFX, `at` in seconds from scene start
     bigNumber: z.object({ text: z.string().min(1), label: z.string().min(1) }).optional(), // solo silhouette card: counts up
     clipStart: z.number().int().min(0).max(120).default(0), // solo: frames into the clip where the scene starts
     offsetRight: z.number().int().min(0).default(0), // frames into the right clip (so mirrored twins are not identical)

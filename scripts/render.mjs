@@ -62,7 +62,7 @@ const { amplitude, durationSec } = computeAmplitude(voiceWav, FPS);
 const words = alignmentToWords(ed.alignment);
 const scenes = sceneTimings(script, words, durationSec, FPS, { tailSec: 0.4, leadFrames: 1 });
 const pacing = buildPacing(script, scenes, words, FPS);
-const pages = captionPages(words, scenes, { maxWords: 4, maxChars: 30 });
+const pages = captionPages(words, scenes, { maxWords: 4, maxChars: 30, chunks: script.scenes.map((s) => s.captionChunks) });
 const chars = ed.alignment.characters.map((c, i) => ({
   char: c,
   start: ed.alignment.character_start_times_seconds[i],

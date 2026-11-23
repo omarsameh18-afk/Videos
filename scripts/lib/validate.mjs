@@ -90,6 +90,10 @@ export function validateScript(raw) {
       ...(sc.type === 'BigNumber' ? [sc.props.label] : []),
       ...(sc.type === 'AnimatedChart' && sc.props.marker ? [sc.props.marker.label] : []),
     ];
+    if (sc.captionChunks) {
+      if (sc.captionChunks.join(' ').split(/\s+/).join(' ') !== sc.narration.trim().split(/\s+/).join(' ')) errors.push(`${at}: captionChunks do not join to the narration`);
+      for (const c of sc.captionChunks) if (c.trim().split(/\s+/).length > 4) errors.push(`${at}: caption chunk "${c}" has more than 4 words`);
+    }
     if (sc.type === 'ClipScene') {
       const p = sc.props;
       if (p.question) { vis.push([p.question, 972]); headlines.push(p.question); }
@@ -98,6 +102,12 @@ export function validateScript(raw) {
       if (p.swapRight) p.clipRight = p.clipRight ?? p.clip;
       (p.labels ?? []).forEach((x) => vis.push([x, 380]));
       p.tags.forEach((x) => { vis.push([x, 972]); headlines.push(x); });
+      if (p.card) {
+        // cards: owner rule = <= 8 words per card (symbols like → / + = don't count), each row must fit
+        const cw = [p.card.tag ?? '', ...p.card.rows].join(' ').split(/\s+/).filter((w) => /[a-z0-9]/i.test(w)).length;
+        if (cw > 8) errors.push(`${at}: card has ${cw} words (max 8)`);
+        for (const x of [p.card.title, p.card.tag, ...p.card.rows].filter(Boolean)) if (!fits(x, 880)) errors.push(`${at}: card text "${x}" does not fit`);
+      }
       if (p.meters) { vis.push([p.meters.label, 972]); headlines.push(p.meters.label); }
       const man = existsSync('assets/clips/manifest.json') ? JSON.parse(readFileSync('assets/clips/manifest.json', 'utf8')).items.map((x) => x.name) : [];
       for (const c of [p.clip, p.clipRight, p.swapRight?.clip, ...(p.seqLeft ?? []), ...(p.seqRight ?? []), ...(p.seqRightBig ?? [])].filter(Boolean)) if (!man.includes(c)) errors.push(`${at}: clip "${c}" is not in assets/clips/manifest.json`);

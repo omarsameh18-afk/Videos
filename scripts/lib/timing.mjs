@@ -86,12 +86,12 @@ export const DANGLING = new Set([
   'a', 'an', 'the', 'your', 'my', 'our', 'their', 'his', 'her', 'its', 'to', 'of', 'from', 'in', 'on', 'at', 'for',
   'with', 'and', 'but', 'or', 'nor', 'is', 'are', 'was', 'were', 'be', "it's", "that's", 'that', 'this',
   'these', 'those', 'after', 'before', 'into', 'than', 'as', 'by', 'so', 'if', 'very', 'really', 'no', 'one',
-  'some', 'any', 'every', "isn't", "don't", "doesn't", "didn't", "hasn't", "won't", "can't", 'half', 'looks', 'can', 'will', 'would', 'should',
+  'some', 'any', 'every', "isn't", "don't", "doesn't", "didn't", "hasn't", "won't", "can't", 'half', 'looks', 'hard', 'fewer', 'biggest', 'next', 'leg', 'end', 'over', 'more', 'can', 'will', 'would', 'should',
   'means', 'mean', 'makes', 'make', 'gets', 'get', 'let', 'out', 'single', 'like', 'he', 'she', 'they', 'we', 'i', 'you', 'which', 'what', 'who', 'how', 'why', 'where', 'when',
 ]);
 const PARTICLES = new Set(['in', 'up', 'to', 'on', 'off', 'out', 'down', 'over']);
 const bare = (w) => w.toLowerCase().replace(/[^a-z0-9']/g, '');
-const closes = (w) => /[.,;:?!]$/.test(w);
+const closes = (w) => /[.,;:?!…]['"”’]?$/.test(w);
 
 /**
  * CAPTION RULE: chunk by phrase/meaning, 1-3 words, never end on a dangling word, never across punctuation
@@ -138,7 +138,7 @@ export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
   };
   texts.forEach((w, k) => {
     seg.push(k);
-    if (/[.;:?!]$/.test(w)) flush();
+    if (/[.;:?!…]['"”’]?$/.test(w)) flush(); // sentence end, also before a closing quote ("good.'") and after '…'
   });
   if (seg.length) flush();
   return out;
@@ -147,10 +147,21 @@ export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
 /** Caption pages from phrase chunks, never across a scene boundary. */
 export function captionPages(words, scenes, opts = {}) {
   const pages = [];
-  for (const sc of scenes) {
+  scenes.forEach((sc, si) => {
     const idx = Array.from({ length: sc.wordCount }, (_, k) => sc.firstWord + k).filter((i) => i < words.length);
+    const fixed = opts.chunks?.[si];
+    if (fixed) {
+      // hand-written phrase chunks (validated to equal the narration word for word)
+      let k = 0;
+      for (const ph of fixed) {
+        const n = ph.trim().split(/\s+/).length;
+        pages.push(idx.slice(k, k + n));
+        k += n;
+      }
+      return;
+    }
     for (const ch of chunkWords(idx.map((i) => words[i].text), opts)) pages.push(ch.map((k) => idx[k]));
-  }
+  });
   return pages.map((idx, p) => ({
     words: idx,
     start: words[idx[0]].start,

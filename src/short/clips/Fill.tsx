@@ -126,7 +126,43 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
             })
           : counter && <div style={{ ...headline(130, C.accent), transform: `scale(${interpolate(tick, [0, 1], [1.4, 1])})` }}>{counter}</div>}
       </div>
+      {p.card && <Card card={p.card} f={f} fps={fps} still={p.card.still || first} />}
       <AbsoluteFill style={{ background: '#fff', opacity: flash }} />
     </AbsoluteFill>
+  );
+};
+
+/** Big readable card: pink pill tag + up to 4 rows (last row lime). Stays inside x 40-940 (right 12% clear). */
+const Card: React.FC<{ card: { title?: string; tag?: string; rows: string[]; y: number; check: boolean }; f: number; fps: number; still: boolean }> = ({ card, f, fps, still }) => {
+  const inS = still ? 1 : spring({ frame: f - 3, fps, config: { damping: 13, stiffness: 240, overshootClamping: true } });
+  return (
+    <div style={{ position: 'absolute', left: 40, width: 900, top: card.y, padding: '22px 30px 26px', borderRadius: 34, background: 'rgba(11,12,28,0.88)', border: `6px solid ${C.accent}`, boxShadow: '0 16px 0 rgba(0,0,0,0.35)', transform: `scale(${interpolate(inS, [0, 1], [0.7, 1])})`, opacity: inS, textAlign: 'center' }}>
+      {card.title && <div style={{ ...headline(72, C.accent), marginBottom: 10, whiteSpace: 'nowrap' }}>{card.title}</div>}
+      {card.tag && (
+        <div style={{ display: 'inline-block', padding: '4px 26px', marginBottom: 10, borderRadius: 40, background: C.accent2, ...headline(64, '#fff') }}>{card.tag}</div>
+      )}
+      {card.rows.map((r, i) => {
+        const s = still ? 1 : spring({ frame: f - 8 - i * 6, fps, config: { damping: 12, stiffness: 300, overshootClamping: true } });
+        const arrow = r.startsWith('→');
+        const text = arrow ? r.replace(/^→\s*/, '') : r;
+        const chars = text.length + (card.check ? 1.6 : 0) + (arrow ? 1.6 : 0);
+        const sz = Math.min(card.rows.length > 2 ? 104 : 118, Math.floor(830 / (chars * 0.56)));
+        const col = i === card.rows.length - 1 ? C.accent : '#fff';
+        return (
+          <div key={i} style={{ ...headline(sz, col), lineHeight: 1.08, whiteSpace: 'nowrap', transform: `scale(${s})`, textTransform: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: sz * 0.18 }}>
+            {(arrow || card.check) && (
+              <svg width={sz * 0.8} height={sz * 0.8} viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
+                {arrow ? (
+                  <path d="M3 12h14M12 5l7 7-7 7" fill="none" stroke={col} strokeWidth={4.2} strokeLinecap="round" strokeLinejoin="round" style={{ paintOrder: 'stroke' }} />
+                ) : (
+                  <path d="M4 12.5l5 5L20 6.5" fill="none" stroke={col} strokeWidth={4.2} strokeLinecap="round" strokeLinejoin="round" />
+                )}
+              </svg>
+            )}
+            <span>{text}</span>
+          </div>
+        );
+      })}
+    </div>
   );
 };
