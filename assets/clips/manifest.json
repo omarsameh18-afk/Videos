@@ -247,7 +247,23 @@
       "generationId": "XIAXQx5GNHKawArjnVZI",
       "credits": 609,
       "prompt": "edit of pose-chicken-shorts-squat: same stick legs, proud cocky grin, no sweat"
+    },
+    {
+      "name": "stick-squat-collapse",
+      "file": "assets/clips/stick-squat-collapse.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "tccYGWQbXnWiKjrtJJv4",
+      "credits": 2121,
+      "prompt": "from pose-chicken-shorts-squat: bodyweight squat, stick legs shake, collapse onto butt, shaker gripped"
+    },
+    {
+      "name": "stick-flex-wave",
+      "file": "assets/clips/stick-flex-wave.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "hOld1gKFrHQgAKXtqwup",
+      "credits": 2121,
+      "prompt": "from pose-chicken-proud: bicep flex, stick legs wobble, waves at camera, shaker gripped"
     }
   ],
-  "totalCredits": 45892
+  "totalCredits": 50134
 }

@@ -10,7 +10,7 @@ import { Silhouette } from './Solo';
 // clip's top (gym wall) fills the strip behind the title band.
 export const FILL = { drop: 110, titleH: 190, captionY: 1425, captionH: 140, sourceY: 206 };
 const CLIP_FRAMES = 150;
-const WAIST = 0.56;
+const WAIST = 0.64; // below the hanging hands so the growth never cuts an arm
 
 const Clip: React.FC<{ clip: string; start?: number }> = ({ clip, start = 0 }) => (
   <Loop durationInFrames={CLIP_FRAMES - start}>
@@ -24,7 +24,7 @@ const Body: React.FC<{ clip: string; start: number; upper: number; zoom: number;
       <Clip clip={clip} start={start} />
     </div>
     {upper > 1.001 && (
-      <div style={{ position: 'absolute', inset: 0, transform: `scale(${upper}, ${1 + (upper - 1) * 0.6})`, transformOrigin: `50% ${WAIST * 100}%` }}>
+      <div style={{ position: 'absolute', inset: 0, transform: `scale(${upper}, ${1 + (upper - 1) * 0.3})`, transformOrigin: `50% ${WAIST * 100}%` }}>
         <div style={{ position: 'absolute', inset: 0, WebkitMaskImage: `radial-gradient(ellipse 64% 48% at 50% ${WAIST * 100 - 26}%, #000 78%, transparent 100%)`, clipPath: `inset(0 0 ${(1 - WAIST) * 100}% 0)` }}>
           <Clip clip={clip} start={start} />
         </div>
@@ -92,7 +92,7 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
       {/* title band: gradient so the text reads, never an empty block */}
       <div style={{ position: 'absolute', left: 0, top: 0, width: 1080, height: FILL.titleH + 90, background: 'linear-gradient(rgba(11,12,28,0.82) 55%, rgba(11,12,28,0))' }} />
       {p.bodyMeters && (
-        <div style={{ position: 'absolute', left: 28, top: FILL.titleH + 14, width: 380, padding: '10px 16px', borderRadius: 18, background: 'rgba(11,12,28,0.72)' }}>
+        <div style={{ position: 'absolute', left: 28, top: FILL.titleH + 14, width: 330, padding: '8px 14px', borderRadius: 18, background: 'rgba(11,12,28,0.72)' }}>
           {(
             [
               ['UPPER BODY', p.bodyMeters.upper, C.accent],
@@ -103,7 +103,7 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
             const blink = v[1] <= 0 ? 0.55 + 0.45 * Math.abs(Math.sin(f / 5)) : 1;
             return (
               <div key={label} style={{ marginBottom: 6 }}>
-                <div style={{ ...headline(44, '#fff'), textAlign: 'left' }}>
+                <div style={{ ...headline(46, '#fff'), textAlign: 'left' }}>
                   {label} <span style={{ color: col, opacity: blink }}>{Math.round(val)}%</span>
                 </div>
                 <div style={{ height: 26, borderRadius: 13, background: 'rgba(0,0,0,0.6)', border: '3px solid #0B0C1C', overflow: 'hidden' }}>

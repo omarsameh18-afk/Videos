@@ -153,3 +153,10 @@ All earlier rules (pacing, animation, visual, v5, US audience) still apply.
 ## BUDGET (until Dec 1)
 - BrainPump budget = 50K ElevenLabs credits total; never touch the last 16K of the account (reserved).
 - Ledger: docs/budget.md (account usage before/after each video). Report the running total in every GATE.
+
+## FILL FORMAT (Video #1 "max-365" on)
+- Clip fills 1080x1920 edge to edge (ClipScene `layout: "fill"`), dropped 110 px under a gradient title band; captions at ~78%
+  (y 1425, box x 50-930); source top-left under the title; meters top-left. No blurred side panels, no boxed clip.
+- Upper-body growth line sits below the hanging hands (0.64), vertical growth factor 0.3 so the head stays clear.
+- eleven_v3 voice: run `node scripts/desilence.mjs <tts.mp3> <tts.timestamps.json> <id>` (its timestamps smear words
+  over pauses), then render with voice/<id>.mp3. Extra SFX per scene via `props.sfx` (boing, scratch).

@@ -86,7 +86,7 @@ export const DANGLING = new Set([
   'a', 'an', 'the', 'your', 'my', 'our', 'their', 'his', 'her', 'its', 'to', 'of', 'from', 'in', 'on', 'at', 'for',
   'with', 'and', 'but', 'or', 'nor', 'is', 'are', 'was', 'were', 'be', "it's", "that's", 'that', 'this',
   'these', 'those', 'after', 'before', 'into', 'than', 'as', 'by', 'so', 'if', 'very', 'really', 'no', 'one',
-  'some', 'any', 'every', "isn't", "don't", "doesn't", 'can', 'will', 'would', 'should',
+  'some', 'any', 'every', "isn't", "don't", "doesn't", "didn't", "hasn't", "won't", "can't", 'half', 'looks', 'can', 'will', 'would', 'should',
   'means', 'mean', 'makes', 'make', 'gets', 'get', 'let', 'out', 'single', 'like', 'he', 'she', 'they', 'we', 'i', 'you', 'which', 'what', 'who', 'how', 'why', 'where', 'when',
 ]);
 const PARTICLES = new Set(['in', 'up', 'to', 'on', 'off', 'out', 'down', 'over']);
@@ -111,6 +111,7 @@ export function chunkWords(texts, { maxWords = 3, maxChars = 24 } = {}) {
     if (!closes(last) && !particle && DANGLING.has(bare(last))) c += 20;
     if (!closes(last) && /-/.test(last)) c += 20; // 'three-minute' needs its noun
     if (ch.length === 1 && DANGLING.has(bare(last))) c += 30;
+    if (ch.length <= 2 && ['a', 'an', 'the'].includes(bare(ch[0]))) c += 1; // orphan 'A DAY.' -> keep the verb with its object
     if (ch.slice(0, -1).some((w) => /,$/.test(w))) c += 8; // a comma inside a chunk: 'WITH AGE, MOST MUSCLE | LOSS' -> split at the comma
     return c;
   };

@@ -234,6 +234,7 @@ export const Script = z.object({
     sources: z.array(Source).min(1, 'at least one source is required'),
     variant: z.string().optional(),
     targetSec: z.tuple([z.number(), z.number()]).optional(), // allowed final length [min, max]
+    hookMaxSec: z.number().min(2).max(4.5).optional(), // override the 3 s hook rule when the owner fixed the exact hook line
     seed: z.number().int().default(1),
   }),
   voice: z.object({

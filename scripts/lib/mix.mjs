@@ -26,7 +26,7 @@ export function mixAudio({ voice, events, durSec, out, musicDb = -20, whooshDb =
   const sfxFiles = [...new Set(events.map((e) => e.sfx))];
   sfxFiles.forEach((s) => inputs.push('-i', SFX[s]));
   const idx = (s) => 2 + sfxFiles.indexOf(s);
-  const sfxGain = { whoosh: whooshDb, pop: popDb, thud: thudDb };
+  const sfxGain = { whoosh: whooshDb, pop: popDb, thud: thudDb, boing: -4, scratch: -6 };
 
   const f = [];
   f.push(`[0:a]aresample=48000,apad=whole_dur=${durSec}[v]`);
