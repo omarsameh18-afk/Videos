@@ -10,6 +10,7 @@ import { MaxFigureProps } from './max/MaxFigure';
 import { VIDEO } from './config';
 import { Short, calculateShortMetadata } from './short/Short';
 import { ShortProps } from './short/types';
+import { SunVanishes, SUN_FRAMES } from './elfahman/SunVanishes';
 
 export const RemotionRoot: React.FC = () => (
   <>
@@ -23,6 +24,7 @@ export const RemotionRoot: React.FC = () => (
       calculateMetadata={calculateShortMetadata}
       defaultProps={{ durationInFrames: 1, scenes: [], words: [], pages: [], chars: [], amplitude: [], audioSrc: '', exprKeys: [], poseKeys: [], zoomKeys: [], shakes: [], emphasisWords: [] } as unknown as ShortProps}
     />
+    <Composition id="ElFahman12" component={SunVanishes} width={1080} height={1920} fps={30} durationInFrames={SUN_FRAMES} />
     <Composition id="ProofSheet" component={ProofSheet} {...PROOF_SIZE} fps={VIDEO.fps} durationInFrames={1} />
     <Composition id="BodyProbe" component={BodyProbe} width={2400} height={1800} fps={30} durationInFrames={1} />
     <Composition id="VisualGallery" component={VisualGallery} width={VIDEO.width} height={VIDEO.height} fps={VIDEO.fps} durationInFrames={60} defaultProps={{ which: 'split' as 'split' | 'number' | 'gauge' }} />

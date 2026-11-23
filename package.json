@@ -25,6 +25,7 @@
   "homepage": "https://github.com/omarsameh18-afk/Videos#readme",
   "dependencies": {
     "@fontsource/anton": "^5.3.0",
+    "@fontsource/cairo": "^5.3.0",
     "@fontsource/montserrat": "^5.3.0",
     "@remotion/cli": "^4.0.545",
     "@remotion/media-utils": "^4.0.545",
