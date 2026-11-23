@@ -1,44 +1,18 @@
 {
-  "name": "brainpump-shorts",
-  "version": "1.0.0",
-  "description": "Max (BrainPump) YouTube Shorts animation system",
+  "name": "videos",
+  "private": true,
   "scripts": {
-    "studio": "remotion studio src/index.ts",
-    "typecheck": "tsc -p .",
-    "proof-sheet": "remotion still src/index.ts ProofSheet review/proof-sheet.png",
-    "rig-test": "node scripts/rig-test.mjs",
-    "validate": "node --no-warnings scripts/validate.mjs",
-    "render": "node --no-warnings scripts/render.mjs",
-    "import-voice": "node --no-warnings scripts/import-voice.mjs",
-    "measure-poses": "rm -rf .cache/probe && remotion render src/index.ts PoseProbe .cache/probe --sequence --image-format=png >/dev/null && python3 scripts/measure-poses.py .cache/probe"
+    "studio": "remotion studio",
+    "render": "remotion render"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/omarsameh18-afk/Videos.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/omarsameh18-afk/Videos/issues"
-  },
-  "homepage": "https://github.com/omarsameh18-afk/Videos#readme",
   "dependencies": {
-    "@fontsource/anton": "^5.3.0",
-    "@fontsource/cairo": "^5.3.0",
-    "@fontsource/montserrat": "^5.3.0",
-    "@remotion/cli": "^4.0.545",
-    "@remotion/media-utils": "^4.0.545",
-    "@remotion/renderer": "^4.0.545",
+    "@remotion/bundler": "^4.0.300",
+    "@remotion/cli": "^4.0.300",
+    "@remotion/renderer": "^4.0.300",
+    "@types/react": "^18.3.12",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "remotion": "^4.0.545",
-    "undici": "^6.29.1",
-    "zod": "^4.6.7"
-  },
-  "devDependencies": {
-    "@types/react": "^18.3.31",
-    "typescript": "^7.0.2"
-  },
-  "private": true
+    "remotion": "^4.0.300",
+    "typescript": "^5.6.3"
+  }
 }

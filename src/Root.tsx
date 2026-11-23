@@ -1,51 +1,45 @@
 import React from 'react';
-import { Composition } from 'remotion';
-import { ProofSheet, PROOF_SIZE } from './dev/ProofSheet';
-import { RigTest } from './dev/RigTest';
-import { MaxFrame } from './dev/MaxFrame';
-import { VisualGallery } from './dev/VisualGallery';
-import { BodyProbe } from './dev/BodyProbe';
-import { PoseProbe, PROBE, PROBE_POSES, PROBE_EXPR } from './dev/PoseProbe';
-import { MaxFigureProps } from './max/MaxFigure';
-import { VIDEO } from './config';
-import { Short, calculateShortMetadata } from './short/Short';
-import { ShortProps } from './short/types';
-import { SunVanishes, SUN_FRAMES } from './elfahman/SunVanishes';
+import {Composition} from 'remotion';
+import {FPS} from './elfahman/lib/anim';
+import {Rabies, RABIES_DURATION_S} from './elfahman/videos/Rabies';
+import {Mummies, MUMMIES_DURATION_S} from './elfahman/videos/Mummies';
+import {Doorway, DOORWAY_DURATION_S} from './elfahman/videos/Doorway';
+import {Writing, WRITING_DURATION_S} from './elfahman/videos/Writing';
+import {Liar, LIAR_DURATION_S} from './elfahman/videos/Liar';
+import {Sommaroy, SOMMAROY_DURATION_S} from './elfahman/videos/Sommaroy';
+import {Humans, HUMANS_DURATION_S} from './elfahman/videos/Humans';
+import {Screens, SCREENS_DURATION_S} from './elfahman/videos/Screens';
+import {Tears, TEARS_DURATION_S} from './elfahman/videos/Tears';
+import {Doomsday, DOOMSDAY_DURATION_S} from './elfahman/videos/Doomsday';
+import {DoomsdayV2, DOOMSDAY_V2_DURATION_S} from './elfahman/videos/DoomsdayV2';
+import {Earth, EARTH_DURATION_S} from './elfahman/videos/Earth';
 
+// الفهمان series: one composition per episode (1080x1920, 60 fps)
 export const RemotionRoot: React.FC = () => (
   <>
-    <Composition
-      id="Short"
-      component={Short}
-      width={VIDEO.width}
-      height={VIDEO.height}
-      fps={VIDEO.fps}
-      durationInFrames={1}
-      calculateMetadata={calculateShortMetadata}
-      defaultProps={{ durationInFrames: 1, scenes: [], words: [], pages: [], chars: [], amplitude: [], audioSrc: '', exprKeys: [], poseKeys: [], zoomKeys: [], shakes: [], emphasisWords: [] } as unknown as ShortProps}
-    />
-    <Composition id="ElFahman12" component={SunVanishes} width={1080} height={1920} fps={30} durationInFrames={SUN_FRAMES} />
-    <Composition id="ProofSheet" component={ProofSheet} {...PROOF_SIZE} fps={VIDEO.fps} durationInFrames={1} />
-    <Composition id="BodyProbe" component={BodyProbe} width={2400} height={1800} fps={30} durationInFrames={1} />
-    <Composition id="VisualGallery" component={VisualGallery} width={VIDEO.width} height={VIDEO.height} fps={VIDEO.fps} durationInFrames={60} defaultProps={{ which: 'split' as 'split' | 'number' | 'gauge' }} />
-    <Composition id="PoseProbe" component={PoseProbe} width={PROBE.width} height={PROBE.height} fps={30} durationInFrames={PROBE_POSES.length * PROBE_EXPR.length} />
-    <Composition
-      id="MaxFrame"
-      component={MaxFrame}
-      width={VIDEO.width}
-      height={VIDEO.height}
-      fps={VIDEO.fps}
-      durationInFrames={1}
-      defaultProps={{ expression: 'neutral', pose: 'idle' } as MaxFigureProps}
-    />
-    <Composition
-      id="RigTest"
-      component={RigTest}
-      width={VIDEO.width}
-      height={VIDEO.height}
-      fps={VIDEO.fps}
-      durationInFrames={300}
-      defaultProps={{ amplitude: [] as number[] }}
-    />
+    <Composition id="Elfahman01Rabies" component={Rabies} durationInFrames={Math.round(RABIES_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman02Mummies" component={Mummies} durationInFrames={Math.round(MUMMIES_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman03Doorway" component={Doorway} durationInFrames={Math.round(DOORWAY_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman04Writing" component={Writing} durationInFrames={Math.round(WRITING_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman05Liar" component={Liar} durationInFrames={Math.round(LIAR_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman06Sommaroy" component={Sommaroy} durationInFrames={Math.round(SOMMAROY_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman07Humans" component={Humans} durationInFrames={Math.round(HUMANS_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman08Screens" component={Screens} durationInFrames={Math.round(SCREENS_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman09Tears" component={Tears} durationInFrames={Math.round(TEARS_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman10Doomsday" component={Doomsday} durationInFrames={Math.round(DOOMSDAY_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman10DoomsdayV2" component={DoomsdayV2} durationInFrames={Math.round(DOOMSDAY_V2_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman11Earth" component={Earth} durationInFrames={Math.round(EARTH_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
   </>
 );

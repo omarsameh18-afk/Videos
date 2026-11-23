@@ -1,23 +1,15 @@
-# BrainPump Shorts (Max) — working rules
+# Videos repo: notes for Claude
 
-## Self-review
-- Claude is both builder and strict reviewer. After every visual change: render PNG frames, open them,
-  check them against docs/REVIEW.md, fix what fails.
-- Max 2 self-fix loops per stage. If something still fails, stop and list the issue.
-- Never ask Omar to copy things to another chat. Only stop at GATES (end of a stage).
-- At a GATE reply with ONLY: a 3-line summary, 1 image/MP4 path, and "PASS" or "NEEDS OMAR: <one question>".
+## الفهمان series (Arabic Egyptian YouTube Shorts)
+Everything for this series is already built and saved. **Do not rebuild the character, set, sounds or code.**
+Read `series/elfahman/README.md` first: it has the series rules and the step-by-step recipe for a new video.
 
-## Project rules
-- Character is Max, channel is BrainPump (@brainpump_us). Brand settings: src/config.ts.
-- Max never says or shows doctor/scientist/coach/PT and never gives medical advice.
-- Banned words: config/bannedWords.json (checked by `npm run validate`).
-- Render spec: 1080x1920, 30 fps, H.264, yuv420p, AAC, max 60 s.
-- Secrets: ELEVENLABS_API_KEY lives in .env only. Never commit .env.
-- In the cloud container set REMOTION_BROWSER=/opt/pw-browsers/chromium_headless_shell.
+- Reusable library (character poses, mouth/blink/wink layers, set, sounds, font): `public/elfahman/lib/`, `public/elfahman/sfx/`
+- Reusable code: `src/elfahman/lib/`; episode template to copy: `src/elfahman/videos/Writing.tsx` (episode 04: hook rule, no generated pictures), `Liar.tsx` (episode 05: suspense mood, drama pauses, music bed), `Sommaroy.tsx` (episode 06: map zoom, mood change, curious music bed, record scratch), `Humans.tsx` (episode 07: fast timeline, time chips, every pause cut to 0.25 s), `Screens.tsx` (episode 08: study surprise, mystery -> colourful reveal, split poll), `Tears.tsx` (episode 09: two-card hook caption rule, body/emotion drawing kit), `Doomsday.tsx` (episode 10: calendar, Earth, population curves, magician), `Earth.tsx` (episode 11: relaxed pacing, 3 generated props in SVG, speedometer, stop + freeze, wave over a city) or `Rabies.tsx` (with props)
+- Tools: `series/elfahman/tools/` (timing.py, tighten.py, pauses.py, capgaps.py, ambient_bed.py, suspense_bed.py, curious_bed.py, prep scripts, sfx.py); QA: `scripts/stills.mjs`, `scripts/popscan.py`, `scripts/captioncheck.py`, `scripts/captionsizes.mjs`, `scripts/hookcheck.py`; render: `scripts/render.sh`, loudness: `scripts/loudnorm.sh`
+- Each episode lives in `series/elfahman/videos/NN-topic/` (script, words, final MP4, contact sheet)
+- Credits: log every generation in `images/elfahman/credits.md` (ElevenLabs Starter 30k/month: pictures 1K-2K only, 1 voice take, max 3-4 new props per video)
 
-## Credit rules (standing)
-- TTS voice: up to 1,000 ElevenLabs credits per video without asking. Prefer re-using recorded sentences
-  (`scripts/splice-voice.mjs`) and recording only the new lines.
-- Image/video generation, or anything above 1,000 credits: ask Omar first (estimate with `estimate_only`).
-- Budget until Dec 1: 50K total, never touch the last 16K of the account; log every video in docs/budget.md and
-  report the running total in every GATE.
+## Setup in a fresh session
+`npm ci` and `pip install opencv-python-headless numpy pillow`. The cloud environment must be "Videos"
+(it allows downloads from elevenlabsusercontent.com). Commit the final MP4 + contact sheet into the episode folder.
