@@ -14,6 +14,7 @@ import {Doomsday, DOOMSDAY_DURATION_S} from './elfahman/videos/Doomsday';
 import {DoomsdayV2, DOOMSDAY_V2_DURATION_S} from './elfahman/videos/DoomsdayV2';
 import {Earth, EARTH_DURATION_S} from './elfahman/videos/Earth';
 import {Sun, SUN_DURATION_S} from './elfahman/videos/Sun';
+import {PhoneOff, PHONE_DURATION_S} from './elfahman/videos/PhoneOff';
 
 // الفهمان series: one composition per episode (1080x1920, 60 fps)
 export const RemotionRoot: React.FC = () => (
@@ -43,6 +44,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Elfahman11Earth" component={Earth} durationInFrames={Math.round(EARTH_DURATION_S * FPS)}
       fps={FPS} width={1080} height={1920} />
     <Composition id="Elfahman12SunV2" component={Sun} durationInFrames={Math.round(SUN_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman13Phone" component={PhoneOff} durationInFrames={Math.round(PHONE_DURATION_S * FPS)}
       fps={FPS} width={1080} height={1920} />
   </>
 );

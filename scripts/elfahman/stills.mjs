@@ -7,7 +7,7 @@ const [out, ...frames] = process.argv.slice(2);
 mkdirSync(out, { recursive: true });
 const serveUrl = await bundle({ entryPoint: 'src/index.ts' });
 const browserExecutable = process.env.REMOTION_BROWSER;
-const composition = await selectComposition({ serveUrl, id: 'ElFahman12', browserExecutable });
+const composition = await selectComposition({ serveUrl, id: process.env.COMP ?? 'ElFahman12', browserExecutable });
 const files = [];
 for (const fr of frames.map(Number)) {
   const output = `${out}/f${String(fr).padStart(4, '0')}.png`;

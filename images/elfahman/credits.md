@@ -223,3 +223,16 @@ and no pictures at all.
   `scripts/elfahman/assemble_voice_v2.py` (1.0x, silence only cut). **0 new credits.**
 - Character: existing library (`public/elfahman/lib/`), no new pictures. Boards drawn in code. Music + SFX synthesized. **0 credits.**
 - Episode total (v1 + v2): 931 credits.
+
+## Episode 13 — لو قفلت النت من موبايلك أسبوعين (2026-11-24)
+
+Flow "Elfahman 13 phone internet off" (`3O0oAf43O1C3khFBZCax`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), ONE take of the full script, 71.0 s; tashkeel on `وِشّ لِوِشّ`, `اِتْمَشِّت`, `مَقْدَرُوش`. No inline direction tag (it pushed the take to 1,028 credits, over the 1,000 limit; the connector has no speed setting, so 0.95 could not be set and nothing was slowed afterwards) | | AYBRObaNuhwzB8TBETcr | 989 |
+| Word timing: Scribe v1 | | sU4eYUmNCLZ1bQZDxzoW | 0 |
+| Pause edit at 1.0x (`tools/pace.py` + `pacecheck.py`): 71.0 s -> 65.93 s | no new generation | – | 0 |
+| Pictures | none: all 16 boards drawn in code (phone, Wi-Fi X, pocket, unlock counter, eyes, ahwa + friends + tea glass, clock chip, screen-time bar + stamp, people/tree, mood faces, brain, calendar, crowd + door, comment arrows, send icon) | – | 0 |
+| Music + SFX: `tools/bright_bed.py` (bright bed, scratch on "استنى", held note in the mystery pause) + buzz / tap / stamp synthesized | | – | 0 |
+| **Episode 13 total** | | | **989** |
