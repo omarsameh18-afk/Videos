@@ -2,12 +2,12 @@ import React from 'react';
 import {AbsoluteFill, Audio, Sequence, staticFile, useCurrentFrame} from 'remotion';
 import {Fonts} from '../lib/fonts';
 import {FPS, clamp, easeInOut, easeOut, rand, seg} from '../lib/anim';
-import {shakeAt} from '../lib/camera';
-import {Character, HEAD, Pose, PoseKey, blinkTimes, mouthStates, poseAt, squashAt} from '../lib/Character';
+import {Cam, CamKey, Layer, camAt, shakeAt} from '../lib/camera';
+import {SetBack, SetFront, DESK_SCREEN_Y} from '../lib/Set';
+import {CANVAS, Character, HEAD, Pose, PoseKey, blinkTimes, mouthStates, poseAt, squashAt} from '../lib/Character';
 import {Captions, Group, RED, YELLOW, Word, norm} from '../lib/Captions';
 import {Sparkle, SweatDrop} from '../lib/fx';
 import {BOARDS, Tea} from '../Boards13';
-import {Img} from 'remotion';
 import WORDS from './phone.words.json';
 import ENV from './phone.env.json';
 import TIMING from './phone.timing.json';
@@ -73,40 +73,58 @@ const POSES: PoseKey[] = [
 ];
 const MOUTH = mouthStates((ENV as {level: number[]}).level);
 const BLINKS = blinkTimes(END, 13);
-const CS = 0.56;
-const CHAR_X = 30;
-const CHAR_Y = 1150 - 21 * CS; // top of his hair at y ~1150: he fills the bottom 40%, body runs off the bottom edge
-const HEAD_SCREEN = {x: CHAR_X + HEAD[0] * CS, y: CHAR_Y + HEAD[1] * CS};
+// series layout (identical to episode 11, Earth.tsx): he sits behind the desk of the study set
+const CS = 0.6;
+const CHAR_X = 540 - (CANVAS[0] * CS) / 2;
+const CHAR_Y = DESK_SCREEN_Y - 1450 * CS;
 
 // ============================================================ camera (2.5D)
 const SHAKES: [number, number, number][] = [
   [T.alfalt, 5, 9], [T.gebak, 6, 9], [T.estanna, 18, 6], [T.asghar, 5, 9], [T.fahman, 3, 10],
 ];
-const punchAt = (t: number) => (t >= T.estanna - 0.04 && t < SENT[11].s ? easeOut(seg(t, T.estanna - 0.04, T.estanna + 0.1)) * (1 - seg(t, SENT[11].s - 0.25, SENT[11].s)) : 0);
+// camera framings copied from episode 11 (CAM0 / BASE / NEAR / mystery push-in / "استنى" punch-in / comments / back to CAM0)
+const CAM0: Cam = {x: 520, y: 860, z: 180};
+const BASE: Cam = {x: 512, y: 866, z: 125};
+const NEAR: Cam = {x: 510, y: 850, z: 150};
+const CAM_KEYS: CamKey[] = [
+  [0, 1.0, {x: 516, y: 866, z: 150}],
+  [SENT[1].s - 0.1, SENT[1].s + 0.4, BASE],
+  [SENT[3].s - 0.05, SENT[3].s + 0.4, NEAR],                       // proof: "عشرات المرات"
+  [SENT[4].s - 0.1, SENT[4].s + 0.4, BASE],
+  [T.sa3teen - 0.05, T.sa3teen + 0.4, NEAR],                       // "+2:30"
+  [SENT[6].s - 0.1, SENT[6].s + 0.4, BASE],
+  [SENT[8].s - 0.05, SENT[8].s + 0.4, NEAR],                       // mood board
+  [T.tab - 0.2, MYST[1] - 0.02, {x: 512, y: 780, z: 215}],         // slow push-in on the question + mystery pause
+  [T.estanna - 0.04, T.estanna + 0.1, {x: 540, y: 690, z: 280}],   // punch-in exactly on "استنى"
+  [SENT[11].s - 0.1, SENT[11].s + 0.4, BASE],
+  [SENT[12].s - 0.05, SENT[12].s + 0.4, NEAR],
+  [SENT[13].s - 0.1, SENT[13].s + 0.4, BASE],
+  [SENT[14].s - 0.1, SENT[14].s + 0.4, {x: 512, y: 868, z: 122}],
+  [T.fahman - 0.1, T.fahman + 0.5, CAM0],                          // ends on the opening framing (loop)
+];
 
 // ============================================================ timeline chips (top)
 const AR = {fontFamily: 'Cairo', fontWeight: 900, direction: 'rtl' as const};
 const NODES = ['ساعة', 'يوم', 'كام يوم', 'أسبوعين'];
 const NODE_OF = [-1, 0, 1, 1, 2, 2, 3, 3, 3, -2, -2, -2, -2, -2, -1, -1]; // -2 = hidden (mystery / payoff / twist)
 const Timeline: React.FC<{node: number; t: number; since: number}> = ({node, t, since}) => {
-  const x0 = 860, x1 = 220;
+  const x0 = 770, x1 = 90; // right-to-left, inside the board (860 wide)
   const xs = NODES.map((_, i) => x0 + ((x1 - x0) * i) / (NODES.length - 1));
   const prev = Math.max(0, node - 1);
   const fill = node < 0 ? x0 : xs[prev] + (xs[node] - xs[prev]) * easeInOut(seg(t, since, since + 0.4));
   return (
-    <div style={{position: 'absolute', top: 150, left: 0, width: 1080, height: 150}}>
-      <svg width={1080} height={150} style={{position: 'absolute'}}>
-        <line x1={x0} y1={40} x2={x1} y2={40} stroke="rgba(0,0,0,0.55)" strokeWidth={16} strokeLinecap="round" />
-        <line x1={x0} y1={40} x2={fill} y2={40} stroke={YELLOW} strokeWidth={10} strokeLinecap="round" />
-        {xs.map((x, i) => <circle key={i} cx={x} cy={40} r={i === node ? 18 + Math.sin(t * 10) * 3 : 12} fill={i <= node ? YELLOW : '#555'} stroke="#111" strokeWidth={5} />)}
+    <div style={{position: 'absolute', top: 0, left: 0, width: BW, height: STRIP, background: 'rgba(10,14,20,0.55)'}}>
+      <svg width={BW} height={STRIP} style={{position: 'absolute'}}>
+        <line x1={x0} y1={STRIP / 2} x2={x1} y2={STRIP / 2} stroke="rgba(255,255,255,0.25)" strokeWidth={8} strokeLinecap="round" />
+        <line x1={x0} y1={STRIP / 2} x2={fill} y2={STRIP / 2} stroke={YELLOW} strokeWidth={8} strokeLinecap="round" />
       </svg>
       {xs.map((x, i) => {
         const on = i === node, done = i <= node;
-        const s = on ? 1 + 0.12 * Math.max(0, 1 - (t - since) / 0.3) : 0.86;
+        const sc = on ? 1 + 0.12 * Math.max(0, 1 - (t - since) / 0.3) : 0.9;
         return (
-          <div key={i} style={{position: 'absolute', top: 66, left: x - 110, width: 220, display: 'flex', justifyContent: 'center'}}>
-            <div style={{...AR, fontSize: 36, lineHeight: 1.35, padding: '0 18px 6px', borderRadius: 999, border: '4px solid #111', transform: `scale(${s})`,
-              background: on ? YELLOW : done ? '#FFF3C4' : 'rgba(255,255,255,0.85)', color: '#111', boxShadow: '0 5px 0 #111', whiteSpace: 'nowrap'}}>{NODES[i]}</div>
+          <div key={i} style={{position: 'absolute', top: 0, height: STRIP, left: x - 80, width: 160, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+            <div style={{...AR, fontSize: 24, lineHeight: 1.35, padding: '0 14px 4px', borderRadius: 999, border: '3px solid #111', transform: `scale(${sc})`,
+              background: on ? YELLOW : done ? '#FFF3C4' : 'rgba(255,255,255,0.85)', color: '#111', whiteSpace: 'nowrap'}}>{NODES[i]}</div>
           </div>
         );
       })}
@@ -140,8 +158,8 @@ const GROUPS: Group[] = (() => {
   const out: Group[] = [];
   // hook: caption 1 "لو قفلت نت موبايلك" from frame 0, caption 2 "أسبوعين… مخك هيحصله إيه؟" on the onset of "أسبوعين"
   const O = T.osboo3en;
-  out.push({words: [{w: 'لو', s: 0, e: 0}, {w: 'قفلت', s: 0, e: 0, c: RED}, {w: 'نت', s: 0, e: 0}, {w: 'موبايلك', s: 0, e: 0}], s: 0, e: O, style: 'hook', fs: 140, br: 2, x: 470, maxW: 860});
-  out.push({words: [{w: 'أسبوعين…', s: O, e: O, c: YELLOW}, {w: 'مخك', s: O, e: O, c: YELLOW}, {w: 'هيحصله', s: O, e: O}, {w: 'إيه؟', s: O, e: O}], s: O, e: 0, style: 'hook', fs: 118, br: 2, x: 470, maxW: 860});
+  out.push({words: [{w: 'لو', s: 0, e: 0}, {w: 'قفلت', s: 0, e: 0, c: RED}, {w: 'نت', s: 0, e: 0}, {w: 'موبايلك', s: 0, e: 0}], s: 0, e: O, style: 'hook', fs: 140, br: 2, x: 540, maxW: 950});
+  out.push({words: [{w: 'أسبوعين…', s: O, e: O, c: YELLOW}, {w: 'مخك', s: O, e: O, c: YELLOW}, {w: 'هيحصله', s: O, e: O}, {w: 'إيه؟', s: O, e: O}], s: O, e: 0, style: 'hook', fs: 118, br: 2, x: 540, maxW: 900});
   let cur: Word[] = [];
   const flush = () => { if (cur.length) out.push({words: cur, s: cur[0].s, e: cur[cur.length - 1].e}); cur = []; };
   ws.slice(10).forEach((w, k, arr) => {
@@ -153,8 +171,8 @@ const GROUPS: Group[] = (() => {
     if (end || cur.length >= 3 || (cur.length >= 2 && len > 12)) flush();
   });
   flush();
-  for (const g of out) if (g.words.every((w) => ['الفهمان', 'كسبان'].includes(nq(w.w)))) { g.style = 'gold'; g.fs = 120; }
-  for (const g of out) if (g.style === undefined) g.fs = 92;
+  for (const g of out) if (g.words.every((w) => ['الفهمان', 'كسبان'].includes(nq(w.w)))) { g.style = 'gold'; g.fs = 118; }
+  for (const g of out) if (g.style === undefined) g.fs = 96;
   const pin: Record<string, number> = {'استنى': T.estanna, 'الفهمان': T.fahman, 'كسبان': T.kasban};
   for (const g of out) for (const w of g.words) if (pin[nq(w.w)] !== undefined) w.s = pin[nq(w.w)];
   for (const g of out) g.s = g.words[0].s;
@@ -170,21 +188,14 @@ const GROUPS: Group[] = (() => {
   return out;
 })();
 export const PHONE_GROUPS = GROUPS;
-const CAP_Y = 1055;
+const CAP_Y = 1250; // episode 11 caption position (y 1250, x 460)
 
-// ============================================================ the study set + the board inset
-// set image 1152x2048 drawn 1348x2396 (top at -20): the desk edge lands at y ~1770, under his badge
-const SET_W = 1348, SET_H = 2396, SET_L = 540 - SET_W / 2, SET_T = -20;
-const SetLayer: React.FC<{src: string; dx: number; dy: number; dim: number}> = ({src, dx, dy, dim}) => (
-  <div style={{position: 'absolute', left: SET_L + dx, top: SET_T + dy, width: SET_W, height: SET_H}}>
-    <Img src={staticFile(`elfahman/lib/${src}`)} style={{position: 'absolute', inset: 0, width: SET_W, height: SET_H}} />
-    {dim > 0 && <div style={{position: 'absolute', inset: 0, background: `rgba(10,8,20,${dim})`,
-      ...(src.endsWith('.png') ? {WebkitMaskImage: `url(${staticFile(`elfahman/lib/${src}`)})`, WebkitMaskSize: '100% 100%'} : {})}} />}
-  </div>
-);
-// the board: the beat drawings were made for the full 1080-wide frame; their content band (y 262..982) is shown
-// scaled into a framed board on the wall at x 60..1020, y 300..940
-const SRC_Y = 262, BX = 60, BY = 300, BW = 960, BS = BW / 1080, BH = Math.round(720 * BS);
+// ============================================================ board (episode 11 frame: x 80, y 84, 860 x 480 on the character plane)
+// The beat drawings are made on a 1080-wide canvas; their content band (y SRC_Y .. SRC_Y + 603) fills the board under a thin
+// timeline strip.
+const BX = 80, BY = 84, BW = 860, BH = 480, STRIP = 58;
+const BS = BW / 1080, SRC_Y = 250;
+const INK = '#2d1c14';
 
 // ============================================================ sound
 type Cue = [number, string, number];
@@ -215,16 +226,11 @@ export const PhoneOff: React.FC = () => {
   const lt = t - b0;
   const Board = BOARDS[bi];
   const ev = (EV[bi] ?? []).map((x) => x - b0);
-  // mystery freeze: the board's own clock stops in the pause
-  const bt = bi === 9 ? Math.min(lt, MYST[0] - b0) : lt;
-  // camera: cut punch (1.05 -> 1) + slow drift that returns to rest at the loop point; particles drift ~1.8x (parallax)
-  const cut = bi === 0 ? 1 : 1 + 0.05 * (1 - easeOut(clamp(lt / 0.25)));
-  const drift = 1 + Math.min(lt, 4) * 0.006 * (bi === 15 ? 1 - seg(t, END - 0.6, END) : 1) * (bi === 0 ? 0 : 1);
-  const loopU = (2 * Math.PI * t) / END;
-  const panX = Math.sin(loopU * 5) * 12, panY = Math.sin(loopU * 4) * 9;
+  const bt = bi === 9 ? Math.min(lt, MYST[0] - b0) : lt; // mystery freeze: the board's own clock stops in the pause
+  const cut = bi === 0 ? 1 : 1 + 0.04 * (1 - easeOut(clamp(lt / 0.25))); // small push on each new board
+  const cam0 = camAt(t, CAM0, CAM_KEYS);
   const sh = shakeAt(t, SHAKES);
-  const punch = punchAt(t);
-  const zoom = 1 + 0.22 * punch;
+  const cam: Cam = {x: cam0.x - sh.x, y: cam0.y - sh.y, z: cam0.z};
   const pose = poseAt(t, POSES);
   const squash = Math.max(squashAt(t, POSES), t > END - 0.07 ? Math.sin(((t - END + 0.07) / 0.07) * Math.PI / 2) : 0);
   const vf = Math.round(t * FPS);
@@ -234,46 +240,43 @@ export const PhoneOff: React.FC = () => {
   const wink = t >= T.kasban && pose === 'temple';
   const sweat = pose === 'worried';
   const myst = seg(t, T.hasalo, MYST[0]) * (1 - seg(t, MYST[1] - 0.02, MYST[1] + 0.1));
-  const part = PART[bi];
+  const sig = t >= T.estanna - 0.02 && t < SENT[11].s ? 0.3 * easeOut(seg(t, T.estanna - 0.02, T.estanna + 0.12)) * (1 - seg(t, SENT[11].s - 0.3, SENT[11].s)) : 0;
+  const ROOM = 0.06 + 0.22 * myst;
   const node = NODE_OF[bi];
   return (
-    <AbsoluteFill style={{backgroundColor: '#0B0E1C'}}>
+    <AbsoluteFill style={{backgroundColor: '#140e0b'}}>
       <Fonts />
-      <AbsoluteFill style={{transformOrigin: `${HEAD_SCREEN.x}px ${HEAD_SCREEN.y}px`, transform: `scale(${zoom})`}}>
-        {/* far plane: the series study set (wall, shelves, window), moves least (2.5D parallax) */}
-        <SetLayer src="set_bg.jpg" dx={panX * 0.45 + sh.x * 0.3} dy={panY * 0.45 + sh.y * 0.3} dim={0.05 + 0.3 * myst + 0.2 * punch} />
-        {/* middle plane: the board on the wall above him; each beat's drawing lives inside it */}
-        <div style={{position: 'absolute', left: BX - 18 + panX * 0.7 + sh.x * 0.6, top: BY - 18 + panY * 0.7 + sh.y * 0.6, width: BW + 36, height: BH + 36, borderRadius: 30,
-          background: 'linear-gradient(180deg,#9a6a3e,#6e4526)', border: '7px solid #2d1c14', boxShadow: '0 18px 30px rgba(0,0,0,0.45)'}} />
-        <div style={{position: 'absolute', left: BX + panX * 0.7 + sh.x * 0.6, top: BY + panY * 0.7 + sh.y * 0.6, width: BW, height: BH, overflow: 'hidden', borderRadius: 14, border: '5px solid #2d1c14'}}>
-          <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transformOrigin: '0 0', transform: `scale(${BS}) translate(0px, ${-SRC_Y}px)`}}>
-            <div style={{position: 'absolute', inset: 0, transformOrigin: `540px ${SRC_Y + 360}px`, transform: `scale(${cut * drift})`}}>
+      <SetBack cam={cam} dim={ROOM + sig} />
+      <Layer cam={cam} z={1000}>
+        {/* the board on the wall (episode 11 frame and size); this video's drawings inside it */}
+        <div style={{position: 'absolute', left: BX - BW * 0.32, top: BY - BH * 0.48, width: BW * 1.64, height: BH * 1.96, borderRadius: '50%',
+          background: 'radial-gradient(ellipse, rgba(255,233,176,0.18) 55%, rgba(255,233,176,0) 72%)'}} />
+        <div style={{position: 'absolute', left: BX - 16, top: BY - 16, width: BW + 32, height: BH + 32, borderRadius: 26, background: '#8a5a33', border: `10px solid ${INK}`, boxSizing: 'border-box'}} />
+        <div style={{position: 'absolute', left: BX, top: BY, width: BW, height: BH, borderRadius: 14, overflow: 'hidden', border: `6px solid ${INK}`, boxSizing: 'border-box', background: '#21302b'}}>
+          <div style={{position: 'absolute', left: -6, top: -6, width: 1080, height: 1920, transformOrigin: '0 0', transform: `scale(${BS}) translate(0px, ${-SRC_Y}px)`}}>
+            <div style={{position: 'absolute', inset: 0, transformOrigin: `540px ${SRC_Y + 340}px`, transform: `scale(${cut})`}}>
               <Board t={bt} d={b1 - b0} ev={ev} />
             </div>
           </div>
-          <div style={{position: 'absolute', inset: 0, background: `radial-gradient(ellipse 75% 70% at 50% 45%, rgba(0,0,0,0) 60%, rgba(0,0,0,${0.25 + 0.3 * myst}) 100%)`}} />
+          {node > -2 && <Timeline node={node} t={t} since={b0} />}
+          <div style={{position: 'absolute', inset: 0, background: `radial-gradient(ellipse 62% 58% at 50% 42%, rgba(255,246,216,0.06) 0%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.28) 100%)`}} />
+          {(sig > 0 || myst > 0) && <div style={{position: 'absolute', inset: 0, background: '#0b1210', opacity: (sig / 0.3) * 0.32 * 0.8 + myst * 0.25}} />}
         </div>
-        <AbsoluteFill style={{background: `radial-gradient(ellipse 80% 62% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,${0.22 + 0.3 * myst + 0.25 * punch}) 100%)`}} />
-        {/* near plane: الفهمان */}
-        <div style={{position: 'absolute', inset: 0, transform: `translate(${sh.x}px, ${sh.y}px)`}}>
-          <div style={{position: 'absolute', left: CHAR_X + 40, top: 1520, width: 680, height: 420, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(0,0,0,0.45), rgba(0,0,0,0) 70%)'}} />
-          <Character pose={pose} mouth={mouth} blink={blink} wink={wink} x={CHAR_X} y={CHAR_Y} scale={CS} squash={squash} t={t}>
-            <svg width={10} height={10} style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}}>
-              {wink && <Sparkle x={HEAD[0] + 230} y={HEAD[1] - 60} dt={t - T.kasban} r={56} />}
-              {sweat && [0, 1, 2].map((i) => {
-                const ws = POSES.filter(([, p]) => p === 'worried').map(([k]) => k).filter((k) => k <= t).pop() ?? 0;
-                return <SweatDrop key={i} x={HEAD[0] + (i % 2 ? 250 : -240)} y={HEAD[1] - 170} dt={t - (ws + 0.15 + i * 0.95)} s={1} />;
-              })}
-            </svg>
-          </Character>
-        </div>
-        {/* front plane: the desk with the mug and books (he sits behind it); a tea glass on it at the ahwa */}
-        <SetLayer src="set_fg.png" dx={panX * 0.45 + sh.x * 0.3} dy={panY * 0.45 + sh.y * 0.3} dim={0.3 * myst + 0.2 * punch} />
-        {bi === 4 && <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}><Tea x={845} y={1815} s={0.95} t={t} /></svg>}
-      </AbsoluteFill>
-      {/* UI plane (no camera): timeline chips + captions */}
-      {node > -2 && <Timeline node={node} t={t} since={b0} />}
-      <Captions t={t} groups={GROUPS.slice(0, 2)} colors={{}} y={930} x={470} />
+        <Character pose={pose} mouth={mouth} blink={blink} wink={wink} x={CHAR_X} y={CHAR_Y} scale={CS} squash={squash} t={t}>
+          <svg width={10} height={10} style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}}>
+            {wink && <Sparkle x={HEAD[0] + 210} y={HEAD[1] - 40} dt={t - T.kasban} r={48} />}
+            {sweat && [0, 1, 2].map((i) => {
+              const ws = POSES.filter(([, p]) => p === 'worried').map(([k]) => k).filter((k) => k <= t).pop() ?? 0;
+              return <SweatDrop key={i} x={HEAD[0] + (i % 2 ? 230 : -220)} y={HEAD[1] - 170} dt={t - (ws + 0.15 + i * 0.95)} s={0.9} />;
+            })}
+          </svg>
+        </Character>
+      </Layer>
+      <SetFront cam={cam} dim={ROOM + sig} />
+      {/* the ahwa beat: a tea glass on his desk */}
+      {bi === 4 && <Layer cam={cam} z={1000}><svg width={10} height={10} style={{position: 'absolute', left: 0, top: 0, overflow: 'visible'}}><Tea x={860} y={DESK_SCREEN_Y + 34} s={0.85} t={t} /></svg></Layer>}
+      <AbsoluteFill style={{background: `radial-gradient(ellipse 78% 62% at 50% 36%, rgba(0,0,0,0) 52%, rgba(0,0,0,${0.3 + sig * 0.6 + myst * 0.2}) 100%)`}} />
+      <Captions t={t} groups={GROUPS.slice(0, 2)} colors={{}} y={CAP_Y} x={540} />
       <Captions t={t} groups={GROUPS.slice(2)} colors={{}} y={CAP_Y} x={460} />
       <Audio src={staticFile('elfahman/phone/vo/vo.wav')} />
       <Audio src={staticFile('elfahman/phone/music/bed.wav')} />

@@ -232,10 +232,10 @@ export const B1: React.FC<BoardProps> = ({t, ev}) => {
   return (
     <Scene bg={BG_NIGHT}>
       <Dots t={t} color="#9EC7FF" o={0.18} />
-      <Phone x={690 + shake} y={530 + bob} w={280} h={500} kind="wifi" xk={xk} rot={-6 + Math.sin(t * 1.4) * 2} glow={1 - 0.6 * xk} t={t} />
+      <Phone x={690 + shake} y={585 + bob} w={270} h={470} kind="wifi" xk={xk} rot={-6 + Math.sin(t * 1.4) * 2} glow={1 - 0.6 * xk} t={t} />
       {[0, 1, 2].map((i) => {
         const p = ((t * 0.9 + i / 3) % 1);
-        return <circle key={i} cx={690} cy={530 + bob} r={180 + p * 200} fill="none" stroke="#9EC7FF" strokeWidth={6} opacity={(1 - p) * 0.35 * (1 - xk)} />;
+        return <circle key={i} cx={690} cy={585 + bob} r={180 + p * 200} fill="none" stroke="#9EC7FF" strokeWidth={6} opacity={(1 - p) * 0.35 * (1 - xk)} />;
       })}
       <Floor />
     </Scene>
@@ -260,7 +260,7 @@ export const B2: React.FC<BoardProps> = ({t, ev}) => {
     </>}>
       <Dots t={t} o={0.15} />
       {/* jeans pocket close-up */}
-      <g transform="translate(540 650)">
+      <g transform="translate(540 600) scale(0.72)">
         <path d="M -330 -230 L 330 -230 L 300 260 Q 0 330 -300 260 Z" fill="#3E6FB0" stroke={INK} strokeWidth={10} />
         <path d="M -330 -230 L 330 -230" stroke="#2A4F85" strokeWidth={30} />
         <path d="M -230 -215 Q 0 -60 230 -215" fill="#2F5A96" stroke={INK} strokeWidth={9} />
@@ -306,9 +306,9 @@ export const B3: React.FC<BoardProps> = ({t}) => {
       </div>
     </>}>
       <Dots t={t} o={0.15} />
-      <Phone x={680} y={650} w={300} h={540} kind="apps" on={on} rot={4 + Math.sin(t * 2) * 2} glow={on} t={t} />
+      <Phone x={680} y={590} w={260} h={460} kind="apps" on={on} rot={4 + Math.sin(t * 2) * 2} glow={on} t={t} />
       {/* thumb tap ring on each wake */}
-      <circle cx={680} cy={860} r={30 + 40 * (t % P) / P} fill="none" stroke="#fff" strokeWidth={6} opacity={1 - (t % P) / P} />
+      <circle cx={680} cy={790} r={30 + 40 * (t % P) / P} fill="none" stroke="#fff" strokeWidth={6} opacity={1 - (t % P) / P} />
       <Floor />
     </Scene>
   );
@@ -319,7 +319,7 @@ export const B4: React.FC<BoardProps> = ({t, ev}) => {
   const [hit = 0.9] = ev; // "عشرات"
   const fly = easeInOut(seg(t, 0, hit));
   const n = Math.round(5 + fly * 75);
-  const eyes = [[180, 420], [900, 430], [150, 640], [930, 650], [250, 880], [830, 880], [540, 380]];
+  const eyes = [[180, 420], [900, 430], [150, 640], [930, 650], [250, 800], [830, 800], [540, 380]];
   return (
     <Scene bg={BG_PURPLE} html={<>
       <div style={{position: 'absolute', left: 540 + (1 - fly) * -280, top: 560 + (1 - fly) * -120, transform: `translate(-50%,-50%) scale(${0.6 + 0.6 * fly + (t > hit ? 0.06 * wobble(t - hit, 3, 6) : 0)})`,
@@ -345,10 +345,10 @@ const Ahwa: React.FC<{t: number; dim?: number}> = ({t, dim = 0}) => (
         <circle cx={x} cy={430} r={70} fill="#FFE98A" opacity={0.18 + 0.05 * Math.sin(t * 3 + i)} />
       </g>
     ))}
-    <rect x={0} y={1000} width={W} height={920} fill="#6B3A22" />
-    <rect x={0} y={1000} width={W} height={14} fill={INK} opacity={0.4} />
+    <rect x={0} y={850} width={W} height={1070} fill="#6B3A22" />
+    <rect x={0} y={850} width={W} height={14} fill={INK} opacity={0.4} />
     {/* tables */}
-    {[[270, 1010], [800, 1010]].map(([x, y], i) => (
+    {[[300, 860], [780, 860]].map(([x, y], i) => (
       <g key={i}>
         <rect x={x - 12} y={y - 130} width={24} height={130} fill="#3A2416" />
         <ellipse cx={x} cy={y - 130} rx={150} ry={26} fill="#C0C6CC" stroke={INK} strokeWidth={6} />
@@ -363,9 +363,9 @@ export const B5: React.FC<BoardProps> = ({t, ev}) => {
   return (
     <Scene bg={BG_WARM} html={spot > 0 ? <Txt x={700} y={560} size={64} s={popIn(t - only)} color={YEL}>الوحيد!</Txt> : null}>
       <Ahwa t={t} dim={0.25 * spot} />
-      <Person x={170} y={960} s={1.45} color="#5B8DEF" look="down" phone glow={0.9 + 0.1 * Math.sin(t * 5)} />
-      <Person x={450} y={960} s={1.45} color="#35C46B" look="down" phone glow={0.9 + 0.1 * Math.sin(t * 4 + 1)} skin="#B77A50" />
-      <Person x={900} y={960} s={1.45} color="#B57BFF" look="down" phone glow={0.9 + 0.1 * Math.sin(t * 6 + 2)} skin="#D9A273" />
+      <Person x={170} y={845} s={1.2} color="#5B8DEF" look="down" phone glow={0.9 + 0.1 * Math.sin(t * 5)} />
+      <Person x={450} y={845} s={1.2} color="#35C46B" look="down" phone glow={0.9 + 0.1 * Math.sin(t * 4 + 1)} skin="#B77A50" />
+      <Person x={900} y={845} s={1.2} color="#B57BFF" look="down" phone glow={0.9 + 0.1 * Math.sin(t * 6 + 2)} skin="#D9A273" />
       {/* tea glass on his table, front right */}
       <ellipse cx={890} cy={1350} rx={170} ry={34} fill="#C0C6CC" stroke={INK} strokeWidth={7} />
       <Tea x={890} y={1345} s={1.1} t={t} />
@@ -381,7 +381,7 @@ export const B6: React.FC<BoardProps> = ({t, ev}) => {
   const spin = t * (t < hit ? 3 : 14);
   return (
     <Scene bg={BG_WARM} html={t > hit ? (
-      <div style={{position: 'absolute', left: 540, top: 820, transform: `translate(-50%,-50%) scale(${s})`, ...AR, fontSize: 120, color: INK, background: YEL, padding: '0 50px 14px',
+      <div style={{position: 'absolute', left: 540, top: 770, transform: `translate(-50%,-50%) scale(${s})`, ...AR, fontSize: 110, color: INK, background: YEL, padding: '0 50px 14px',
         borderRadius: 999, border: `9px solid ${INK}`, boxShadow: `0 14px 0 ${INK}`, whiteSpace: 'nowrap', lineHeight: 1.4}}>{'\u2066+٢:٣٠\u2069 ساعة'}</div>
     ) : null}>
       <Ahwa t={t} dim={0.45} />
@@ -392,72 +392,172 @@ export const B6: React.FC<BoardProps> = ({t, ev}) => {
   );
 };
 
-// ================================================================== 7 — screen time bar shrinks full -> half ("النص"), "تجربة حقيقية" stamp
+// ------------------------------------------------------------------ small cartoon people (not stick figures)
+const GREY = '#9aa0a8';
+const hex = (c: string) => [1, 3, 5].map((i) => parseInt(c.slice(i, i + 2), 16));
+const mix = (a: string, b: string, k: number) => {
+  const A = hex(a), B = hex(b);
+  return `rgb(${A.map((v, i) => Math.round(v + (B[i] - v) * k)).join(',')})`;
+};
+export type Look = {skin: string; shirt: string; pants: string; hair: string; style: 'short' | 'long' | 'hijab' | 'curly' | 'bald' | 'cap'; beard?: boolean};
+export const LOOKS: Look[] = [
+  {skin: '#C98B5E', shirt: '#FF7A1A', pants: '#2E3A59', hair: '#2b1a10', style: 'short'},
+  {skin: '#B77A50', shirt: '#5B8DEF', pants: '#3a2a20', hair: '#E9A23B', style: 'hijab'},
+  {skin: '#D9A273', shirt: '#35C46B', pants: '#2E3A59', hair: '#1b1410', style: 'curly'},
+  {skin: '#8E5A3A', shirt: '#B57BFF', pants: '#444', hair: '#1b1410', style: 'short', beard: true},
+  {skin: '#E0B48A', shirt: '#FF5A9E', pants: '#2E3A59', hair: '#5a3218', style: 'long'},
+  {skin: '#A86A45', shirt: '#FFD23F', pants: '#3a2a20', hair: '#2b1a10', style: 'cap'},
+  {skin: '#C98B5E', shirt: '#2EC4B6', pants: '#2E3A59', hair: '#7a3b9e', style: 'hijab'},
+  {skin: '#D9A273', shirt: '#FF9F1C', pants: '#444', hair: '#2b1a10', style: 'bald', beard: true},
+  {skin: '#B77A50', shirt: '#E84A5F', pants: '#2E3A59', hair: '#1b1410', style: 'long'},
+  {skin: '#8E5A3A', shirt: '#4A90E2', pants: '#3a2a20', hair: '#1b1410', style: 'curly'},
+];
+// x, y = feet; pose stand / sit (on a bench, feet at y) / walk; grey 0..1 desaturates; smile 0..1
+export const Kid: React.FC<{x: number; y: number; s?: number; look: Look; pose?: 'stand' | 'sit' | 'walk'; t?: number; grey?: number; smile?: number; flip?: boolean; wave?: number}> =
+  ({x, y, s = 1, look, pose = 'stand', t = 0, grey = 0, smile = 1, flip = false, wave = 0}) => {
+  const c = (col: string) => (grey > 0 ? mix(col, GREY, grey) : col);
+  const sk = c(look.skin), sh = c(look.shirt), pa = c(look.pants), hr = c(look.hair);
+  const sw = pose === 'walk' ? Math.sin(t * 8) : 0;
+  const hipY = pose === 'sit' ? -60 : -95;
+  const bob = pose === 'walk' ? -Math.abs(Math.cos(t * 8)) * 5 : 0;
+  const leg = (side: number) => {
+    if (pose === 'sit') return <g key={side}>
+      <path d={`M ${side * 14} ${hipY} L ${side * 14 + 46} ${hipY}`} stroke={pa} strokeWidth={28} strokeLinecap="round" />
+      <path d={`M ${side * 14 + 46} ${hipY} L ${side * 14 + 46} -8`} stroke={pa} strokeWidth={26} strokeLinecap="round" />
+      <ellipse cx={side * 14 + 56} cy={-4} rx={20} ry={10} fill={INK} />
+    </g>;
+    const a = side * sw * 24;
+    return <g key={side} transform={`rotate(${a} ${side * 12} ${hipY})`}>
+      <path d={`M ${side * 12} ${hipY} L ${side * 12} -10`} stroke={pa} strokeWidth={28} strokeLinecap="round" />
+      <ellipse cx={side * 12 + 8} cy={-4} rx={20} ry={10} fill={INK} />
+    </g>;
+  };
+  const arm = (side: number) => {
+    const a = pose === 'walk' ? -side * sw * 28 : pose === 'sit' ? side * -30 : side * 8 + (side === 1 ? -wave : 0);
+    return <g key={side} transform={`rotate(${a} ${side * 40} ${hipY - 95})`}>
+      <path d={`M ${side * 40} ${hipY - 95} L ${side * 48} ${hipY - 25}`} stroke={sh} strokeWidth={22} strokeLinecap="round" />
+      <circle cx={side * 49} cy={hipY - 18} r={12} fill={sk} stroke={INK} strokeWidth={4} />
+    </g>;
+  };
+  const hy = hipY - 150 + bob;
+  return (
+    <g transform={`translate(${x} ${y}) scale(${flip ? -s : s} ${s})`}>
+      <g transform={`translate(0 ${bob})`}>
+        {leg(-1)}{leg(1)}
+        {arm(-1)}
+        <path d={`M -42 ${hipY + 6} Q -48 ${hipY - 100} -30 ${hipY - 108} L 30 ${hipY - 108} Q 48 ${hipY - 100} 42 ${hipY + 6} Z`} fill={sh} stroke={INK} strokeWidth={6} strokeLinejoin="round" />
+        <path d={`M -14 ${hipY - 108} Q 0 ${hipY - 92} 14 ${hipY - 108}`} fill={sk} stroke={INK} strokeWidth={4} />
+        {arm(1)}
+      </g>
+      <g transform={`translate(0 ${hy})`}>
+        {look.style === 'hijab' && <path d="M -46 10 Q -54 -52 0 -56 Q 54 -52 46 10 Q 40 40 0 44 Q -40 40 -46 10 Z" fill={hr} stroke={INK} strokeWidth={5} />}
+        {look.style === 'long' && <path d="M -42 -4 Q -48 -50 0 -52 Q 48 -50 42 -4 L 46 46 L -46 46 Z" fill={hr} stroke={INK} strokeWidth={5} />}
+        <circle r={36} fill={sk} stroke={INK} strokeWidth={5} />
+        {look.style === 'short' && <path d="M -36 -6 Q -40 -44 0 -42 Q 40 -44 36 -6 Q 26 -26 0 -26 Q -22 -26 -36 -6 Z" fill={hr} stroke={INK} strokeWidth={4} />}
+        {look.style === 'long' && <path d="M -36 -2 Q -36 -42 0 -40 Q 36 -42 36 -2 Q 20 -24 0 -24 Q -20 -24 -36 -2 Z" fill={hr} stroke={INK} strokeWidth={4} />}
+        {look.style === 'curly' && [-28, -14, 0, 14, 28].map((cx, i) => <circle key={i} cx={cx} cy={-30 + Math.abs(cx) * 0.3} r={14} fill={hr} stroke={INK} strokeWidth={3} />)}
+        {look.style === 'cap' && <g><path d="M -36 -10 Q -36 -44 0 -44 Q 36 -44 36 -10 Z" fill={c('#E84A5F')} stroke={INK} strokeWidth={4} /><path d="M 10 -12 L 56 -10" stroke={INK} strokeWidth={8} strokeLinecap="round" /></g>}
+        {look.style === 'hijab' && <path d="M -36 -2 Q -34 -40 0 -40 Q 34 -40 36 -2 Q 20 -30 0 -30 Q -20 -30 -36 -2 Z" fill={hr} stroke={INK} strokeWidth={4} />}
+        {look.beard && <path d="M -26 8 Q 0 46 26 8 Q 0 26 -26 8 Z" fill={hr} />}
+        <ellipse cx={-13} cy={-2} rx={5} ry={6.5} fill={INK} /><ellipse cx={13} cy={-2} rx={5} ry={6.5} fill={INK} />
+        <circle cx={-11} cy={-4} r={1.8} fill="#fff" /><circle cx={15} cy={-4} r={1.8} fill="#fff" />
+        <path d={`M -15 -16 L -7 ${-17 + 2 * (1 - smile)} M 7 ${-17 + 2 * (1 - smile)} L 15 -16`} stroke={INK} strokeWidth={3.5} strokeLinecap="round" />
+        <circle cx={-22} cy={10} r={6} fill="#FF8A8A" opacity={0.45 * smile} /><circle cx={22} cy={10} r={6} fill="#FF8A8A" opacity={0.45 * smile} />
+        <path d={`M -12 14 Q 0 ${14 + 12 * smile - 2 * (1 - smile)} 12 14`} stroke={INK} strokeWidth={4} fill={smile > 0.6 ? '#fff' : 'none'} strokeLinecap="round" />
+      </g>
+    </g>
+  );
+};
+
+// ================================================================== 7 — a phone Screen Time screen: daily average drops 5:14 -> 2:41, "تجربة حقيقية" stamp
 export const B7: React.FC<BoardProps> = ({t, ev}) => {
   const [stamp = 1.0, half = 4.8] = ev; // "تجربة", "نزل"
-  const k = easeInOut(seg(t, half - 0.2, half + 0.6));
-  const w = 760 * (1 - 0.5 * k);
+  const k = easeInOut(seg(t, half - 0.15, half + 0.45));
+  const mins = Math.round(314 + (161 - 314) * k); // 5:14 -> 2:41
+  const time = `${Math.floor(mins / 60)}:${String(mins % 60).padStart(2, '0')}`;
   const st = t > stamp ? 1 + 1.4 * (1 - easeOut(seg(t, stamp, stamp + 0.18))) : 0;
+  const days = [0.9, 1.0, 0.85, 0.95, 0.92, 0.98, 0.88];
+  const PX = 560, PY = 600, PW = 300, PH = 500;
   return (
     <Scene bg={BG_TEAL} html={<>
-      <Txt x={540} y={470} size={64} color="#fff">وقت الموبايل</Txt>
-      {k > 0.5 && <Txt x={160 + w / 2 + 10} y={800} size={100} s={popIn(t - half - 0.3)} color={YEL}>النص</Txt>}
+      <div style={{position: 'absolute', left: PX - PW / 2 + 30, top: PY - PH / 2 + 70, width: PW - 60, textAlign: 'center', fontFamily: 'Cairo', fontWeight: 900, color: '#fff', direction: 'rtl', lineHeight: 1.1}}>
+        <div style={{fontSize: 26, opacity: 0.85}}>وقت الشاشة</div>
+        <div style={{fontSize: 18, opacity: 0.6, marginTop: 6}}>المتوسط اليومي</div>
+        <div style={{fontSize: 74, direction: 'ltr', color: k > 0.5 ? '#7CFFB0' : '#fff', marginTop: 4}}>{time}</div>
+      </div>
+      {k > 0.95 && <Pill x={300} y={470} s={popIn(t - half - 0.45)} size={50}>للنص!</Pill>}
       {st > 0 && (
-        <div style={{position: 'absolute', left: 740, top: 830, transform: `translate(-50%,-50%) rotate(-10deg) scale(${st})`, opacity: Math.min(1, (t - stamp) / 0.08), ...AR, fontSize: 58, color: RED,
-          border: `9px solid ${RED}`, borderRadius: 18, padding: '0 22px 8px', background: 'rgba(255,255,255,0.9)', whiteSpace: 'nowrap'}}>تجربة حقيقية</div>
+        <div style={{position: 'absolute', left: 820, top: 760, transform: `translate(-50%,-50%) rotate(-10deg) scale(${st})`, opacity: Math.min(1, (t - stamp) / 0.08), ...AR, fontSize: 50, color: RED,
+          border: `8px solid ${RED}`, borderRadius: 16, padding: '0 20px 6px', background: 'rgba(255,255,255,0.92)', whiteSpace: 'nowrap'}}>تجربة حقيقية</div>
       )}
     </>}>
       <Dots t={t} o={0.15} />
-      <Phone x={180} y={650} w={120} h={210} kind="bar" rot={-8} />
-      <rect x={160} y={570} width={760} height={110} rx={55} fill="#0E4A55" stroke={INK} strokeWidth={9} />
-      <rect x={160} y={570} width={w} height={110} rx={55} fill={k > 0.5 ? '#35C46B' : RED} stroke={INK} strokeWidth={9} />
-      <rect x={180} y={585} width={Math.max(0, w - 40)} height={26} rx={13} fill="#fff" opacity={0.3} />
-      <line x1={540} y1={540} x2={540} y2={710} stroke="#fff" strokeWidth={6} strokeDasharray="14 10" opacity={0.7} />
-      <Floor />
+      <g transform={`translate(${PX} ${PY}) rotate(${-3 + Math.sin(t * 1.5) * 1.5})`}>
+        <rect x={-PW / 2 + 10} y={-PH / 2 + 14} width={PW} height={PH} rx={46} fill={INK} opacity={0.35} />
+        <rect x={-PW / 2} y={-PH / 2} width={PW} height={PH} rx={46} fill="#22252e" stroke={INK} strokeWidth={9} />
+        <rect x={-PW / 2 + 18} y={-PH / 2 + 34} width={PW - 36} height={PH - 68} rx={26} fill="#121826" />
+        {/* weekly bars: they drop to about half */}
+        {days.map((h, i) => {
+          const bh = 150 * h * (1 - 0.49 * k);
+          return <rect key={i} x={-PW / 2 + 42 + i * 32} y={PH / 2 - 60 - bh} width={22} height={bh} rx={6} fill={k > 0.5 ? '#35C46B' : '#4A90E2'} />;
+        })}
+        <line x1={-PW / 2 + 36} y1={PH / 2 - 58} x2={PW / 2 - 36} y2={PH / 2 - 58} stroke="#fff" strokeWidth={3} opacity={0.4} />
+      </g>
+      {k > 0.05 && k < 0.98 && <path d={`M 760 ${520 + 140 * k} l 0 -90`} stroke={YEL} strokeWidth={14} strokeLinecap="round" opacity={0} />}
+      <g transform={`translate(790 ${500 + 120 * k})`} opacity={seg(t, half - 0.1, half + 0.2)}>
+        <path d="M -26 -60 L 26 -60 L 26 0 L 56 0 L 0 60 L -56 0 L -26 0 Z" fill={YEL} stroke={INK} strokeWidth={7} strokeLinejoin="round" />
+      </g>
     </Scene>
   );
 };
 
-// ================================================================== 8 — face to face + walking + tree (outdoors)
+// ================================================================== 8 — family and friends sitting together face to face + one walking outside
 export const B8: React.FC<BoardProps> = ({t, ev}) => {
   const [sit = 0.3, face = 2.0, walk = 3.3] = ev; // "قعدت", "وش", "اتمشت"
   const a = popIn(t - sit), b = popIn(t - face), c = popIn(t - walk);
-  const step = Math.sin(t * 9);
-  const wx = 690 + (t - walk) * 50;
+  const wx = 700 + Math.max(0, t - walk) * 60;
   return (
     <Scene bg={BG_SKY}>
-      <circle cx={900} cy={330} r={90} fill="#FFE066" stroke={INK} strokeWidth={7} />
-      <path d="M 0 900 Q 300 820 540 880 Q 800 940 1080 860 L 1080 1920 L 0 1920 Z" fill="#7BD66B" />
-      <path d="M 0 1000 Q 400 950 1080 1010 L 1080 1920 L 0 1920 Z" fill="#5FBF55" />
-      {/* two people face to face */}
-      <g opacity={a > 0 ? 1 : 0} transform={`translate(0 ${(1 - Math.min(1, a)) * 60})`}>
-        <Person x={170} y={900} s={1.3} color="#FF7A1A" look="side" />
-        <Person x={440} y={900} s={1.3} color="#5B8DEF" look="side" flip skin="#B77A50" />
-        <Bubble x={190} y={470} s={b} dots={t} />
-        <Bubble x={420} y={440} s={b} flip dots={t + 0.5} />
+      <circle cx={930} cy={420} r={60} fill="#FFE066" stroke={INK} strokeWidth={6} />
+      <path d="M 0 760 Q 300 700 540 740 Q 800 790 1080 730 L 1080 1920 L 0 1920 Z" fill="#7BD66B" />
+      <path d="M 0 830 Q 400 800 1080 840 L 1080 1920 L 0 1920 Z" fill="#5FBF55" />
+      {/* left: a family/friends picnic bench, sitting together, talking */}
+      <g opacity={a > 0 ? 1 : 0} transform={`translate(0 ${(1 - Math.min(1, a)) * 40})`}>
+        <rect x={40} y={700} width={520} height={22} rx={10} fill="#A0522D" stroke={INK} strokeWidth={6} />
+        <rect x={70} y={720} width={18} height={80} fill="#7a3f1e" /><rect x={510} y={720} width={18} height={80} fill="#7a3f1e" />
+        <Kid x={110} y={790} s={0.78} look={LOOKS[0]} pose="sit" smile={1} />
+        <Kid x={230} y={790} s={0.78} look={LOOKS[1]} pose="sit" smile={1} />
+        <Kid x={380} y={790} s={0.78} look={LOOKS[2]} pose="sit" smile={1} flip />
+        <Kid x={500} y={790} s={0.78} look={LOOKS[3]} pose="sit" smile={1} flip />
+        <Bubble x={190} y={470} s={b * 0.7} dots={t} />
+        <Bubble x={440} y={460} s={b * 0.7} flip dots={t + 0.5} />
       </g>
-      {/* tree + a walking figure */}
-      <g transform={`scale(${Math.min(1, c)})`} style={{transformOrigin: '860px 900px'}}>
-        <Tree x={900} y={900} s={1.25} t={t} />
-      </g>
-      {c > 0 && <Person x={wx} y={900 + Math.abs(step) * -6} s={1.1} color="#35C46B" look="side" legs={step} skin="#D9A273" />}
+      {/* right: outside, one walking past a tree */}
+      <g transform={`translate(880 800) scale(${Math.min(1, c)}) translate(-880 -800)`}><Tree x={900} y={800} s={1.0} t={t} /></g>
+      {c > 0 && <Kid x={wx} y={830} s={0.72} look={LOOKS[4]} pose="walk" t={t} smile={1} />}
     </Scene>
   );
 };
 
-// ================================================================== 9 — mood meter: 10 faces, 7 turn grey -> smiling yellow one by one
+// ================================================================== 9 — mood: 10 different little people, 7 light up smiling one by one
 export const B9: React.FC<BoardProps> = ({t, ev}) => {
   const [go = 1.2] = ev; // "سبعة"
-  const turned = (i: number) => (i < 7 ? easeOut(seg(t, go + i * 0.22, go + i * 0.22 + 0.18)) : 0);
+  const ORDER = [0, 2, 4, 5, 7, 8, 9]; // the 7 that light up (spread over both rows)
+  const lit = (i: number) => { const n = ORDER.indexOf(i); return n < 0 ? 0 : easeOut(seg(t, go + n * 0.22, go + n * 0.22 + 0.2)); };
   return (
-    <Scene bg={BG_GREEN} html={t > go + 1.6 ? <Txt x={540} y={860} size={96} s={popIn(t - go - 1.6)} color={YEL}>٧ من ١٠</Txt> : null}>
+    <Scene bg={BG_GREEN} html={t > go + 1.6 ? <Txt x={540} y={410} size={80} s={popIn(t - go - 1.6)} color={YEL}>٧ من ١٠</Txt> : null}>
       <Dots t={t} o={0.15} />
       {Array.from({length: 10}, (_, i) => {
-        const r = Math.floor(i / 5), c = i % 5;
-        const x = 900 - c * 190, y = 470 + r * 200; // right-to-left order
-        return <Face key={i} x={x} y={y + Math.sin(t * 2 + i) * 4} r={74} k={turned(i)} />;
+        const r = Math.floor(i / 5), cc = i % 5;
+        const x = 900 - cc * 190 + (r ? 40 : 0), y = r ? 840 : 650; // right-to-left order
+        const k = lit(i);
+        return (
+          <g key={i}>
+            {k > 0 && <ellipse cx={x} cy={y - 120} rx={80} ry={110} fill="#FFF3A0" opacity={0.45 * k} />}
+            <Kid x={x} y={y + (k > 0 ? -Math.sin(Math.PI * Math.min(1, k)) * 14 : 0)} s={0.72} look={LOOKS[i]} pose="stand" grey={1 - k} smile={k} wave={k * 30} />
+          </g>
+        );
       })}
-      <Floor />
     </Scene>
   );
 };
@@ -497,15 +597,18 @@ export const B11: React.FC<BoardProps> = ({t}) => (
 export const B12: React.FC<BoardProps> = ({t, ev}) => {
   const [focus = 0.3, younger = 1.6] = ev; // "تركيزهم", "أصغر"
   const glow = easeOut(seg(t, focus, focus + 0.6));
-  const flips = Math.floor(clamp((t - 0.9) / 1.4) * 10); // 10 pages flip back
-  const pageK = ((t - 0.9) / 0.14) % 1;
+  // the calendar flips BACKWARD one year per page, 2026 -> 2016, landing just before the badge
+  const F0 = 0.15, F1 = Math.max(F0 + 0.8, younger - 0.1);
+  const flips = Math.floor(clamp((t - F0) / (F1 - F0)) * 10);
+  const pageK = clamp(((t - F0) / ((F1 - F0) / 10)) % 1);
   const year = 2026 - flips;
   const badge = popIn(t - younger, 0.34);
   return (
     <Scene bg="conic-gradient(from 0deg at 50% 32%,#FF5A4E,#FF9F1C,#FFD23F,#35C46B,#2A8CFF,#B57BFF,#FF5A9E,#FF5A4E)" html={<>
       <div style={{position: 'absolute', left: 820, top: 480, transform: 'translate(-50%,-50%)', ...AR, fontSize: 62, color: INK, direction: 'ltr'}}>{year}</div>
+      
       {badge > 0 && (
-        <div style={{position: 'absolute', left: 540, top: 800, transform: `translate(-50%,-50%) rotate(-4deg) scale(${badge})`, ...AR, fontSize: 120, color: INK,
+        <div style={{position: 'absolute', left: 540, top: 700, transform: `translate(-50%,-50%) rotate(-4deg) scale(${badge})`, ...AR, fontSize: 120, color: INK,
           background: 'linear-gradient(180deg,#FFF3A0,#FFD23F 45%,#F2A900)', padding: '0 54px 16px', borderRadius: 999, border: `10px solid ${INK}`, boxShadow: `0 14px 0 ${INK}, 0 0 60px #FFF3A0`, whiteSpace: 'nowrap', lineHeight: 1.4}}>{'\u2066-١٠\u2069 سنين'}</div>
       )}
     </>}>
@@ -520,7 +623,7 @@ export const B12: React.FC<BoardProps> = ({t, ev}) => {
         <rect x={-130} y={-150} width={260} height={290} rx={22} fill="#fff" stroke={INK} strokeWidth={9} />
         <rect x={-130} y={-150} width={260} height={80} rx={22} fill={RED} stroke={INK} strokeWidth={9} />
         {[-70, 70].map((x) => <rect key={x} x={x - 10} y={-176} width={20} height={50} rx={10} fill="#ddd" stroke={INK} strokeWidth={6} />)}
-        {t > 0.9 && flips < 10 && (
+        {t > F0 && flips < 10 && (
           <path d={`M -130 -70 L 130 -70 L 130 ${-70 + 210 * (1 - pageK)} L -130 ${-70 + 210 * (1 - pageK)} Z`} fill="#f4f4f4" stroke={INK} strokeWidth={6} opacity={0.95} />
         )}
         <path d="M -60 -100 A 40 40 0 1 1 -20 -60" stroke="#fff" strokeWidth={8} fill="none" />
@@ -535,10 +638,10 @@ export const B13: React.FC<BoardProps> = ({t, ev}) => {
   const [turn = 2.4] = ev; // "مقدروش"
   const N = 12;
   return (
-    <Scene bg="radial-gradient(ellipse at 50% 40%,#5A6B8C 0%,#2E3650 65%,#161A28 100%)" html={<Pill x={830} y={360} size={56}>أسبوعين</Pill>}>
+    <Scene bg="radial-gradient(ellipse at 50% 40%,#5A6B8C 0%,#2E3650 65%,#161A28 100%)" html={<Pill x={830} y={400} size={52}>أسبوعين</Pill>}>
       <Dots t={t} o={0.1} />
-      <rect x={0} y={900} width={W} height={1020} fill="#20263A" />
-      <Door x={830} y={900} open={0.25 + 0.1 * Math.sin(t * 2)} />
+      <rect x={0} y={840} width={W} height={1080} fill="#20263A" />
+      <Door x={830} y={840} open={0.25 + 0.1 * Math.sin(t * 2)} />
       {Array.from({length: N}, (_, i) => {
         const keep = i === 2 || i === 7 || i === 10; // only a few keep going
         const row = i % 3;
@@ -549,7 +652,7 @@ export const B13: React.FC<BoardProps> = ({t, ev}) => {
         const x = start + fwd - back * (t - turn) * 200 * (back > 0 ? 1 : 0);
         const xx = keep ? Math.min(start + tt * 140, 790) : Math.max(-80, x);
         const step = Math.sin(t * 10 + i);
-        return <Person key={i} x={xx} y={880 + row * 26} s={0.78 + row * 0.06} color={['#FF5A4E', '#35C46B', '#5B8DEF', '#B57BFF', '#FF9F1C'][i % 5]} look="side" legs={step} flip={back > 0.5} skin={['#C98B5E', '#B77A50', '#D9A273'][i % 3]} o={keep && xx >= 780 ? Math.max(0, 1 - (t - (790 - start) / 140)) : 1} />;
+        return <Person key={i} x={xx} y={815 + row * 18} s={0.7 + row * 0.05} color={['#FF5A4E', '#35C46B', '#5B8DEF', '#B57BFF', '#FF9F1C'][i % 5]} look="side" legs={step} flip={back > 0.5} skin={['#C98B5E', '#B77A50', '#D9A273'][i % 3]} o={keep && xx >= 780 ? Math.max(0, 1 - (t - (790 - start) / 140)) : 1} />;
       })}
     </Scene>
   );
@@ -560,7 +663,7 @@ export const B14: React.FC<BoardProps> = ({t, ev}) => {
   const [one = 1.4] = ev; // "واحد"
   const fallAt = [0.5, 0.9, 1.3];
   return (
-    <Scene bg="radial-gradient(ellipse at 50% 35%,#4B5D7A 0%,#26304A 65%,#121725 100%)" html={t > one + 0.4 ? <Txt x={540} y={330} size={96} s={popIn(t - one - 0.4)} color={YEL}>واحد بس!</Txt> : null}>
+    <Scene bg="radial-gradient(ellipse at 50% 35%,#4B5D7A 0%,#26304A 65%,#121725 100%)" html={t > one + 0.4 ? <Txt x={540} y={410} size={84} s={popIn(t - one - 0.4)} color={YEL}>واحد بس!</Txt> : null}>
       <Dots t={t} o={0.1} />
       <rect x={110} y={740} width={860} height={36} rx={18} fill="#8FA3C4" stroke={INK} strokeWidth={8} />
       {[0, 1, 2, 3].map((i) => {
@@ -591,9 +694,9 @@ export const B15: React.FC<BoardProps> = ({t, ev}) => {
       {t > send && <Pill x={300} y={430} s={popIn(t - send)} size={60}>ابعته</Pill>}
     </>}>
       <Dots t={t} color="#9EC7FF" o={0.18} />
-      <Phone x={690} y={560 + Math.sin(t * 2.2) * 14} w={260} h={470} kind="wifi" xk={xk} rot={-6} glow={0.4} t={t} />
+      <Phone x={690} y={590 + Math.sin(t * 2.2) * 10} w={240} h={420} kind="wifi" xk={xk} rot={-6} glow={0.4} t={t} />
       {t > write && [0, 1, 2].map((i) => (
-        <ArrowDown key={i} x={200 + i * 340} y={850 + ((t * 2 + i * 0.3) % 1) * 50} s={0.8 * popIn(t - write - i * 0.12)} color={i === 1 ? RED : YEL} />
+        <ArrowDown key={i} x={200 + i * 340} y={745 + ((t * 2 + i * 0.3) % 1) * 50} s={0.8 * popIn(t - write - i * 0.12)} color={i === 1 ? RED : YEL} />
       ))}
       {t > send && <SendIcon x={300 + Math.sin(t * 3) * 10} y={600 - ((t - send) * 20) % 30} s={popIn(t - send) * 1.1} rot={-10} />}
       <Floor />
@@ -610,7 +713,7 @@ export const B16: React.FC<BoardProps> = ({t, d}) => {
         {Array.from({length: 24}, (_, i) => (
           <circle key={i} cx={rand(i) * W} cy={(rand(i + 3) * 1150 + t * 120) % 1150} r={4 + rand(i + 8) * 6} fill={YEL} opacity={0.6} />
         ))}
-        <Phone x={690} y={530} w={280} h={500} kind="wifi" xk={0} rot={-6} glow={0.3} />
+        <Phone x={690} y={585} w={270} h={470} kind="wifi" xk={0} rot={-6} glow={0.3} />
         <Floor />
       </Scene>
       <div style={{position: 'absolute', inset: 0, opacity: toHook}}>
