@@ -1,18 +1,17 @@
-# Episode 13 QA: لو قفلت النت من موبايلك أسبوعين
+# Episode 13 v2 QA: لو قفلت النت من موبايلك أسبوعين
 
-- Output: `elfahman-13-phone-internet-off.mp4`. 1080x1920, **60 fps**, H.264 **yuv420p** + AAC, **65.93 s**. Loudness **−14.1 LUFS**, true peak −1.4 dBFS.
-- Voice: ONE eleven_v4 take (voice XFkxnO6GgzVSxqEN2NVq), 71.0 s raw, re-edited at 1.0x by `tools/pace.py` (silence cut or added, nothing stretched).
-  The connector has no speed setting, so 0.95 could not be set. The inline "relaxed" tag would have pushed the take over 1,000 credits, so it was left out.
-- Pace: body (line 2 → end) 170 words / 62.06 s = **2.74 words/s**.
-- Gaps as heard (ffmpeg silencedetect −40 dB, `pacecheck.json`): sentence gaps 0.35–0.41 s (**avg 0.38**), comma gaps 0.15–0.18 s (avg 0.17),
-  in-phrase gaps ≤ 0.07 s, hook in one go (ends 3.06 s), "استنى ده الغريب جاي!" straight through, **mystery pause 0.79 s** after "حصله إيه؟",
-  **longest gap outside the mystery pause 0.41 s**, no leading silence, 0.40 s after the last word.
-- Character: الفهمان library (`public/elfahman/lib/`) in the bottom 40% in every frame. The 1 s contact sheet (66 frames) shows the orange hoodie,
-  ف badge and round teal glasses in all of them. Poses: hero smirk → explain → worried + sweat on "بيرن" → explain → point_up on "عشرات" →
-  hero at the ahwa → point_up on "ساعتين" → thumbs_up on "اتمشت" / "أحسن" → thinking from "طب" through the pause → shocked + punch-in + shake +
-  scratch/stinger on "استنى" → point_up (payoff) → worried on "مقدروش" → point_up on "واحد" → explain → temple on "الفهمان", wink on "كسبان".
-- Frame 0: caption 1 "لو قفلت نت موبايلك" is on screen, and the phone bobs and Wi-Fi rings move by frame 1 (frame 1→2 diff 5.2). Caption 2 "أسبوعين… مخك هيحصله إيه؟" starts on "أسبوعين".
-- Loop: the last frame is the hook board (same phone, timeline, camera at rest), and the pose swap into frame 0 is hidden in a squash (`loop-last-first.png`).
-  The remaining first-vs-last difference (14.0) is the pose and the gold caption, the same as earlier episodes.
-- Pop scan: each flagged jump is a board cut, the X pop, the screen on/off loop (board 3), the clock chip, the stamp, the "استنى" punch-in/shake, or the calendar flips.
-- Credits: 989 (voice). 0 for pictures, Scribe, music and SFX.
+v2 = two fixes on v1: (1) the series study set behind every frame, with each beat drawn inside a framed board on the wall above him;
+(2) a new hook line (1 eleven_v4 take). Everything else is the same.
+
+- Output: `elfahman-13-phone-internet-off.mp4`. 1080x1920, **60 fps**, H.264 yuv420p + AAC, **65.80 s**. **−14.0 LUFS**, peak −1.2 dBFS (limiter before loudnorm).
+- Hook: "لو قفلت النت من موبايلك أسبوعين بس، مخك هيحصله إيه؟", one take with `[calm, curious, unhurried]`. The connector has no speed setting, so 0.95 could not be set.
+  **Hook = 3.74 s** of speech, said in one go. Its only pause is the breath after "بس", trimmed from 0.31 s to **0.25 s** (measures 0.25–0.27 s depending on the detector setting).
+  **Gap after the hook = 0.43 s**, then "أول ساعة". The hook was raised +0.6 dB to match the main take. It starts at 0.00 s; the first 0.04 s is the soft attack of "لو".
+- Rest of the voice: the v1 take reused (no new generation), cut from the same raw take at 1.0x. Nothing was sped up or stretched; only silence was cut.
+  Sentence gaps 0.36–0.43 s (avg 0.40 incl. the hook gap), comma gaps 0.15–0.17 s, in-phrase micro-gaps ≤ 0.05 s (were 0.07, to stay under 66 s).
+  **Mystery pause 0.76 s**. **Longest gap outside it: 0.43 s**. 0.40 s after the last word.
+- Contact sheet (1 s, 66 frames): the study set (wall, bookshelf, globe, window, lamp, desk with the mug and books) is behind الفهمان in every frame,
+  and الفهمان (orange hoodie, ف badge, round teal glasses) is in every frame, sitting behind the desk. The ahwa beat puts a tea glass on his desk.
+- Frame 0: caption 1 "لو قفلت نت موبايلك" on screen, phone and Wi-Fi rings moving by frame 1. Loop: the last frame is the hook board inside the same set,
+  and the swap from the temple/wink pose back to the smirk is hidden in a squash (`loop-last-first.png`).
+- Credits: **78** (hook line only). Scribe 0. Episode total (v1 + v2) 1,067.
