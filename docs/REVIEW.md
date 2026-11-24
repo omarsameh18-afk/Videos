@@ -167,3 +167,10 @@ All earlier rules (pacing, animation, visual, v5, US audience) still apply.
 - FINAL CHECK: transcribe the final MP4 audio (ElevenLabs scribe via the connector, from the public raw file in review/stt/),
   compare word-for-word with the script, then `node scripts/align-from-stt.mjs <script> <words.json> voice/<id>.timestamps.json`
   and re-render with `voice.maxGapSec: 2` so the audio stays exactly the transcribed one (captions in sync to ~1 frame).
+
+## CREDIT SAFETY (permanent, from protein-window)
+- A `creative_run_flow_nodes` / `creative_add_flow_node` call that TIMES OUT can still execute minutes later and charge.
+  Run ONE paid node per call, and after a timeout check the node's `generations` AND re-check the node again ~3 min
+  later before anything else. Never re-run a timed-out paid call.
+- Library clips are git-ignored: in a fresh container re-download them from the ElevenLabs flow "BrainPump - Max clips"
+  (generation ids in assets/clips/manifest.json) with `creative_get_generations`.

@@ -263,7 +263,55 @@
       "generationId": "hOld1gKFrHQgAKXtqwup",
       "credits": 2121,
       "prompt": "from pose-chicken-proud: bicep flex, stick legs wobble, waves at camera, shaker gripped"
+    },
+    {
+      "name": "pose-sprint-chug",
+      "file": "assets/clips/pose-sprint-chug.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "8OpUxj7CLcrNiNMPQWd4",
+      "credits": 609,
+      "prompt": "MASTER ref; comedic full sprint toward open gym doorway, chugging the pink shaker, frantic eyes"
+    },
+    {
+      "name": "pose-protein-meal",
+      "file": "assets/clips/pose-protein-meal.png",
+      "model": "gemini-3.1-flash-image",
+      "generationId": "h8BVjPURztF2I7t4B9HS",
+      "credits": 609,
+      "prompt": "MASTER ref; at a small table, plate of grilled chicken + fried eggs, fork to mouth, happy grin, shaker on table"
+    },
+    {
+      "name": "sprint-chug",
+      "file": "assets/clips/sprint-chug.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "rGPAU8piBaJOrUmNCUaJ",
+      "credits": 2121,
+      "prompt": "from pose-sprint-chug: frantic bouncy sprint in place while chugging the shaker; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "protein-meal",
+      "file": "assets/clips/protein-meal.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "RAvyiMqaWN6Q2v0k6WAw",
+      "credits": 2121,
+      "prompt": "from pose-protein-meal: eats chicken, happy chew, nods, cuts another bite; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "walk-sip",
+      "file": "assets/clips/walk-sip.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "dNdnxGNhaCA90U99cbTu",
+      "credits": 2121,
+      "prompt": "from MASTER: slow relaxed steps, sip from the shaker, content smile; static camera, no morphing, no logos, shaker stays a shaker"
+    },
+    {
+      "name": "sprint-chug-b",
+      "file": "assets/clips/sprint-chug-b.mp4",
+      "model": "kling-2.5-turbo",
+      "generationId": "UpIVRPi1yVCK487vu1d6",
+      "credits": 2121,
+      "prompt": "duplicate take of sprint-chug (a timed-out run call executed late); same prompt"
     }
   ],
-  "totalCredits": 50134
+  "totalCredits": 59836
 }

@@ -42,7 +42,14 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
   const first = timing.from === 0;
   const segF = Math.round(p.segSec * fps);
   const seq = p.seqLeft ?? [p.clip];
-  const k = p.freeze ? 0 : Math.floor(f / segF);
+  // segment boundaries (frames): uniform segSec, or explicit per-segment durations (last runs to the end)
+  const bounds: number[] = [0];
+  if (p.segDurs) {
+    for (const d of p.segDurs.slice(0, seq.length - 1)) bounds.push(bounds.at(-1)! + Math.round(d * fps));
+  } else for (let b = segF; b < dur + segF; b += segF) bounds.push(b);
+  const k = p.freeze ? 0 : Math.max(0, bounds.findLastIndex((b) => b <= f));
+  const segFrom = p.freeze ? 0 : bounds[k];
+  const segLen = p.freeze ? undefined : p.segDurs ? (k + 1 < bounds.length ? bounds[k + 1] - bounds[k] : dur - bounds[k]) : segF;
   const clip = seq[k % seq.length];
   const start = (p.clipStarts?.[k % seq.length] ?? p.clipStart) || 0;
   const prog = Math.min(1, f / Math.max(1, dur - 1));
@@ -80,11 +87,11 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
         <>
           {/* strip behind the title band: the same clip's wall, zoomed from the top */}
           <div style={{ position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transform: 'scale(1.3)', transformOrigin: '50% 0%' }}>
-            <Sequence key={`w${k}`} from={p.freeze ? 0 : k * segF} layout="none">
+            <Sequence key={`w${k}`} from={segFrom} layout="none">
               <Clip clip={clip} start={start} />
             </Sequence>
           </div>
-          <Sequence key={k} from={p.freeze ? 0 : k * segF} durationInFrames={p.freeze ? undefined : segF} layout="none">
+          <Sequence key={k} from={segFrom} durationInFrames={segLen} layout="none">
             <Body clip={clip} start={start} upper={upper} zoom={zoom} focusY={p.focusY ?? 0.5} />
           </Sequence>
         </>
@@ -133,19 +140,26 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
 };
 
 /** Big readable card: pink pill tag + up to 4 rows (last row lime). Stays inside x 40-940 (right 12% clear). */
-const Card: React.FC<{ card: { title?: string; tag?: string; rows: string[]; y: number; check: boolean; hide?: [number, number] }; f: number; fps: number; still: boolean }> = ({ card, f, fps, still }) => {
-  const inS0 = still ? 1 : spring({ frame: f - 3, fps, config: { damping: 13, stiffness: 240, overshootClamping: true } });
+type CardT = { title?: string; tag?: string; rows: string[]; y: number; check: boolean; hide?: [number, number]; icon?: 'clock' | 'scale'; breakAt?: number; showFrom?: number };
+const Card: React.FC<{ card: CardT; f: number; fps: number; still: boolean }> = ({ card, f, fps, still }) => {
+  const from = Math.round((card.showFrom ?? 0) * fps);
+  if (f < from) return null;
+  const inS0 = still && !card.showFrom ? 1 : spring({ frame: f - 3 - from, fps, config: { damping: 13, stiffness: 240, overshootClamping: true } });
   const t = f / fps;
   const hid = card.hide ? interpolate(t, [card.hide[0] - 0.15, card.hide[0], card.hide[1], card.hide[1] + 0.2], [1, 0, 0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) : 1;
   const inS = inS0 * hid;
   return (
     <div style={{ position: 'absolute', left: 40, width: 900, top: card.y, padding: '22px 30px 26px', borderRadius: 34, background: 'rgba(11,12,28,0.88)', border: `6px solid ${C.accent}`, boxShadow: '0 16px 0 rgba(0,0,0,0.35)', transform: `scale(${interpolate(inS, [0, 1], [0.7, 1])})`, opacity: inS, textAlign: 'center' }}>
       {card.title && <div style={{ ...headline(72, C.accent), marginBottom: 10, whiteSpace: 'nowrap' }}>{card.title}</div>}
-      {card.tag && (
-        <div style={{ display: 'inline-block', padding: '4px 26px', marginBottom: 10, borderRadius: 40, background: C.accent2, ...headline(64, '#fff') }}>{card.tag}</div>
+      {(card.tag || card.icon) && (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 26, marginBottom: 10 }}>
+          {card.icon === 'clock' && <ClockIcon f={f} fps={fps} breakAt={card.breakAt} />}
+          {card.icon === 'scale' && <ScaleIcon f={f} fps={fps} />}
+          {card.tag && <div style={{ display: 'inline-block', padding: '4px 26px', borderRadius: 40, background: C.accent2, ...headline(64, '#fff') }}>{card.tag}</div>}
+        </div>
       )}
       {card.rows.map((r, i) => {
-        const s = still ? 1 : spring({ frame: f - 8 - i * 6, fps, config: { damping: 12, stiffness: 300, overshootClamping: true } });
+        const s = still && !card.showFrom ? 1 : spring({ frame: f - 8 - i * 6 - from, fps, config: { damping: 12, stiffness: 300, overshootClamping: true } });
         const arrow = r.startsWith('→');
         const text = arrow ? r.replace(/^→\s*/, '') : r;
         const chars = text.length + (card.check ? 1.6 : 0) + (arrow ? 1.6 : 0);
@@ -167,5 +181,65 @@ const Card: React.FC<{ card: { title?: string; tag?: string; rows: string[]; y: 
         );
       })}
     </div>
+  );
+};
+
+/** "30 MIN" stopwatch; at breakAt (s) it cracks and shatters into flying shards. */
+const ClockIcon: React.FC<{ f: number; fps: number; breakAt?: number }> = ({ f, fps, breakAt }) => {
+  const S = 132;
+  const bf = breakAt === undefined ? Infinity : Math.round(breakAt * fps);
+  const t = f - bf; // frames since the break
+  const hand = (f * 9) % 360;
+  const face = (
+    <>
+      <circle cx="50" cy="54" r="38" fill="#fff" stroke="#0B0C1C" strokeWidth="7" />
+      <rect x="42" y="4" width="16" height="10" rx="3" fill="#0B0C1C" />
+      <path d="M50 54 L50 26" stroke={C.accent2} strokeWidth="6" strokeLinecap="round" transform={`rotate(${hand} 50 54)`} />
+      <text x="50" y="80" textAnchor="middle" fontFamily="Anton, sans-serif" fontSize="15" fill="#0B0C1C">30 MIN</text>
+    </>
+  );
+  if (t < 0) {
+    const shake = t > -8 ? Math.sin(f * 2.4) * 3 : 0;
+    return (
+      <svg width={S} height={S} viewBox="0 0 100 100" style={{ transform: `translateX(${shake}px)` }}>
+        {face}
+      </svg>
+    );
+  }
+  // 8 wedge shards fly out, spin and fade; crack lines flash first
+  const shards = Array.from({ length: 8 }, (_, i) => {
+    const a = (i / 8) * Math.PI * 2;
+    const a2 = ((i + 1) / 8) * Math.PI * 2;
+    const p = `M50 54 L${50 + 44 * Math.sin(a)} ${54 - 44 * Math.cos(a)} L${50 + 44 * Math.sin(a2)} ${54 - 44 * Math.cos(a2)} Z`;
+    const mid = (a + a2) / 2;
+    const d = t * (5 + (i % 3) * 1.6);
+    const fall = 0.25 * t * t;
+    return (
+      <g key={i} clipPath="url(#clk)" transform={`translate(${Math.sin(mid) * d} ${-Math.cos(mid) * d + fall}) rotate(${t * (i % 2 ? 14 : -11)} 50 54)`} opacity={interpolate(t, [0, 14, 20], [1, 1, 0], { extrapolateRight: 'clamp' })}>
+        <clipPath id="clk"><path d={p} /></clipPath>
+        {face}
+      </g>
+    );
+  });
+  return (
+    <svg width={S} height={S} viewBox="0 0 100 100" style={{ overflow: 'visible' }}>
+      {shards}
+      {t < 4 && <path d="M50 54 L30 30 M50 54 L78 40 M50 54 L60 88 M50 54 L18 64" stroke="#0B0C1C" strokeWidth="4" opacity={1 - t / 4} />}
+    </svg>
+  );
+};
+
+/** Bathroom scale: the needle swings and settles on the target. */
+const ScaleIcon: React.FC<{ f: number; fps: number }> = ({ f, fps }) => {
+  const s = spring({ frame: f - 6, fps, config: { damping: 7, stiffness: 120 } });
+  const ang = interpolate(s, [0, 1], [-80, 25]);
+  return (
+    <svg width={132} height={132} viewBox="0 0 100 100">
+      <rect x="8" y="22" width="84" height="70" rx="16" fill="#fff" stroke="#0B0C1C" strokeWidth="7" />
+      <path d="M26 52 A24 24 0 0 1 74 52" fill="none" stroke="#0B0C1C" strokeWidth="5" />
+      <path d="M50 56 L50 34" stroke={C.accent2} strokeWidth="6" strokeLinecap="round" transform={`rotate(${ang} 50 56)`} />
+      <circle cx="50" cy="56" r="5" fill="#0B0C1C" />
+      <rect x="30" y="66" width="40" height="14" rx="4" fill={C.accent} stroke="#0B0C1C" strokeWidth="3" />
+    </svg>
   );
 };

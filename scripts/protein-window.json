@@ -1,0 +1,133 @@
+{
+ "meta": {
+  "id": "protein-window",
+  "title": "The Protein Window Is (Mostly) a Myth",
+  "topic": "protein timing vs total daily protein, daily target per lb, meal distribution",
+  "targetSec": [28, 34],
+  "hookMaxSec": 3.5,
+  "sources": [
+   {
+    "label": "Schoenfeld et al., 2013",
+    "citation": "Schoenfeld BJ, Aragon AA, Krieger JW. The effect of protein timing on muscle strength and hypertrophy: a meta-analysis. J Int Soc Sports Nutr. 2013;10(1):53."
+   },
+   {
+    "label": "Morton et al., 2018",
+    "citation": "Morton RW et al. A systematic review, meta-analysis and meta-regression of the effect of protein supplementation on resistance training-induced gains in muscle mass and strength in healthy adults. Br J Sports Med. 2018;52(6):376-384."
+   },
+   {
+    "label": "Areta et al., 2013",
+    "citation": "Areta JL et al. Timing and distribution of protein ingestion during prolonged recovery from resistance exercise alters myofibrillar protein synthesis. J Physiol. 2013;591(9):2319-2331."
+   }
+  ],
+  "seed": 3
+ },
+ "voice": {
+  "voiceId": "TX3LPaxmHKxFdv7VOQHJ",
+  "modelId": "eleven_v3",
+  "speed": 1.0,
+  "maxGapSec": 5
+ },
+ "scenes": [
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "The thirty-minute protein window? Mostly a myth.",
+   "emphasis": ["myth"],
+   "props": {
+    "layout": "fill",
+    "clip": "sprint-chug",
+    "seqLeft": ["sprint-chug"],
+    "clipStart": 8,
+    "segSec": 4,
+    "flash": 0,
+    "card": { "rows": ["THE 30-MIN", "PROTEIN WINDOW?", "MOSTLY A MYTH"], "y": 900, "still": true }
+   },
+   "captionChunks": ["The thirty-minute", "protein window?", "Mostly a myth."]
+  },
+  {
+   "type": "ClipScene",
+   "background": "lab",
+   "narration": "Max sprints to his shake after every workout… for nothing.",
+   "emphasis": ["nothing"],
+   "props": {
+    "layout": "fill",
+    "clip": "sprint-chug",
+    "seqLeft": ["sprint-chug", "bicep-curl", "shocked"],
+    "clipStarts": [90, 30, 20],
+    "segDurs": [1.0, 1.6],
+    "segSec": 4,
+    "flash": 0
+   },
+   "captionChunks": ["Max sprints", "to his shake", "after every workout…", "for nothing."]
+  },
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "When studies controlled for total daily protein, workout timing barely mattered.",
+   "emphasis": ["total"],
+   "sourceIndex": 0,
+   "props": {
+    "layout": "fill",
+    "clip": "thinking",
+    "seqLeft": ["thinking", "idle-talk"],
+    "segDurs": [2.8],
+    "segSec": 4,
+    "flash": 0,
+    "sfx": [{ "at": 3.6, "name": "thud" }],
+    "card": { "tag": "#1", "icon": "clock", "breakAt": 3.6, "rows": ["TOTAL PROTEIN", "> TIMING"], "y": 900 }
+   },
+   "captionChunks": ["When studies", "controlled for", "total daily protein,", "workout timing", "barely mattered."]
+  },
+  {
+   "type": "ClipScene",
+   "background": "lab",
+   "narration": "How much? About point-seven grams per pound a day. Past that, gains level off.",
+   "emphasis": ["point-seven"],
+   "sourceIndex": 1,
+   "props": {
+    "layout": "fill",
+    "clip": "bicep-curl",
+    "seqLeft": ["bicep-curl", "flex"],
+    "segDurs": [3.0],
+    "segSec": 4,
+    "flash": 0,
+    "card": { "tag": "#2", "icon": "scale", "rows": ["~0.7 G/LB/DAY", "180 LB → ~125 G"], "y": 900 }
+   },
+   "captionChunks": ["How much?", "About point-seven grams", "per pound a day.", "Past that,", "gains level off."]
+  },
+  {
+   "type": "ClipScene",
+   "background": "gym",
+   "narration": "And split it up. Four protein meals beat two huge ones or eight snacks for the muscle-building response.",
+   "emphasis": ["Four"],
+   "sourceIndex": 2,
+   "props": {
+    "layout": "fill",
+    "clip": "protein-meal",
+    "seqLeft": ["protein-meal", "celebrate"],
+    "segDurs": [3.6],
+    "segSec": 4,
+    "flash": 0,
+    "card": { "rows": ["#3 SPREAD IT: 4 MEALS"], "y": 1250 }
+   },
+   "captionChunks": ["And split it up.", "Four protein meals", "beat two huge ones", "or eight snacks", "for the muscle-building response."]
+  },
+  {
+   "type": "ClipScene",
+   "background": "lab",
+   "narration": "So relax. Hit your number, spread it out… and walk to your shake.",
+   "emphasis": ["relax"],
+   "props": {
+    "layout": "fill",
+    "clip": "walk-sip",
+    "seqLeft": ["sip-shaker", "walk-sip"],
+    "clipStarts": [20, 0],
+    "segDurs": [1.4],
+    "segSec": 4,
+    "flash": 0,
+    "card": { "title": "SAVE THIS", "rows": ["TOTAL > TIMING", "0.7 G/LB", "4 MEALS"], "y": 880, "check": true, "showFrom": 1.6 }
+   },
+   "captionChunks": ["So relax.", "Hit your number,", "spread it out…", "and walk", "to your shake."]
+  }
+ ]
+}

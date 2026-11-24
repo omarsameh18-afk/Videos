@@ -75,9 +75,12 @@ export function buildPacing(script, scenes, words, fps) {
           changes.push({ frame: fr, kind: 'card' });
         }
         const segF = Math.round((p.segSec ?? 2) * fps);
-        if ((p.seqLeft ?? []).length > 1 || (p.seqRight ?? []).length > 1) for (let fr = segF; fr < dur; fr += segF) changes.push({ frame: t.from + fr, kind: 'move' });
+        if (p.segDurs) { let acc = 0; for (const d of p.segDurs.slice(0, (p.seqLeft ?? []).length - 1)) { acc += Math.round(d * fps); if (acc < dur) changes.push({ frame: t.from + acc, kind: 'move' }); } }
+        else if ((p.seqLeft ?? []).length > 1 || (p.seqRight ?? []).length > 1) for (let fr = segF; fr < dur; fr += segF) changes.push({ frame: t.from + fr, kind: 'move' });
         if (p.tags.length) p.tags.forEach((_, k) => { const fr = t.from + Math.round(dur * 0.25) + k * 8; changes.push({ frame: fr, kind: 'card' }); sfx.push({ t: fr / fps, sfx: 'pop' }); });
         if (i === 0) sfx.push({ t: t.from / fps + 0.05, sfx: 'thud' });
+        if (p.card?.breakAt !== undefined) changes.push({ frame: t.from + Math.round(p.card.breakAt * fps), kind: 'card' });
+        if (p.card?.showFrom !== undefined) { changes.push({ frame: t.from + Math.round(p.card.showFrom * fps), kind: 'card' }); sfx.push({ t: t.from / fps + p.card.showFrom, sfx: 'pop' }); }
         for (const x of p.sfx ?? []) sfx.push({ t: t.from / fps + x.at, sfx: x.name });
       }
       for (const side of sc.type === 'ClipScene' ? [] : ['left', 'right']) {
