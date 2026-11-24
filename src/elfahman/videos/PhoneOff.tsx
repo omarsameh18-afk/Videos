@@ -6,7 +6,8 @@ import {shakeAt} from '../lib/camera';
 import {Character, HEAD, Pose, PoseKey, blinkTimes, mouthStates, poseAt, squashAt} from '../lib/Character';
 import {Captions, Group, RED, YELLOW, Word, norm} from '../lib/Captions';
 import {Sparkle, SweatDrop} from '../lib/fx';
-import {BOARDS} from '../Boards13';
+import {BOARDS, Tea} from '../Boards13';
+import {Img} from 'remotion';
 import WORDS from './phone.words.json';
 import ENV from './phone.env.json';
 import TIMING from './phone.timing.json';
@@ -33,7 +34,7 @@ const T = {
   wahid: at('الوحيد'), sa3teen: at('ساعتين'), tagroba: at('تجربة'), nezel: at('نزل'), a3adet: at('قعدت'), wesh: at('وش'),
   etmashet: at('اتمشت'), sab3a: at('سبعة'), ahsan: at('أحسن'), tab: at('طب'), hasalo: at('حصله'), tarkiz: at('تركيزهم'), asghar: at('أصغر'),
   maqdarush: at('مقدروش'), wa7ed: at('واحد'), ekteb: at('اكتب'), eb3at: at('وابعت'),
-  estanna: 43.573, fahman: 64.482, kasban: 65.117, // measured audio onsets (timing.py / silencedetect)
+  estanna: 43.783, fahman: 64.366, kasban: 64.985, // measured audio onsets (timing.py / silencedetect), v2 voice
 };
 const MYST: [number, number] = [SENT[9].e, SENT[10].s];
 const B = (i: number) => (i === 0 ? 0 : SENT[i].s); // board i starts on its sentence
@@ -171,6 +172,20 @@ const GROUPS: Group[] = (() => {
 export const PHONE_GROUPS = GROUPS;
 const CAP_Y = 1055;
 
+// ============================================================ the study set + the board inset
+// set image 1152x2048 drawn 1348x2396 (top at -20): the desk edge lands at y ~1770, under his badge
+const SET_W = 1348, SET_H = 2396, SET_L = 540 - SET_W / 2, SET_T = -20;
+const SetLayer: React.FC<{src: string; dx: number; dy: number; dim: number}> = ({src, dx, dy, dim}) => (
+  <div style={{position: 'absolute', left: SET_L + dx, top: SET_T + dy, width: SET_W, height: SET_H}}>
+    <Img src={staticFile(`elfahman/lib/${src}`)} style={{position: 'absolute', inset: 0, width: SET_W, height: SET_H}} />
+    {dim > 0 && <div style={{position: 'absolute', inset: 0, background: `rgba(10,8,20,${dim})`,
+      ...(src.endsWith('.png') ? {WebkitMaskImage: `url(${staticFile(`elfahman/lib/${src}`)})`, WebkitMaskSize: '100% 100%'} : {})}} />}
+  </div>
+);
+// the board: the beat drawings were made for the full 1080-wide frame; their content band (y 262..982) is shown
+// scaled into a framed board on the wall at x 60..1020, y 300..940
+const SRC_Y = 262, BX = 60, BY = 300, BW = 960, BS = BW / 1080, BH = Math.round(720 * BS);
+
 // ============================================================ sound
 type Cue = [number, string, number];
 const SFX: Cue[] = [
@@ -224,13 +239,21 @@ export const PhoneOff: React.FC = () => {
   return (
     <AbsoluteFill style={{backgroundColor: '#0B0E1C'}}>
       <Fonts />
-      {/* far plane: the board */}
       <AbsoluteFill style={{transformOrigin: `${HEAD_SCREEN.x}px ${HEAD_SCREEN.y}px`, transform: `scale(${zoom})`}}>
-        <AbsoluteFill style={{transform: `translate(${panX + sh.x * 0.6}px, ${panY + sh.y * 0.6}px) scale(${cut * drift * 1.03})`}}>
-          <Board t={bt} d={b1 - b0} ev={ev} />
-        </AbsoluteFill>
-        {part && <Particles kind={part} t={t} dx={panX * 1.8} dy={panY * 1.8} />}
-        <AbsoluteFill style={{background: `radial-gradient(ellipse 80% 62% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,${0.28 + 0.35 * myst + 0.25 * punch}) 100%)`}} />
+        {/* far plane: the series study set (wall, shelves, window), moves least (2.5D parallax) */}
+        <SetLayer src="set_bg.jpg" dx={panX * 0.45 + sh.x * 0.3} dy={panY * 0.45 + sh.y * 0.3} dim={0.05 + 0.3 * myst + 0.2 * punch} />
+        {/* middle plane: the board on the wall above him; each beat's drawing lives inside it */}
+        <div style={{position: 'absolute', left: BX - 18 + panX * 0.7 + sh.x * 0.6, top: BY - 18 + panY * 0.7 + sh.y * 0.6, width: BW + 36, height: BH + 36, borderRadius: 30,
+          background: 'linear-gradient(180deg,#9a6a3e,#6e4526)', border: '7px solid #2d1c14', boxShadow: '0 18px 30px rgba(0,0,0,0.45)'}} />
+        <div style={{position: 'absolute', left: BX + panX * 0.7 + sh.x * 0.6, top: BY + panY * 0.7 + sh.y * 0.6, width: BW, height: BH, overflow: 'hidden', borderRadius: 14, border: '5px solid #2d1c14'}}>
+          <div style={{position: 'absolute', left: 0, top: 0, width: 1080, height: 1920, transformOrigin: '0 0', transform: `scale(${BS}) translate(0px, ${-SRC_Y}px)`}}>
+            <div style={{position: 'absolute', inset: 0, transformOrigin: `540px ${SRC_Y + 360}px`, transform: `scale(${cut * drift})`}}>
+              <Board t={bt} d={b1 - b0} ev={ev} />
+            </div>
+          </div>
+          <div style={{position: 'absolute', inset: 0, background: `radial-gradient(ellipse 75% 70% at 50% 45%, rgba(0,0,0,0) 60%, rgba(0,0,0,${0.25 + 0.3 * myst}) 100%)`}} />
+        </div>
+        <AbsoluteFill style={{background: `radial-gradient(ellipse 80% 62% at 50% 40%, rgba(0,0,0,0) 55%, rgba(0,0,0,${0.22 + 0.3 * myst + 0.25 * punch}) 100%)`}} />
         {/* near plane: الفهمان */}
         <div style={{position: 'absolute', inset: 0, transform: `translate(${sh.x}px, ${sh.y}px)`}}>
           <div style={{position: 'absolute', left: CHAR_X + 40, top: 1520, width: 680, height: 420, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(0,0,0,0.45), rgba(0,0,0,0) 70%)'}} />
@@ -244,12 +267,15 @@ export const PhoneOff: React.FC = () => {
             </svg>
           </Character>
         </div>
+        {/* front plane: the desk with the mug and books (he sits behind it); a tea glass on it at the ahwa */}
+        <SetLayer src="set_fg.png" dx={panX * 0.45 + sh.x * 0.3} dy={panY * 0.45 + sh.y * 0.3} dim={0.3 * myst + 0.2 * punch} />
+        {bi === 4 && <svg width={1080} height={1920} style={{position: 'absolute', left: 0, top: 0}}><Tea x={845} y={1815} s={0.95} t={t} /></svg>}
       </AbsoluteFill>
       {/* UI plane (no camera): timeline chips + captions */}
       {node > -2 && <Timeline node={node} t={t} since={b0} />}
       <Captions t={t} groups={GROUPS.slice(0, 2)} colors={{}} y={930} x={470} />
       <Captions t={t} groups={GROUPS.slice(2)} colors={{}} y={CAP_Y} x={460} />
-      <Audio src={staticFile('elfahman/phone/vo/vo.mp3')} />
+      <Audio src={staticFile('elfahman/phone/vo/vo.wav')} />
       <Audio src={staticFile('elfahman/phone/music/bed.wav')} />
       <Audio src={staticFile('elfahman/phone/music/hits.wav')} />
       <Sequence from={Math.round(T.estanna * FPS)} durationInFrames={Math.round(0.6 * FPS)}><Audio src={staticFile('elfahman/phone/music/scratch.wav')} volume={0.7} /></Sequence>

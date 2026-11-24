@@ -188,7 +188,7 @@ const Star: React.FC<{x: number; y: number; r: number; rot?: number}> = ({x, y, 
   }
   return <polygon points={pts.join(' ')} fill={YEL} stroke={INK} strokeWidth={r * 0.14} strokeLinejoin="round" />;
 };
-const Tea: React.FC<{x: number; y: number; s: number; t: number}> = ({x, y, s, t}) => (
+export const Tea: React.FC<{x: number; y: number; s: number; t: number}> = ({x, y, s, t}) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}>
     {[0, 1, 2].map((i) => (
       <path key={i} d={`M ${-14 + i * 14} -120 q 12 -20 0 -40 q -12 -20 0 -40`} stroke="#fff" strokeWidth={6} fill="none" strokeLinecap="round"
