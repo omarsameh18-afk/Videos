@@ -4,6 +4,7 @@ import { C } from '../../max/theme';
 import { headline } from '../scenes/common';
 import { SceneProps } from '../scenes/types';
 import { Silhouette } from './Solo';
+import { CamContext } from '../CamContext';
 
 // FILL format: ONE Max, the clip fills 1080x1920 edge to edge (no side panels, no boxed clip).
 // The clip sits DROP px lower so the title band above his hair stays clear; a zoomed copy of the same
@@ -55,7 +56,22 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
   const prog = Math.min(1, f / Math.max(1, dur - 1));
   const upper = p.upper ? interpolate(prog, [0, 1], [p.upper.from, p.upper.to]) : 1;
   const punch = first ? 0 : 1 - spring({ frame: f, fps, config: { damping: 12, stiffness: 200 } });
-  const zoom = (p.zoom ?? 1) * (1 + 0.06 * punch) * (1 + 0.012 * Math.sin(f / 9) * (p.silhouette ? 0 : 1));
+  // camera: every new caption phrase = quick cut-zoom, alternating 100% <-> 115%, plus a slow push-in within the phrase
+  const pages = React.useContext(CamContext);
+  const t0 = timing.from / fps;
+  const T = (timing.from + f) / fps;
+  const starts = pages.map((x) => x.start).filter((s) => s >= t0 - 0.02 && s < t0 + dur / fps);
+  if (starts[0] === undefined || starts[0] > t0 + 0.02) starts.unshift(t0);
+  const pi = Math.max(0, starts.findLastIndex((s) => s <= T + 1e-6));
+  const level = (i: number) => (i % 2 ? 1.15 : 1.0);
+  const sinceF = Math.round((T - starts[pi]) * fps);
+  const snap = spring({ frame: sinceF, fps, config: { damping: 20, stiffness: 520, overshootClamping: true } });
+  const cam = p.camera ? (pi === 0 ? 1 : level(pi - 1) + (level(pi) - level(pi - 1)) * snap) * (1 + Math.min(0.05, 0.03 * (T - starts[pi]))) : 1;
+  // beat shakes
+  const sh = [...p.shake].reverse().find((x) => f >= Math.round(x.at * fps) && f - Math.round(x.at * fps) < x.frames);
+  const shk = sh ? (sh.frames - (f - Math.round(sh.at * fps))) / sh.frames : 0;
+  const shakeT = sh ? `translate(${Math.sin(f * 3.3) * sh!.amp * shk}px, ${Math.cos(f * 2.6) * sh!.amp * 0.7 * shk}px) rotate(${Math.sin(f * 2.1) * 1.2 * shk}deg)` : '';
+  const zoom = (p.zoom ?? 1) * cam * (1 + 0.06 * punch) * (1 + 0.012 * Math.sin(f / 9) * (p.silhouette ? 0 : 1));
   const flash = first ? 0 : interpolate(f, [0, 2, 8], [0, p.flash ?? 0.45, 0], { extrapolateRight: 'clamp' });
   const tick = spring({ frame: f, fps, config: { damping: 9, stiffness: 320 } });
   const counter = p.week && p.showWeek ? `${p.unit} ${p.week.to}` : undefined;
@@ -92,7 +108,9 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
             </Sequence>
           </div>
           <Sequence key={k} from={segFrom} durationInFrames={segLen} layout="none">
-            <Body clip={clip} start={start} upper={upper} zoom={zoom} focusY={p.focusY ?? 0.5} />
+            <div style={{ position: 'absolute', inset: 0, transform: shakeT }}>
+              <Body clip={clip} start={start} upper={upper} zoom={zoom} focusY={p.focusY ?? 0.28} />
+            </div>
           </Sequence>
         </>
       )}
@@ -134,6 +152,12 @@ export const FillView: React.FC<SceneProps> = ({ scene, timing }) => {
           : counter && <div style={{ ...headline(130, C.accent), transform: `scale(${interpolate(tick, [0, 1], [1.4, 1])})` }}>{counter}</div>}
       </div>
       {p.card && <Card card={p.card} f={f} fps={fps} still={p.card.still || first} />}
+      {p.card?.icon === 'clock' && (
+        // hero stopwatch beside Max's head (never over the face): pops in, ticks, shatters at breakAt
+        <div style={{ position: 'absolute', left: 36, top: 250, transform: `scale(${spring({ frame: f - 2, fps, config: { damping: 11, stiffness: 220 } })})`, transformOrigin: '50% 50%', filter: 'drop-shadow(0 10px 0 rgba(0,0,0,0.35))' }}>
+          <ClockIcon f={f} fps={fps} breakAt={p.card.breakAt} size={300} />
+        </div>
+      )}
       <AbsoluteFill style={{ background: '#fff', opacity: flash }} />
     </AbsoluteFill>
   );
@@ -151,10 +175,9 @@ const Card: React.FC<{ card: CardT; f: number; fps: number; still: boolean }> = 
   return (
     <div style={{ position: 'absolute', left: 40, width: 900, top: card.y, padding: '22px 30px 26px', borderRadius: 34, background: 'rgba(11,12,28,0.88)', border: `6px solid ${C.accent}`, boxShadow: '0 16px 0 rgba(0,0,0,0.35)', transform: `scale(${interpolate(inS, [0, 1], [0.7, 1])})`, opacity: inS, textAlign: 'center' }}>
       {card.title && <div style={{ ...headline(72, C.accent), marginBottom: 10, whiteSpace: 'nowrap' }}>{card.title}</div>}
-      {(card.tag || card.icon) && (
+      {(card.tag || card.icon === 'scale') && (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 26, marginBottom: 10 }}>
-          {card.icon === 'clock' && <ClockIcon f={f} fps={fps} breakAt={card.breakAt} />}
-          {card.icon === 'scale' && <ScaleIcon f={f} fps={fps} />}
+                    {card.icon === 'scale' && <ScaleIcon f={f} fps={fps} />}
           {card.tag && <div style={{ display: 'inline-block', padding: '4px 26px', borderRadius: 40, background: C.accent2, ...headline(64, '#fff') }}>{card.tag}</div>}
         </div>
       )}
@@ -185,8 +208,8 @@ const Card: React.FC<{ card: CardT; f: number; fps: number; still: boolean }> = 
 };
 
 /** "30 MIN" stopwatch; at breakAt (s) it cracks and shatters into flying shards. */
-const ClockIcon: React.FC<{ f: number; fps: number; breakAt?: number }> = ({ f, fps, breakAt }) => {
-  const S = 132;
+const ClockIcon: React.FC<{ f: number; fps: number; breakAt?: number; size?: number }> = ({ f, fps, breakAt, size = 132 }) => {
+  const S = size;
   const bf = breakAt === undefined ? Infinity : Math.round(breakAt * fps);
   const t = f - bf; // frames since the break
   const hand = (f * 9) % 360;

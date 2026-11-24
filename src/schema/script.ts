@@ -210,6 +210,8 @@ export const ClipScene = z.object({
     flash: z.number().min(0).max(1).optional(), // white flash strength at scene start
     clipStarts: z.array(z.number().int().min(0).max(120)).optional(), // per seq entry
     sfx: z.array(z.object({ at: z.number().min(0), name: z.string() })).default([]),
+    shake: z.array(z.object({ at: z.number().min(0), amp: z.number().default(22), frames: z.number().int().default(12) })).default([]), // fill: camera shake on a beat (s from scene start)
+    camera: z.boolean().default(true), // fill: cut-zoom 100%<->115% on every caption phrase + slow push-in
     // big readable card (fill layout): optional pill tag, rows (each <= 4 words), y = top of the card
     card: z.object({ title: z.string().optional(), tag: z.string().optional(), rows: z.array(z.string().min(1)).min(1).max(4), y: z.number().int().min(200).max(1300).default(560), check: z.boolean().default(false), still: z.boolean().default(false), hide: z.tuple([z.number(), z.number()]).optional(), icon: z.enum(['clock', 'scale']).optional(), breakAt: z.number().optional(), showFrom: z.number().optional() }).optional(), // hide = [from, to] s: get out of the way of a key moment // extra SFX, `at` in seconds from scene start
     bigNumber: z.object({ text: z.string().min(1), label: z.string().min(1) }).optional(), // solo silhouette card: counts up

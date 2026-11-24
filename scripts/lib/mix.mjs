@@ -10,7 +10,7 @@ const ffmpegJson = (args) => {
 };
 export const measureLufs = (file) => Number(ffmpegJson(['-hide_banner', '-i', file, '-af', 'loudnorm=print_format=json', '-f', 'null', '-']).input_i);
 
-export const SFX = { whoosh: 'assets/audio/whoosh.wav', pop: 'assets/audio/pop.wav', thud: 'assets/audio/thud.wav', boing: 'assets/audio/boing.wav', scratch: 'assets/audio/scratch.wav' };
+export const SFX = { whoosh: 'assets/audio/whoosh.wav', pop: 'assets/audio/pop.wav', thud: 'assets/audio/thud.wav', boing: 'assets/audio/boing.wav', scratch: 'assets/audio/scratch.wav', glass: 'assets/audio/glass.wav' };
 export const MUSIC = 'assets/audio/music-bed.wav';
 
 /**
@@ -26,7 +26,7 @@ export function mixAudio({ voice, events, durSec, out, musicDb = -20, whooshDb =
   const sfxFiles = [...new Set(events.map((e) => e.sfx))];
   sfxFiles.forEach((s) => inputs.push('-i', SFX[s]));
   const idx = (s) => 2 + sfxFiles.indexOf(s);
-  const sfxGain = { whoosh: whooshDb, pop: popDb, thud: thudDb, boing: -4, scratch: -6 };
+  const sfxGain = { whoosh: whooshDb, pop: popDb, thud: thudDb, boing: -4, scratch: -6, glass: -3 };
 
   const f = [];
   f.push(`[0:a]aresample=48000,apad=whole_dur=${durSec}[v]`);

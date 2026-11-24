@@ -8,6 +8,13 @@ import { maxMode, SIDE_CAPTION, SIDE_FOOTER_Y, EXP_FOOTER_Y, VERSUS } from './ge
 export const SourceFooter: React.FC<{ label: string; sceneType: string; fill?: boolean }> = ({ label, sceneType, fill }) => {
   const f = useCurrentFrame();
   const side = maxMode(sceneType) === 'reactor';
+  if (fill)
+    // fill layout: bottom-left, above the lime floor line, phone-readable white on a dark pill
+    return (
+      <div style={{ position: 'absolute', left: 32, top: 1632, opacity: interpolate(f, [4, 12], [0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }), fontFamily: FONT_BODY, fontWeight: 800, fontSize: 36, lineHeight: 1.2, color: '#FFFFFF', background: 'rgba(8,9,24,0.86)', borderRadius: 40, padding: '8px 24px' }}>
+        Source: {label}
+      </div>
+    );
   return (
     <div
       style={{

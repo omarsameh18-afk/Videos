@@ -55,6 +55,7 @@
     "seqLeft": ["sprint-chug", "bicep-curl", "shocked"],
     "clipStarts": [102, 30, 20],
     "segDurs": [0.85, 1.6],
+    "shake": [{ "at": 2.72, "amp": 22, "frames": 14 }],
     "segSec": 4,
     "flash": 0
    },
@@ -73,7 +74,7 @@
     "segDurs": [2.8],
     "segSec": 4,
     "flash": 0,
-    "sfx": [{ "at": 3.6, "name": "thud" }],
+    "sfx": [{ "at": 3.6, "name": "glass" }],
     "card": { "tag": "#1", "icon": "clock", "breakAt": 3.6, "rows": ["TOTAL PROTEIN", "> TIMING"], "y": 900 }
    },
    "captionChunks": ["When studies", "controlled for", "total daily protein,", "workout timing", "barely mattered."]

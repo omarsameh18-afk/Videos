@@ -18,6 +18,7 @@ import type { BackgroundName } from '../config';
 import { SubjectsLayer } from './experiment/SubjectsLayer';
 import { DayCounter, GymSet, Reveal, SplitClone } from './experiment/Overlays';
 import { ClipSceneView } from './clips/ClipScene';
+import { CamContext } from './CamContext';
 
 const SCENES: Record<string, React.FC<SceneProps>> = { Hook, WrongVsRight, StatCard, Outro, MuscleHighlight, AnimatedChart, Gauge, MuscleZoom, SplitVersus, BigNumber, SplitClone, GymSet, DayCounter, Reveal, ClipScene: ClipSceneView };
 
@@ -32,6 +33,7 @@ export const Short: React.FC<ShortProps> = (props) => {
   const k = sh === undefined ? 0 : (8 - (frame - sh)) / 8;
   const shake = `translate(${Math.sin(frame * 3.1) * 14 * k}px, ${Math.cos(frame * 2.3) * 10 * k}px)`;
   return (
+    <CamContext.Provider value={pages}>
     <AbsoluteFill style={{ transform: shake }}>
       {scenes.map((t, i) => (
         <Sequence key={`bg${i}`} from={t.from} durationInFrames={t.durationInFrames}>
@@ -61,6 +63,7 @@ export const Short: React.FC<ShortProps> = (props) => {
       })}
       {audioSrc && <Audio src={staticFile(audioSrc)} />}
     </AbsoluteFill>
+    </CamContext.Provider>
   );
 };
 
