@@ -53,8 +53,8 @@
     "layout": "fill",
     "clip": "sprint-chug",
     "seqLeft": ["sprint-chug", "bicep-curl", "shocked"],
-    "clipStarts": [90, 30, 20],
-    "segDurs": [1.0, 1.6],
+    "clipStarts": [102, 30, 20],
+    "segDurs": [0.85, 1.6],
     "segSec": 4,
     "flash": 0
    },
