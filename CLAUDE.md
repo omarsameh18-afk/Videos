@@ -6,6 +6,7 @@
 - Max 2 self-fix loops per stage. If something still fails, stop and list the issue.
 - Never ask Omar to copy things to another chat. Only stop at GATES (end of a stage).
 - At a GATE reply with ONLY: a 3-line summary, 1 image/MP4 path, and "PASS" or "NEEDS OMAR: <one question>".
+- ALWAYS send the final MP4 itself in the chat (SendUserFile) the moment it is rendered - never just a path.
 
 ## Project rules
 - Character is Max, channel is BrainPump (@brainpump_us). Brand settings: src/config.ts.
