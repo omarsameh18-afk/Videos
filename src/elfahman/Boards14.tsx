@@ -9,23 +9,23 @@ import {clamp, easeIn, easeInOut, easeOut, popIn, rand, seg, wobble} from './lib
 export type BoardProps = {t: number; d: number; ev: number[]};
 const W = 1080;
 const H = 1920;
-const YEL = '#FFD23F';
-const RED = '#FF5A4E';
-const INK = '#1b1410';
-const SKIN = '#C98B5E';
+export const YEL = '#FFD23F';
+export const RED = '#FF5A4E';
+export const INK = '#1b1410';
+export const SKIN = '#C98B5E';
 const STONE = '#EFE2C2';
 export const AR: React.CSSProperties = {fontFamily: 'Cairo', fontWeight: 900, direction: 'rtl'};
-const CY = 560; // vertical middle of the visible band
-const FLOOR = 800;
+export const CY = 560; // vertical middle of the visible band
+export const FLOOR = 800;
 
 // ------------------------------------------------------------------ shared scene + text
-const Scene: React.FC<{bg: string; children?: React.ReactNode; html?: React.ReactNode}> = ({bg, children, html}) => (
+export const Scene: React.FC<{bg: string; children?: React.ReactNode; html?: React.ReactNode}> = ({bg, children, html}) => (
   <div style={{position: 'absolute', inset: 0, background: bg, overflow: 'hidden'}}>
     <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} style={{position: 'absolute', inset: 0}}>{children}</svg>
     {html}
   </div>
 );
-const Txt: React.FC<{x: number; y: number; s?: number; size?: number; color?: string; stroke?: number; rot?: number; children: React.ReactNode; o?: number}> = ({x, y, s = 1, size = 70, color = '#fff', stroke = 10, rot = 0, children, o = 1}) => (s <= 0 ? null : (
+export const Txt: React.FC<{x: number; y: number; s?: number; size?: number; color?: string; stroke?: number; rot?: number; children: React.ReactNode; o?: number}> = ({x, y, s = 1, size = 70, color = '#fff', stroke = 10, rot = 0, children, o = 1}) => (s <= 0 ? null : (
   <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot}deg) scale(${s})`, opacity: o, ...AR, fontSize: size, color,
     WebkitTextStroke: `${stroke}px ${INK}`, paintOrder: 'stroke fill', whiteSpace: 'nowrap', lineHeight: 1.2}}>{children}</div>
 ));
@@ -33,15 +33,15 @@ const Pill: React.FC<{x: number; y: number; s?: number; size?: number; bg?: stri
   <div style={{position: 'absolute', left: x, top: y, transform: `translate(-50%,-50%) rotate(${rot}deg) scale(${s})`, ...AR, fontSize: size, color, background: bg,
     padding: '0px 34px 10px', borderRadius: 999, border: `7px solid ${INK}`, boxShadow: `0 10px 0 ${INK}`, whiteSpace: 'nowrap', lineHeight: 1.45}}>{children}</div>
 ));
-const Dust: React.FC<{t: number; color?: string; n?: number; o?: number}> = ({t, color = '#fff', n = 22, o = 0.25}) => (
+export const Dust: React.FC<{t: number; color?: string; n?: number; o?: number}> = ({t, color = '#fff', n = 22, o = 0.25}) => (
   <g opacity={o}>
     {Array.from({length: n}, (_, i) => (
       <circle key={i} cx={rand(i + 1) * W + Math.sin(t * 0.5 + i) * 20} cy={260 + rand(i + 40) * 580 + Math.cos(t * 0.4 + i * 2) * 16} r={3 + rand(i + 80) * 7} fill={color} />
     ))}
   </g>
 );
-const Ground: React.FC<{c?: string; o?: number}> = ({c = '#000', o = 0.18}) => <rect x={0} y={FLOOR} width={W} height={H - FLOOR} fill={c} opacity={o} />;
-const SAND = 'linear-gradient(180deg,#FFD9A0 0%,#F4B66A 60%,#D98E45 100%)';
+export const Ground: React.FC<{c?: string; o?: number}> = ({c = '#000', o = 0.18}) => <rect x={0} y={FLOOR} width={W} height={H - FLOOR} fill={c} opacity={o} />;
+export const SAND = 'linear-gradient(180deg,#FFD9A0 0%,#F4B66A 60%,#D98E45 100%)';
 const DUSK = 'linear-gradient(180deg,#5B6FD6 0%,#F49A6A 70%,#E5774A 100%)';
 const NIGHT = 'radial-gradient(ellipse at 50% 35%,#36406E 0%,#1A1F3A 60%,#0D1020 100%)';
 
@@ -201,13 +201,13 @@ export const Scribe: React.FC<{x: number; y: number; s?: number; t?: number; wri
 };
 
 // ------------------------------------------------------------------ small props
-const StoneBlock: React.FC<{x: number; y: number; s?: number}> = ({x, y, s = 1}) => (
+export const StoneBlock: React.FC<{x: number; y: number; s?: number}> = ({x, y, s = 1}) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}>
     <rect x={-70} y={-46} width={140} height={92} rx={8} fill="#D8B77A" stroke={INK} strokeWidth={7} />
     <path d="M -70 -10 L 70 -18 M -20 -46 L -26 46" stroke="#B48F55" strokeWidth={5} />
   </g>
 );
-const Cliff: React.FC<{t: number}> = ({t}) => (
+export const Cliff: React.FC<{t: number}> = ({t}) => (
   <g>
     <path d={`M 0 ${FLOOR} L 0 330 Q 120 290 260 320 Q 420 270 560 300 Q 760 260 900 300 Q 1000 290 1080 320 L 1080 ${FLOOR} Z`} fill="#C9874A" stroke={INK} strokeWidth={8} />
     <path d="M 0 420 Q 300 400 540 430 Q 800 410 1080 440" stroke="#A86A36" strokeWidth={8} fill="none" />
@@ -317,7 +317,7 @@ const Clock: React.FC<{x: number; y: number; r: number; spin: number}> = ({x, y,
     <circle r={r * 0.08} fill={INK} />
   </g>
 );
-const Stamp: React.FC<{x: number; y: number; dt: number; text: string; color?: string; size?: number; rot?: number}> = ({x, y, dt, text, color = RED, size = 64, rot = -10}) => {
+export const Stamp: React.FC<{x: number; y: number; dt: number; text: string; color?: string; size?: number; rot?: number}> = ({x, y, dt, text, color = RED, size = 64, rot = -10}) => {
   if (dt <= 0) return null;
   const sc = dt < 0.12 ? 1.9 - 0.9 * easeIn(dt / 0.12) : 1 + wobble(dt - 0.12, 3, 10) * 0.05;
   return (
@@ -371,7 +371,7 @@ const Pen: React.FC<{x: number; y: number; s: number; rot?: number}> = ({x, y, s
     <path d="M -14 10 L 0 44 L 14 10 Z" fill="#3A2A14" stroke={INK} strokeWidth={5} />
   </g>
 ));
-const Rays: React.FC<{x: number; y: number; t: number; color?: string; o?: number}> = ({x, y, t, color = '#FFE98A', o = 0.35}) => (
+export const Rays: React.FC<{x: number; y: number; t: number; color?: string; o?: number}> = ({x, y, t, color = '#FFE98A', o = 0.35}) => (
   <g transform={`translate(${x} ${y}) rotate(${t * 12})`} opacity={o}>
     {Array.from({length: 16}, (_, i) => <path key={i} d="M 0 0 L -60 -900 L 60 -900 Z" fill={color} transform={`rotate(${i * 22.5})`} />)}
   </g>
