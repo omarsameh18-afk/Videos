@@ -651,7 +651,7 @@ export const B17: React.FC<BoardProps> = ({t, ev}) => {
 
 // ================================================================== 18 — big gold badge "أول إضراب في التاريخ" + flag stamps on
 export const B18: React.FC<BoardProps> = ({t, ev}) => {
-  const p = popIn(t - ev[0], 0.32);
+  const p = t < ev[0] ? 0.45 * popIn(t, 0.3) * (1 + 0.03 * Math.sin(t * 5)) : 0.45 + 0.55 * popIn(t - ev[0], 0.32); // small from the start, stamps to full size on "إضراب"
   return (
     <Scene bg="radial-gradient(circle at 50% 45%,#7A5A00 0%,#2A1E00 80%)" html={
       p > 0 ? <div style={{position: 'absolute', left: 540, top: CY, transform: `translate(-50%,-50%) scale(${p})`, ...AR, textAlign: 'center', fontSize: 66, color: INK, lineHeight: 1.25}}>
