@@ -245,3 +245,16 @@ Flow "Elfahman 13 phone internet off" (`3O0oAf43O1C3khFBZCax`).
 | Rest of the voice: the v1 take reused (no new generation). Re-paced at 1.0x from the same raw take (in-phrase micro-gaps 0.05 s, sentence gaps ~0.36 s) so the longer hook still fits under 66 s | – | – | 0 |
 | Background: the series study set (`public/elfahman/lib/set_bg.jpg` + `set_fg.png`), reused | – | – | 0 |
 | **Episode 13 total (v1 + v2)** | | | **1,067** |
+
+## Episode 14 — أقدم واحد زوّغ من الشغل (2026-11-25)
+
+Flow "Elfahman 14 oldest skipper" (`oRzathVw6NfjtlR18zHe`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), ONE take of the full script, 65.4 s; inline `[warm, amused, telling a friend a story at an ahwa]`; tashkeel on زَوَّغ · سِبا · مَجاش · قَرَصُه · وَجْعاه · البُوظة · الواسْطة · جَعانين · فِطاير · إِضْراب. The connector has no speed setting (0.95 could not be set; the direct API key injection was refused), nothing was slowed or sped up afterwards | | yS3UAURBDG3X0ntgNx08 | 934 |
+| Word timing: Scribe v1 | | Gxhs0V5DyD2Ydy8Qw0Bq | 0 |
+| Pause edit at 1.0x (`tools/pace.py` + `pacecheck.py`): 65.4 s -> 62.54 s | no new generation | – | 0 |
+| Pictures | none: all 20 boards drawn in code (slab, Seba, scribe, scorpion, jar, boss, museum case, wheat sack, temple, pastries, badge + flag) | – | 0 |
+| Music + SFX: `tools/bright_bed.py` (scratch on "استنى", held note in the mystery pause) + library SFX | | – | 0 |
+| **Episode 14 total** | | | **934** |
