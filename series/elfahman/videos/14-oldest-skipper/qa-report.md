@@ -32,3 +32,32 @@
 
 ## Credits
 - Voice 934 (one take). Scribe 0, pictures 0 (all 20 boards drawn in code), music and SFX 0. **Episode total: 934.**
+
+# v2 (new layout, this video only): elfahman-14-oldest-skipper-v2.mp4
+
+- **Reused, unchanged:** the voice file (`public/elfahman/skipper/vo/vo.mp3`, same md5), word timings, script, caption word groups and
+  colours, the bed / hits / scratch / SFX cues, and the board drawings 2–19. The raw mix of the v1 and v2 renders is bit-identical
+  (decoded PCM md5 `7a148eaa…`). **ElevenLabs credits: 0.**
+- **Board:** fills the top ~60%: about y 40 → 1150 and x 40 → 1040 at the opening framing, with the same wood frame as v1.
+  It stays in the 2.5D camera layer, so the "استنى" punch-in still zooms it.
+  Every v1 drawing is zoomed 1.3–1.7× to fill the taller board (`VIEWS` in `src/elfahman/Boards14v2.tsx`).
+- **New hook board (beat 1):** a work site with a tomb door; سِبا tiptoes away on the right with an exaggerated sneaky walk
+  (high knees on tiptoe, paws up, looking back over his shoulder). His basket, spilled stones and chisel + mallet lie behind him.
+  A red "غايب!" stamp slams on at 0.87 s (the onset of "زوّغ"), and the slab with red marks sits small in the top-right corner.
+  He is mid-step in frame 0 and keeps moving from frame 1.
+- **Loop:** the last board ("الفهمان كسبان") replays the hook board on the same continuous clock, so the last frame is the frame-0 board
+  (سِبا sneaking, no stamp yet). Gold sparkles fade out before the end. Camera CAM0 in both frames; the temple → hero swap is hidden in the squash.
+  `loop-last-first-v2.png`.
+- **الفهمان:** 0.42 scale (70% of v1's 0.6), centred, still sitting behind the same desk (same desk-line formula).
+  Same poses and gesture times. Mystery push-in and "استنى" punch-in re-aimed at his lower face position.
+- **Set:** the bookshelves, plant, mug, books and window stay visible. The lamp hung at board height on the right wall, so the bigger board
+  now covers it.
+- **Captions:** same font, colours and groups, centred at y 1385 (hook cards 108 / 102 px on two lines, normal 92, gold 104).
+  They sit over the hoodie between ~1230 and ~1480, under the board and above y 1550.
+- **Layout check** (`layout-check-v2.png`, 0 s / 15 s / 40 s), rendered before the full render: passed.
+
+## v2 output
+- 1080x1920, **60 fps**, H.264 yuv420p, AAC, **62.53 s** (same as v1), **−14.1 LUFS**, peak −1.4 dBFS.
+- Contact sheet `contact-sheet-v2.png` (1 s, 63 frames): الفهمان (orange hoodie, ف badge, teal glasses) sits behind the desk in every frame,
+  the study set is visible, and the board is big with readable drawings.
+- Frame 0: caption "أقدم واحد زوّغ" plus سِبا sneaking away; frame 1 → 2 difference 2.65 (moving).
