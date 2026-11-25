@@ -141,11 +141,11 @@ export const VIEWS: {z: number; cx: number; cy: number}[] = [
   {z: 1.4, cx: 560, cy: 640},  // 1 hook
   {z: 1.45, cx: 640, cy: 640}, // 2 cliff + Seba carrying
   {z: 1.45, cx: 540, cy: 640}, // 3 row with the gap
-  {z: 1.55, cx: 560, cy: 640}, // 4 scribe
+  {z: 1.45, cx: 610, cy: 640}, // 4 scribe
   {z: 1.5, cx: 640, cy: 640},  // 5 scorpion
   {z: 1.5, cx: 550, cy: 640},  // 6 عذر محترم
   {z: 1.3, cx: 540, cy: 600},  // 7 forty workers
-  {z: 1.45, cx: 620, cy: 640}, // 8 bandaged eye
+  {z: 1.3, cx: 660, cy: 640},  // 8 bandaged eye
   {z: 1.7, cx: 460, cy: 640},  // 9 beer jar
   {z: 1.5, cx: 600, cy: 640},  // 10 the boss
   {z: 1.6, cx: 540, cy: 640},  // 11 museum

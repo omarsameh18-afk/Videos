@@ -43,7 +43,7 @@ const MYST: [number, number] = [SENT[12].e, SENT[13].s];
 const B = (i: number) => (i === 0 ? 0 : SENT[i].s); // board i starts on its sentence
 const boardAt = (t: number) => { let i = 0; for (let k = 0; k < NB; k++) if (t >= B(k)) i = k; return i; };
 const EV: Record<number, number[]> = {
-  0: [T.masri], 1: [T.seba, T.talat], 2: [T.magash], 3: [T.meen, T.ghab], 4: [T.aqrab, T.qarasoh], 5: [T.ozr], 6: [T.arbe3een],
+  0: [at('زوّغ')], 1: [T.seba, T.talat], 2: [T.magash], 3: [T.meen, T.ghab], 4: [T.aqrab, T.qarasoh], 5: [T.ozr], 6: [T.arbe3een],
   7: [T.wag3ah, T.shwaya, T.tani], 8: [T.booza], 9: [T.wasta], 10: [T.naharda], 11: [T.tamaneen, T.et2akhar], 12: [T.amalo],
   14: [T.sabo, T.e7na], 15: [T.a3do], 16: [T.ba3atolhom, T.fetayer], 17: [T.edrab], 18: [T.hayekteb, T.eb3ato],
 };
