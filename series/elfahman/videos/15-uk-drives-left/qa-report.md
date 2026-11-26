@@ -29,10 +29,10 @@
   driver on the rear-LEFT horse next to the centre line; soldiers up the RIGHT lane; Cairo taxi up the RIGHT lane on "يمين!"; the comic taxi swerves
   into the LEFT lane and meets oncoming cars; the CTA cars meet nose-to-nose in the same lane.
 - Frame 0: caption 1 "ليه الإنجليز بيسوقوا" (الإنجليز yellow) on screen, the split-road board (UK vs Egypt) clear on mute; road markings
-  scroll and the "؟" pulses from frame 1.
+  scroll and the "؟" pulses from frame 1 (frame 0 → 1 mean pixel difference 4.73).
 - Twist: shocked pose, punch-in and small shake exactly on "يمين!" (43.97 s). Ending: temple on "الفهمان" (59.37 s), wink on "كسبان" (59.89 s,
   measured), gold caption held to the last frame. No stock transition line.
-- Loop: the last board replays the hook board on the same clock (t − END), so the last frame is the frame-0 board; camera CAM0 in both frames;
+- Loop: the last board replays the hook board on the same clock (t − END), so the last frame is the frame-0 board; camera CAM0 in both frames (board-area difference last → frame 0: 3.6; only the pose and caption change, hidden in the end squash);
   `loop-last-first.png`.
 - Known substitution: the library has no "pointing down" pose, so on "منشنه" he points up while a ⬇ and the @ comment icon bounce on the board.
 
