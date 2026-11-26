@@ -258,3 +258,23 @@ Flow "Elfahman 14 oldest skipper" (`oRzathVw6NfjtlR18zHe`).
 | Pictures | none: all 20 boards drawn in code (slab, Seba, scribe, scorpion, jar, boss, museum case, wheat sack, temple, pastries, badge + flag) | – | 0 |
 | Music + SFX: `tools/bright_bed.py` (scratch on "استنى", held note in the mystery pause) + library SFX | | – | 0 |
 | **Episode 14 total** | | | **934** |
+
+## Episode 15 — ليه الإنجليز بيسوقوا شمال؟ (2026-11-26)
+
+Flow "Elfahman 15 uk drives left" (`zXV7n8Ni4m8nxnR8FwEq`). Omar approved going below the 16K floor for this video (option 2: voice + 3 props).
+Account before: 120,924 / 124,177 used (3,253 left).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), ONE take of the 150-word script, 61.4 s; inline `[warm, amused, calm and unhurried, telling a friend a story at an ahwa]` (the connector has no speed setting, so 0.95 could not be set; nothing sped up or slowed afterwards); tashkeel on جُون · وِشُّه · عَجَل · مَشَّى · فِضْلوا · حَكَموها · قَلَبِت · مَنْشِنُه · الكُرْباج · بِيشِدّها · نابِلْيون | | ew4F7RrX1oDUjXWiQKoJ | 967 |
+| Word timing: Scribe v1 (word ends ~0.3 s late; boundaries snapped onto measured silences) | | wE1qRtNJ38RlKON2c5mQ | 0 (listed) |
+| Pause edit at 1.0x (`tools/pace.py`, new `--dots-min/--dots-max` for "…" beats): 61.4 s -> 60.6 s | no new generation | – | 0 |
+| Prop: جون on his brown horse, side view (sword on the near/left side, right hand on the hilt) | GPT Image 2.5 Sunburst, 2K, high, 1:1 | qjQUmKkrM6lOWzZPBV3H | 667 |
+| Prop: covered wagon + 4 horses, driver on the rear-left horse, whip in his right hand | GPT Image 2.5 Sunburst, 2K, high, 16:9 | ZPHxRUTZSSctmglcfxQw | 275 |
+| Prop: Napoleon, full body, comic | GPT Image 2.5 Sunburst, 2K, high, 2:3 | BN3lzE2phopSyYF0cKOQ | 352 |
+| Drawn in code | flags (UK, Egypt, France, USA, India, Australia, Germany, Italy, Spain), top-down roads, red car, Cairo taxi, sword, forest, thief eyes, rider icons, wagons top-down, soldiers, boat + island, pyramids, calendar, timeline, honks, puff cloud, comment icon, arrows | – | 0 |
+| Music + SFX: synthesized (shing, trot, hooves + creak, whip, drum roll, march, boing, honks, puff) | | – | 0 |
+| **Episode 15 listed total** | | | **2,261** |
+
+Account after (2026-11-26, `account_get_usage`): 123,617 / 124,177 used -> **560 left**. The account moved by 2,693, i.e. 432 more than the
+listed generation prices (not explained by any generation in this session; possibly Scribe or rounding on the account side).

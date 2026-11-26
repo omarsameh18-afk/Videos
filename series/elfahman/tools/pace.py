@@ -23,6 +23,7 @@ ap.add_argument('--sent-min', type=float, default=0.38); ap.add_argument('--sent
 ap.add_argument('--comma-min', type=float, default=0.15); ap.add_argument('--comma-max', type=float, default=0.25)
 ap.add_argument('--mid-max', type=float, default=0.15); ap.add_argument('--straight-gap', type=float, default=0.05)
 ap.add_argument('--thr', type=float, default=-40.0)
+ap.add_argument('--dots-min', type=float, default=None); ap.add_argument('--dots-max', type=float, default=None)  # '…' beat (episode 15); default: mid rule
 ap.add_argument('--set', default='', help='b:len,... set the gap after word b to len s (a gap whose kept ends hold a soft breath tail)')
 A = ap.parse_args()
 SR = 44100
@@ -65,6 +66,7 @@ def kind(b):
     if myst and b == myst[0]: return 'mystery'
     if re.search(r'[.!?؟]$', w): return 'sentence'
     if re.search(r'[،,:]$', w): return 'comma'
+    if A.dots_min is not None and re.search(r'…$', w): return 'dots'
     return 'mid'
 # assign runs to boundaries; per boundary the longest run is "the" gap, the others are inner quiet bits (mid rule)
 by_b = {}
@@ -87,7 +89,7 @@ for b, rs in by_b.items():
         k = kind(b) if r is main else ('hook' if kind(b) == 'hook' else 'mid')
         L = {'hook': min(own, 0.03), 'straight': min(own, A.straight_gap), 'mystery': myst[1] if myst else own,
              'sentence': min(max(own, A.sent_min), A.sent_max), 'comma': min(max(own, A.comma_min), A.comma_max),
-             'mid': min(own, A.mid_max)}[k]
+             'mid': min(own, A.mid_max), 'dots': min(max(own, A.dots_min or 0), A.dots_max or 9)}[k]
         if r is main and b in SET: L = min(SET[b], own) if SET[b] < own else SET[b]
         edits.append((r[0], r[1], L))
         if r is main: gaps.append({'b': b, 'kind': k, 'own': round(own, 3), 'len': round(L, 3), 't0': r[0]})

@@ -13,3 +13,4 @@ Start (2026-11-22, before skip-leg-day): account used 58,033 / 124,177 (66,144 l
 | الفهمان #13 phone-internet-off | 0 (all boards code-drawn) | - | 989 (eleven_v4, 1 take) | 989 | 18,850 / 50,000 | 40,254 (account, 2026-11-24 before this video) -> ~39,265 |
 | الفهمان #13 v2 (hook line only) | 0 (study set reused) | - | 78 (eleven_v4, 1 line) | 78 | 18,928 / 50,000 | 35,023 (account, 2026-11-24 before this line) -> ~34,945 |
 | الفهمان #14 oldest-skipper | 0 (all boards code-drawn) | - | 934 (eleven_v4, 1 take) | 934 | 19,862 / 50,000 | 34,945 (account, 2026-11-25 before this video) -> 34,011 |
+| الفهمان #15 uk-drives-left (Omar approved going below the 16K floor) | 1,294 (3 props, 2K) | - | 967 (eleven_v4, 1 take) | 2,261 listed / 2,693 account delta | 22,555 / 50,000 (by account delta) | 3,253 -> 560 |
