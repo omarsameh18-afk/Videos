@@ -441,7 +441,7 @@ export const B6: React.FC<BoardProps> = ({t, b0}) => {
 // ================================================================== 7 — the big wagon (4 horses) rolls in; France + USA flags pop
 export const B7: React.FC<BoardProps> = ({t, b0}) => {
   const eF = at('فرنسا') - b0, eU = at('وأمريكا') - b0, eA = at('عربيات') - b0;
-  const x = lerp(-1200, -20, easeOut(seg(t, eA - 0.6, eA + 0.6))) + t * 6;
+  const x = lerp(-1150, -20, easeOut(seg(t, 0, eA + 0.5))) + t * 6;
   const bob = Math.abs(Math.sin(t * 8)) * -6;
   return (
     <Scene bg="linear-gradient(180deg,#8FD0FF 0%,#D7EEFF 52%,#9ED27A 53%,#7DBE5C 100%)">
@@ -514,6 +514,9 @@ export const B10: React.FC<BoardProps> = ({t, b0}) => {
       <g opacity={0.3}>{Array.from({length: 16}, (_, i) => <path key={i} d="M 0 0 L -60 -1000 L 60 -1000 Z" fill="#FFE98A" transform={`translate(540 640) rotate(${i * 22.5 + t * 10})`} />)}</g>
       <rect x={0} y={0} width={120} height={H} fill="#0055A4" opacity={0.6} /><rect x={960} y={0} width={120} height={H} fill="#EF4135" opacity={0.6} />
       <ellipse cx={540} cy={1140} rx={300} ry={40} fill={INK} opacity={0.35 * s} />
+      <defs><filter id="sil"><feColorMatrix type="matrix" values="0 0 0 0 0.06  0 0 0 0 0.08  0 0 0 0 0.16  0 0 0 1 0" /></filter></defs>
+      {s <= 0 && <g filter="url(#sil)" opacity={0.9}><Pic n="napoleon" x={540 - 215} y={1150 - picH('napoleon', 430)} w={430} /></g>}
+      {s <= 0 && <QMark x={540} y={520} s={1 + 0.08 * Math.sin(t * 6)} size={260} />}
       {s > 0 && <g transform={`translate(540 1150) scale(${s * puff} ${s / puff}) translate(-540 -1150)`}><Pic n="napoleon" x={540 - 230} y={1150 - picH('napoleon', 460)} w={460} /></g>}
     </Scene>
   );
@@ -663,7 +666,8 @@ export const B16: React.FC<BoardProps> = ({t, b0}) => {
       <rect x={60} y={900} width={960} height={22} rx={11} fill={INK} />
       {[820, 260].map((x) => <circle key={x} cx={x} cy={911} r={30} fill={YEL} stroke={INK} strokeWidth={8} />)}
       {/* 1798 (right) */}
-      <g opacity={nap > 0 ? 1 : 0}>
+      {uk <= 0 && <QMark x={260} y={560} s={1 + 0.08 * Math.sin(t * 6)} size={240} />}
+      <g>
         <Pyramids x={820} y={800} s={0.42} />
         {glow > 0 && <circle cx={820} cy={560} r={210} fill="#FFD23F" opacity={0.45 * glow + 0.08 * Math.sin(t * 6) * glow} />}
         <g transform={`translate(820 820) scale(${nap}) translate(-820 -820)`}><Pic n="napoleon" x={820 - 110} y={820 - picH('napoleon', 220)} w={220} /></g>
