@@ -299,3 +299,6 @@ Flow "Elfahman 16 randy no sleep" (`dF7pf1OUUcFoZZMo0Wtd`). Every generation pri
 
 Account after the generations (2026-11-27, `account_get_usage`): **1,515 / 131,000 used -> 129,485 left**. The account moved by exactly the
 listed 1,515 (no hidden extra this time).
+Account at the end of the session (QA done, 2026-11-27): **5,674 / 131,000 used -> 125,326 left**. The extra 4,159 since the check above did
+not come from this session (no generation was started after it; the only later call was a free "add asset node"). The plan is shared with
+another channel, so it is most likely that channel's use. **This video: 1,515.**

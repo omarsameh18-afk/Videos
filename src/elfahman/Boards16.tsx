@@ -858,7 +858,7 @@ export const B14: React.FC<BoardProps> = ({t, b0}) => {
         <Zzz x={300} y={470} t={t} size={86} />
       </> : <>
         <Bed x={120} y={680} w={760} />
-        <g transform={`rotate(${-fall * 78} 470 1060)`}><Randy x={470} y={200} h={860} tired={3} id="b14r" /></g>
+        <g transform={`translate(${-fall * 60} ${fall * 40}) rotate(${-fall * 24 + Math.sin(t * 9) * 2 * (1 - fall)} 470 1060)`}><Randy x={470} y={200} h={860} tired={3} closed={fall > 0.5 ? 1 : 0} id="b14r" /></g>
       </>}
       <g transform={`translate(640 380) scale(${popIn(t - eH, 0.3)})`}>
         <rect x={-190} y={-70} width={380} height={140} rx={70} fill={YEL} stroke={INK} strokeWidth={9} />
