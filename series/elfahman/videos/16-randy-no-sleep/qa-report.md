@@ -52,3 +52,27 @@
 - Voice 1,135 (one take). Scribe 0. Pictures 380 (190 + 190, 1K high). Music + SFX 0 (synthesized). **Episode total: 1,515.**
 - Account: 0 → 1,515 used after the generations (exact match). At the end of the session it showed 5,674 used; the extra 4,159 was not started
   from this session (shared plan).
+
+---
+
+# v2 (voice fix) — 2026-11-27
+
+Only the voice changed (and the timing that follows it, plus the hook caption "ما ينامش"); layout, board drawings, character, SFX and loop
+are the v1 code.
+
+- **Voice**: ONE new eleven_v4 take (Fodoly), the fully diacritized VOICE TEXT sent exactly as written (`voice_v2.sent.txt`, tashkeel untouched,
+  same inline tags as v1; the v1 opening instruction tag was not added because the text had to be sent exactly). 65.2 s raw → 63.63 s at 1.0x.
+- **Pronunciation check** (independent Scribe transcript of the take as a plain audio file, `transcript_take2_independent.txt`): وَلَد → "ولد",
+  ما يِنامْش → "ما ينامش", حِداشَر → "11", هَيْنام → "هينام", بِيْكَلِّموه → "بيكلموه", حَصَلُّه → "حصل له", خَمَسْتاشَر → "15". All correct.
+  No tag word (laughs / whispers / excited / surprised / sarcastic / curious) appears in the transcript. The two [laughs softly] are short
+  chuckles (~0.2 s) at the end of the previous line.
+- **Output**: 1080x1920, 60 fps, H.264 yuv420p (tv), AAC, **63.63 s**, **−14.2 LUFS**, peak −1.4 dBFS.
+- **Pacing** (measured on vo.mp3, silencedetect −40 dB): hook 0–3.77 s in one go (one comma breath 0.17 s), gap after the hook 0.40 s; body 146 words
+  in 59.02 s = **2.47 words/s**; sentence gaps 22 × **0.35–0.40 s** (avg 0.37); comma gaps 13 × **0.16–0.18 s**; "…" beats 10 × **0.25–0.27 s**;
+  **mystery pause 0.77 s** (after "تفتكر حصله إيه؟"); **longest gap elsewhere 0.40 s**; in-phrase ≤ 0.09 s; lead 0.00 s, tail 0.44 s.
+- **Re-timed**: every caption, pose, board beat and SFX follows the new word times (same word indices; "ما ينامش" is one timing entry).
+  TWIST (shocked + punch-in + shake) on "ينام" at 53.88 s; temple on "الفهمان" 62.03 s, wink on "كسبان" 62.77 s (measured); bed re-made on the new timeline.
+- **Captions**: caption 1 "ولد عنده ١٧ سنة" from frame 0; caption 2 "قرر ما ينامش ١١ يوم كاملين!" (ما ينامش yellow, ١١ يوم red) on "قرر". Nothing else changed.
+- **QA**: contact sheet every 1 s (64 frames) passed; frame 0 → 1 moving (4.4); pop scan: every jump cluster is a board change or an intended beat;
+  loop board-area difference last → frame 0 = 1.6 (`loop-last-first.png`).
+- **Credits**: voice 1,231 + independent transcript 359 (estimated ~22, charged 359) = **1,590**. Account 5,674 → 7,264 used (of 131,000).
