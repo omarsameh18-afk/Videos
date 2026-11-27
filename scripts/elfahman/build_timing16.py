@@ -1,5 +1,6 @@
 # words.json (+sent index) and randy.timing.json (sentence bounds from the measured gaps) for episode 16
-import json, subprocess
+import json, subprocess, sys
+PINS = {int(k): float(v) for k, v in (x.split(':') for x in sys.argv[1:])}  # e.g. 27:10.18 37:16.34
 E = 'series/elfahman/videos/16-randy-no-sleep'; V = 'src/elfahman/videos'
 lines = open(f'{E}/script.txt').read().strip().split('\n')
 W = json.load(open(f'{V}/randy.words.json'))
@@ -17,8 +18,11 @@ for si in range(len(sents) - 1):
 sents[0]['s'] = 0
 for s in sents: s.pop('last')
 dur = float(subprocess.check_output(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', 'public/elfahman/randy/vo/vo.mp3']))
-# the two words after a soft laugh: Scribe puts their start at the laugh; measured voice onsets on vo.mp3
-for i, t in {27: 10.18, 37: 16.34}.items(): W[i]['s'] = t
+# v2: "ما ينامش" (script words 5 + 6) is ONE timing entry, so every word index used by the episode code (155 entries) stays as in v1
+if len(W) == 156:
+    W[5] = {'w': 'ما ينامش', 's': W[5]['s'], 'e': W[6]['e'], 'sent': W[5]['sent']}; del W[6]
+# the two words after a soft laugh: Scribe puts their start at the laugh; measured voice onsets on vo.mp3 (v2 values)
+for i, t in PINS.items(): W[i]['s'] = t
 json.dump(W, open(f'{V}/randy.words.json', 'w'), ensure_ascii=False, indent=0)
 json.dump({'duration': round(dur, 3), 'sentences': sents}, open(f'{V}/randy.timing.json', 'w'))
 body_w = len(W) - len(lines[0].split())

@@ -4,7 +4,7 @@ import fs from 'node:fs';
 const {chromium} = createRequire('/')('playwright');
 const clean = (w) => w.replace(/\.\.\.|…/g, '').replace(/[.،,:]$/g, '');
 const ws = JSON.parse(fs.readFileSync('src/elfahman/videos/randy.words.json', 'utf8')).map((w) => clean(w.w));
-const extra = ['ولد','عنده','١٧','سنة','قرر','مينامش','١١','يوم','كاملين!','٧','١٠٠','٦٥','١٥','٤٠','الـ١٠','الـ١١', ' '];
+const extra = ['ولد','عنده','١٧','سنة','قرر','مينامش','ما','ينامش','١١','يوم','كاملين!','٧','١٠٠','٦٥','١٥','٤٠','الـ١٠','الـ١١', ' '];
 const uniq = [...new Set([...ws, ...extra])];
 const b64 = (p) => fs.readFileSync(p).toString('base64');
 const css = `@font-face{font-family:Cairo;font-weight:900;src:url(data:font/woff2;base64,${b64('public/elfahman/fonts/cairo-arabic-900-normal.woff2')}) format('woff2');unicode-range:U+0600-06FF,U+0750-077F,U+08A0-08FF,U+200C-200E,U+FB50-FDFF,U+FE70-FEFC}

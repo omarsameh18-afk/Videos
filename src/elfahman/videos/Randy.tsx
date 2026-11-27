@@ -13,7 +13,7 @@ import ENV from './randy.env.json';
 import TIMING from './randy.timing.json';
 import WW from './randy.wordw.json';
 
-// Episode 16: "ولد قرر مينامش ١١ يوم". ONE eleven_v4 take (voice XFkxnO6GgzVSxqEN2NVq, 1,135 credits) with inline audio tags,
+// Episode 16: "ولد قرر ما ينامش ١١ يوم". v2 voice: ONE eleven_v4 take of the fully diacritized text (voice XFkxnO6GgzVSxqEN2NVq, 1,231 credits) with inline audio tags,
 // re-edited with tools/pace.py at 1.0x on boundaries snapped onto the measured silences (silence only cut / digital silence
 // added): hook in one go, sentence gaps ~0.39 s, commas ~0.19 s, "…" beats ~0.27 s, 0.77 s mystery pause after "تفتكر حصله إيه؟",
 // 0.4 s tail. 20 boards (../Boards16.tsx), 2 generated props (young راندي, old راندي in bed).
@@ -31,7 +31,7 @@ const NB = 20;
 const T = {
   kamleen: wi(8), meen: wi(22), sahleen: wi(31), coca: wi(32), asabi: wi(48), la3eb: wi(61), ghalabo: wi(85), nesy: wi(100),
   mafeesh: wi(113), twist: wi(131), sa3a: wi(147), eb3ato: wi(148),
-  fahman: wi(153), kasban: 61.92, // measured on vo.mp3 (timing.py onset check): الفهمان 61.27, كسبان 61.92
+  fahman: wi(153), kasban: 62.77, // measured on vo.mp3 v2 (timing.py onset check): الفهمان 62.05, كسبان 62.77
 };
 const MYST: [number, number] = [SENT[15].e, SENT[16].s];
 const B = (i: number) => (i === 0 ? 0 : SENT[i].s); // board i starts on its sentence
@@ -130,10 +130,10 @@ const CARDS: number[][] = [
 ];
 const GROUPS: Group[] = (() => {
   const out: Group[] = [];
-  // hook: caption 1 "ولد عنده ١٧ سنة" from frame 0, caption 2 "قرر مينامش ١١ يوم كاملين!" on the onset of "قرر"
+  // hook: caption 1 "ولد عنده ١٧ سنة" from frame 0, caption 2 "قرر ما ينامش ١١ يوم كاملين!" on the onset of "قرر"
   const O = wi(4);
   out.push({words: [{w: 'ولد', s: 0, e: 0}, {w: 'عنده', s: 0, e: 0}, {w: '١٧', s: 0, e: 0, c: YELLOW}, {w: 'سنة', s: 0, e: 0}], s: 0, e: O, style: 'hook', fs: 122, br: 2, x: 540, maxW: 900});
-  out.push({words: [{w: 'قرر', s: O, e: O}, {w: 'مينامش', s: O, e: O, c: YELLOW}, {w: '١١', s: O, e: O, c: RED}, {w: 'يوم', s: O, e: O, c: RED}, {w: 'كاملين!', s: O, e: O}], s: O, e: 0, style: 'hook', fs: 108, br: 2, x: 540, maxW: 900});
+  out.push({words: [{w: 'قرر', s: O, e: O}, {w: 'ما', s: O, e: O, c: YELLOW}, {w: 'ينامش', s: O, e: O, c: YELLOW}, {w: '١١', s: O, e: O, c: RED}, {w: 'يوم', s: O, e: O, c: RED}, {w: 'كاملين!', s: O, e: O}], s: O, e: 0, style: 'hook', fs: 108, br: 3, x: 540, maxW: 900});
   const used = new Set<number>();
   for (const c of CARDS) {
     for (const i of c) { if (used.has(i)) throw new Error(`word ${i} twice`); used.add(i); }
