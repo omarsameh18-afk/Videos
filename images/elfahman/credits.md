@@ -306,3 +306,14 @@ another channel, so it is most likely that channel's use. **This video: 1,515.**
 ### Episode 16 v2 (2026-11-27): voice re-take from the fully diacritized VOICE TEXT
 Reason: the first take misread words (e.g. "ولد", "مينامش"). Account before (`account_get_usage`): **5,674 / 131,000 used -> 125,326 left**
 (above the 1,500 floor). Plan: ONE new full take, no pictures.
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice v2: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), ONE take of the fully diacritized VOICE TEXT sent exactly as written (`series/elfahman/videos/16-randy-no-sleep/voice_v2.sent.txt`), same inline tags as v1; the v1 opening instruction tag was NOT added (the text is sent exactly). 65.2 s raw. Estimate 1,231 (the harakat count as characters) | | cz3gVippeqjBqRMyr1jG | 1,231 |
+| Word timing: Scribe v1 forced to the sent text (wired to the voice node) | | k7DQSwGd8L5ZmpuEOzJm | 0 |
+| Pronunciation check: Scribe v1 on the take as a plain audio file (independent transcript, `transcript_take2_independent.txt`). The estimate said ~22; it was charged **359** | | wosiu6gKVibomkyOlWnY | 359 |
+| Pause edit at 1.0x (`tools/pace.py`, boundaries snapped): 65.2 s -> 63.63 s | no new generation | – | 0 |
+| Pictures, music, SFX | reused / synthesized | – | 0 |
+| **Episode 16 v2 total** | | | **1,590** |
+
+Account after (`account_get_usage`): **7,264 / 131,000 used -> 123,736 left** (moved by exactly 1,590). **Episode 16 total (v1 + v2): 3,105.**
