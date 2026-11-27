@@ -278,3 +278,24 @@ Account before: 120,924 / 124,177 used (3,253 left).
 
 Account after (2026-11-26, `account_get_usage`): 123,617 / 124,177 used -> **560 left**. The account moved by 2,693, i.e. 432 more than the
 listed generation prices (not explained by any generation in this session; possibly Scribe or rounding on the account side).
+
+## Episode 16 — ولد قرر مينامش ١١ يوم (2026-11-27)
+
+Account before (2026-11-27, `account_get_usage`, before any generation): **0 / 131,000 used -> 131,000 left** (Creator plan, monthly
+reset; shared with another channel). Planned spend: ~1,500 (1 voice take ~950 + 2 props ~300 each); stop line 1,800.
+
+Flow "Elfahman 16 randy no sleep" (`dF7pf1OUUcFoZZMo0Wtd`). Every generation priced with `estimate_only` first.
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Voice: eleven_v4, "Fodoly" (XFkxnO6GgzVSxqEN2NVq), ONE take of the full VOICE TEXT, 61.4 s raw. Speed 0.95 is not available on this connector (eleven_v4 has no speed setting, per the model guide), so the #15 instruction tag `[warm, amused, calm and unhurried, telling a friend a story at an ahwa]` opens the text. The script's audio tags ([laughs softly], [excited], [whispers], [surprised], [sarcastic], [curious]) were sent inline; the model guide confirms eleven_v4 on this path reads them as delivery directions, so no test clip was made. Tashkeel as in the brief | | AM8iI3D0Mg9ok1nOqc6H | 1,135 |
+| Word timing: Scribe v1 (forced to the sent text; every tag "word" lasts ~0.05 s, i.e. not spoken; the two [laughs softly] are 0.4–0.9 s of soft laughter) | | UsWzT4O0zbnj4RpDqQqF | 0 |
+| Pause edit at 1.0x (`tools/pace.py` on boundaries snapped onto measured silences, `scripts/elfahman/snap16.py`): 61.4 s -> 62.67 s | no new generation | – | 0 |
+| Prop 1: young راندي, full body, standing, neutral smile (magenta, keyed) | GPT Image 2.5 Sunburst, 1K, high, 16:9 | aMZlaAQHyzOibiFryh7l | 190 |
+| Prop 2: old راندي lying in bed at night, wide awake, blanket pulled up (magenta, keyed). Text prompt only: wiring prop 1 in as a reference was priced at 433, which would have put the video at ~1,760, too close to the 1,800 stop line. The window, moon and bedside clock are drawn in code so the moon can move | GPT Image 2.5 Sunburst, 1K, high, 16:9 | KE9vGIdjDgEtFnOC6foN | 190 |
+| Drawn in code | calendar, wall clock, science-fair table + trophy + banner, coin, Bruce, the sleep scientist, soda can (no brand), shower, bathroom door, football player outline, Egyptian guy + red kit 11, forest, pinball machine, chalkboard, bed + Zzz, press table + mics + newspaper, night calendar, window + moon + bedside clock, record book, phone + alarm clock, sleepy friend, send arrow, tiredness overlays on راندي | – | 0 |
+| Music + SFX: synthesized (`tools/randy_sfx.py`: tick, coin spin, trombone, fizz, shower, knock, cheer, hum, pinball, chalk, clink, snore, flash, book thud) + library SFX + bed | | – | 0 |
+| **Episode 16 total** | | | **1,515** |
+
+Account after the generations (2026-11-27, `account_get_usage`): **1,515 / 131,000 used -> 129,485 left**. The account moved by exactly the
+listed 1,515 (no hidden extra this time).
