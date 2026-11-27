@@ -11,7 +11,7 @@ const composition = await selectComposition({ serveUrl, id: process.env.COMP ?? 
 const files = [];
 for (const fr of frames.map(Number)) {
   const output = `${out}/f${String(fr).padStart(4, '0')}.png`;
-  await renderStill({ serveUrl, composition, frame: fr, output, browserExecutable, scale: 0.5 });
+  await renderStill({ serveUrl, composition, frame: fr, output, browserExecutable, scale: Number(process.env.SCALE ?? 0.5) });
   files.push(output);
 }
 const cols = Math.min(6, files.length);

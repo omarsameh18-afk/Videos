@@ -18,6 +18,7 @@ import {PhoneOff, PHONE_DURATION_S} from './elfahman/videos/PhoneOff';
 import {Skipper, SKIPPER_DURATION_S} from './elfahman/videos/Skipper';
 import {SkipperV2, SKIPPER_V2_DURATION_S} from './elfahman/videos/SkipperV2';
 import {UkLeft, UKLEFT_DURATION_S} from './elfahman/videos/UkLeft';
+import {Randy, RANDY_DURATION_S} from './elfahman/videos/Randy';
 
 // الفهمان series: one composition per episode (1080x1920, 60 fps)
 export const RemotionRoot: React.FC = () => (
@@ -55,6 +56,8 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="Elfahman14SkipperV2" component={SkipperV2} durationInFrames={Math.round(SKIPPER_V2_DURATION_S * FPS)}
       fps={FPS} width={1080} height={1920} />
     <Composition id="Elfahman15UkLeft" component={UkLeft} durationInFrames={Math.round(UKLEFT_DURATION_S * FPS)}
+      fps={FPS} width={1080} height={1920} />
+    <Composition id="Elfahman16Randy" component={Randy} durationInFrames={Math.round(RANDY_DURATION_S * FPS)}
       fps={FPS} width={1080} height={1920} />
   </>
 );

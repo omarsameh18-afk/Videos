@@ -17,6 +17,8 @@ for si in range(len(sents) - 1):
 sents[0]['s'] = 0
 for s in sents: s.pop('last')
 dur = float(subprocess.check_output(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', 'public/elfahman/randy/vo/vo.mp3']))
+# the two words after a soft laugh: Scribe puts their start at the laugh; measured voice onsets on vo.mp3
+for i, t in {27: 10.18, 37: 16.34}.items(): W[i]['s'] = t
 json.dump(W, open(f'{V}/randy.words.json', 'w'), ensure_ascii=False, indent=0)
 json.dump({'duration': round(dur, 3), 'sentences': sents}, open(f'{V}/randy.timing.json', 'w'))
 body_w = len(W) - len(lines[0].split())
