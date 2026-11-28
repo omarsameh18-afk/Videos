@@ -81,6 +81,7 @@ if cut:
     g0 = max(by_b[cut[0] - 1], key=lambda r: r[1] - r[0]); g1 = max(by_b[cut[1]], key=lambda r: r[1] - r[0])
     for b in range(cut[0] - 1, cut[1] + 1): by_b.pop(b, None)
     L = min(max(min(g0[1] - g0[0], g1[1] - g1[0]), A.sent_min), A.sent_max)
+    L = SET.get(cut[0] - 1, L)  # --set also fixes the join gap of the cut (episode 17)
     edits.append((g0[0], g1[1], L)); gaps.append({'b': cut[0] - 1, 'kind': 'sentence', 'own': round(g0[1] - g0[0], 3), 'len': round(L, 3), 'cut_sentence': True})
 for b, rs in by_b.items():
     main = max(rs, key=lambda r: r[1] - r[0])

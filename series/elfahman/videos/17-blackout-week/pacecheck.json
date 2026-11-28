@@ -1,0 +1,732 @@
+[
+ {
+  "b": 4,
+  "kind": "mid",
+  "own": 0.045,
+  "len": 0.045,
+  "at": 1.631,
+  "after": "الدنيا",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 5,
+  "kind": "dots",
+  "own": 0.399,
+  "len": 0.2,
+  "at": 2.06,
+  "after": "كلها…",
+  "measured": 0.177,
+  "start": 2.083
+ },
+ {
+  "b": 6,
+  "kind": "mid",
+  "own": 0.05,
+  "len": 0.05,
+  "at": 2.612,
+  "after": "أسبوع",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 7,
+  "kind": "sentence",
+  "own": 0.519,
+  "len": 0.46,
+  "at": 2.979,
+  "after": "كامل؟",
+  "measured": 0.445,
+  "start": 2.982
+ },
+ {
+  "b": 10,
+  "kind": "comma",
+  "own": 0.267,
+  "len": 0.24,
+  "at": 4.366,
+  "after": "الصبح،",
+  "measured": 0.23,
+  "start": 4.375
+ },
+ {
+  "b": 14,
+  "kind": "dots",
+  "own": 0.546,
+  "len": 0.34,
+  "at": 5.524,
+  "after": "النور…",
+  "measured": 0.295,
+  "start": 5.563
+ },
+ {
+  "b": 16,
+  "kind": "sentence",
+  "own": 0.586,
+  "len": 0.52,
+  "at": 6.266,
+  "after": "حاجة.",
+  "measured": 0.488,
+  "start": 6.297
+ },
+ {
+  "b": 18,
+  "kind": "comma",
+  "own": 0.264,
+  "len": 0.24,
+  "at": 7.237,
+  "after": "عادي،",
+  "measured": 0.23,
+  "start": 7.245
+ },
+ {
+  "b": 20,
+  "kind": "comma",
+  "own": 0.317,
+  "len": 0.24,
+  "at": 8.121,
+  "after": "أحمال،",
+  "measured": 0.217,
+  "start": 8.139
+ },
+ {
+  "b": 21,
+  "kind": "mid",
+  "own": 0.045,
+  "len": 0.045,
+  "at": 8.523,
+  "after": "ساعتين",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 22,
+  "kind": "sentence",
+  "own": 0.619,
+  "len": 0.59,
+  "at": 8.94,
+  "after": "وترجع.",
+  "measured": 0.443,
+  "start": 9.078
+ },
+ {
+  "b": 26,
+  "kind": "dots",
+  "own": 0.501,
+  "len": 0.34,
+  "at": 10.784,
+  "after": "وشه…",
+  "measured": 0.283,
+  "start": 10.838
+ },
+ {
+  "b": 28,
+  "kind": "sentence",
+  "own": 0.362,
+  "len": 0.46,
+  "at": 11.783,
+  "after": "مية.",
+  "measured": 0.451,
+  "start": 11.79
+ },
+ {
+  "b": 32,
+  "kind": "dots",
+  "own": 0.197,
+  "len": 0.3,
+  "at": 13.176,
+  "after": "المية…",
+  "measured": 0.272,
+  "start": 13.198
+ },
+ {
+  "b": 33,
+  "kind": "mid",
+  "own": 0.05,
+  "len": 0.05,
+  "at": 13.882,
+  "after": "شغال",
+  "measured": 0.04,
+  "start": 13.891
+ },
+ {
+  "b": 34,
+  "kind": "sentence",
+  "own": 0.499,
+  "len": 0.499,
+  "at": 14.264,
+  "after": "بالكهربا.",
+  "measured": 0.495,
+  "start": 14.267
+ },
+ {
+  "b": 36,
+  "kind": "comma",
+  "own": 0.324,
+  "len": 0.24,
+  "at": 15.324,
+  "after": "الضهر،",
+  "measured": 0.236,
+  "start": 15.325
+ },
+ {
+  "b": 49,
+  "kind": "mid",
+  "own": 0.072,
+  "len": 0.072,
+  "at": 17.653,
+  "after": "اليوم",
+  "measured": 0.057,
+  "start": 17.667
+ },
+ {
+  "b": 50,
+  "kind": "comma",
+  "own": 0.357,
+  "len": 0.24,
+  "at": 17.952,
+  "after": "التاني،",
+  "measured": 0.214,
+  "start": 17.976
+ },
+ {
+  "b": 52,
+  "kind": "mid",
+  "own": 0.045,
+  "len": 0.045,
+  "at": 18.95,
+  "after": "يسحب",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 53,
+  "kind": "dots",
+  "own": 0.407,
+  "len": 0.34,
+  "at": 19.15,
+  "after": "فلوس…",
+  "measured": 0.326,
+  "start": 19.163
+ },
+ {
+  "b": 55,
+  "kind": "mid",
+  "own": 0.095,
+  "len": 0.095,
+  "at": 20.33,
+  "after": "الفلوس",
+  "measured": 0.088,
+  "start": 20.334
+ },
+ {
+  "b": 56,
+  "kind": "comma",
+  "own": 0.324,
+  "len": 0.24,
+  "at": 20.727,
+  "after": "طافية،",
+  "measured": 0.204,
+  "start": 20.764
+ },
+ {
+  "b": 57,
+  "kind": "mid",
+  "own": 0.117,
+  "len": 0.117,
+  "at": 21.468,
+  "after": "والفيزا",
+  "measured": 0.106,
+  "start": 21.479
+ },
+ {
+  "b": 59,
+  "kind": "sentence",
+  "own": 0.387,
+  "len": 0.46,
+  "at": 22.174,
+  "after": "لازمة.",
+  "measured": 0.451,
+  "start": 22.182
+ },
+ {
+  "b": 60,
+  "kind": "sentence",
+  "own": 0.392,
+  "len": 0.46,
+  "at": 23.175,
+  "after": "والبنزينة؟",
+  "measured": 0.449,
+  "start": 23.186
+ },
+ {
+  "b": 62,
+  "kind": "dots",
+  "own": 0.397,
+  "len": 0.34,
+  "at": 24.376,
+  "after": "موجود…",
+  "measured": 0.315,
+  "start": 24.39
+ },
+ {
+  "b": 63,
+  "kind": "mid",
+  "own": 0.1,
+  "len": 0.1,
+  "at": 24.953,
+  "after": "بس",
+  "measured": 0.089,
+  "start": 24.958
+ },
+ {
+  "b": 64,
+  "kind": "mid",
+  "own": 0.105,
+  "len": 0.105,
+  "at": 25.442,
+  "after": "الطلمبة",
+  "measured": 0.091,
+  "start": 25.451
+ },
+ {
+  "b": 65,
+  "kind": "sentence",
+  "own": 0.481,
+  "len": 0.481,
+  "at": 26.036,
+  "after": "بالكهربا.",
+  "measured": 0.469,
+  "start": 26.049
+ },
+ {
+  "b": 66,
+  "kind": "mid",
+  "own": 0.067,
+  "len": 0.067,
+  "at": 26.829,
+  "after": "اليوم",
+  "measured": 0.06,
+  "start": 26.835
+ },
+ {
+  "b": 67,
+  "kind": "comma",
+  "own": 0.404,
+  "len": 0.24,
+  "at": 27.093,
+  "after": "التالت،",
+  "measured": 0.219,
+  "start": 27.11
+ },
+ {
+  "b": 69,
+  "kind": "comma",
+  "own": 0.272,
+  "len": 0.24,
+  "at": 28.336,
+  "after": "ساح،",
+  "measured": 0.215,
+  "start": 28.358
+ },
+ {
+  "b": 72,
+  "kind": "dots",
+  "own": 1.048,
+  "len": 0.34,
+  "at": 29.394,
+  "after": "فيه…",
+  "measured": 0.163,
+  "start": 29.402
+ },
+ {
+  "b": 75,
+  "kind": "sentence",
+  "own": 0.801,
+  "len": 0.55,
+  "at": 30.46,
+  "after": "حياتك.",
+  "measured": 0.442,
+  "start": 30.462
+ },
+ {
+  "b": 76,
+  "kind": "comma",
+  "own": 0.422,
+  "len": 0.27,
+  "at": 31.421,
+  "after": "وبالليل،",
+  "measured": 0.184,
+  "start": 31.493
+ },
+ {
+  "b": 77,
+  "kind": "mid",
+  "own": 0.06,
+  "len": 0.06,
+  "at": 32.215,
+  "after": "الشارع",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 78,
+  "kind": "mid",
+  "own": 0.08,
+  "len": 0.08,
+  "at": 32.709,
+  "after": "ضلمة",
+  "measured": 0.075,
+  "start": 32.711
+ },
+ {
+  "b": 79,
+  "kind": "dots",
+  "own": 0.491,
+  "len": 0.34,
+  "at": 33.051,
+  "after": "كحل…",
+  "measured": 0.31,
+  "start": 33.077
+ },
+ {
+  "b": 84,
+  "kind": "mid",
+  "own": 0.075,
+  "len": 0.075,
+  "at": 35.089,
+  "after": "فوق",
+  "measured": 0.067,
+  "start": 35.097
+ },
+ {
+  "b": 85,
+  "kind": "sentence",
+  "own": 0.604,
+  "len": 0.52,
+  "at": 35.389,
+  "after": "القاهرة.",
+  "measured": 0.435,
+  "start": 35.472
+ },
+ {
+  "b": 87,
+  "kind": "comma",
+  "own": 0.319,
+  "len": 0.24,
+  "at": 36.552,
+  "after": "السابع،",
+  "measured": 0.192,
+  "start": 36.595
+ },
+ {
+  "b": 97,
+  "kind": "sentence",
+  "own": 0.489,
+  "len": 0.57,
+  "at": 39.618,
+  "after": "كلمهم.",
+  "measured": 0.445,
+  "start": 39.745
+ },
+ {
+  "b": 98,
+  "kind": "mid",
+  "own": 0.045,
+  "len": 0.045,
+  "at": 40.345,
+  "after": "بس",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 99,
+  "kind": "mid",
+  "own": 0.15,
+  "len": 0.12,
+  "at": 40.493,
+  "after": "تفتكر",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 102,
+  "kind": "mid",
+  "own": 0.157,
+  "len": 0.12,
+  "at": 41.426,
+  "after": "يحصل",
+  "measured": 0.05,
+  "start": 41.437
+ },
+ {
+  "b": 103,
+  "kind": "mystery",
+  "own": 0.681,
+  "len": 0.8,
+  "at": 41.616,
+  "after": "بجد؟",
+  "measured": 0.79,
+  "start": 41.618
+ },
+ {
+  "b": 105,
+  "kind": "dots",
+  "own": 0.277,
+  "len": 0.3,
+  "at": 43.169,
+  "after": "بروفة…",
+  "measured": 0.277,
+  "start": 43.186
+ },
+ {
+  "b": 106,
+  "kind": "mid",
+  "own": 0.097,
+  "len": 0.097,
+  "at": 43.716,
+  "after": "سنة",
+  "measured": 0.087,
+  "start": 43.721
+ },
+ {
+  "b": 108,
+  "kind": "mid",
+  "own": 0.062,
+  "len": 0.062,
+  "at": 44.539,
+  "after": "تمنمية",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 110,
+  "kind": "sentence",
+  "own": 0.384,
+  "len": 0.5,
+  "at": 45.23,
+  "after": "وخمسين.",
+  "measured": 0.458,
+  "start": 45.269
+ },
+ {
+  "b": 113,
+  "kind": "comma",
+  "own": 0.232,
+  "len": 0.232,
+  "at": 46.663,
+  "after": "الشمس،",
+  "measured": 0.212,
+  "start": 46.672
+ },
+ {
+  "b": 115,
+  "kind": "mid",
+  "own": 0.08,
+  "len": 0.08,
+  "at": 47.6,
+  "after": "أجهزة",
+  "measured": 0.059,
+  "start": 47.615
+ },
+ {
+  "b": 116,
+  "kind": "mid",
+  "own": 0.16,
+  "len": 0.12,
+  "at": 48.097,
+  "after": "التلغراف",
+  "measured": 0.047,
+  "start": 48.1
+ },
+ {
+  "b": 118,
+  "kind": "comma",
+  "own": 0.337,
+  "len": 0.24,
+  "at": 48.863,
+  "after": "شرار،",
+  "measured": 0.194,
+  "start": 48.907
+ },
+ {
+  "b": 119,
+  "kind": "mid",
+  "own": 0.115,
+  "len": 0.115,
+  "at": 49.564,
+  "after": "والسما",
+  "measured": 0.089,
+  "start": 49.587
+ },
+ {
+  "b": 120,
+  "kind": "mid",
+  "own": 0.052,
+  "len": 0.052,
+  "at": 50.135,
+  "after": "نورت",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 122,
+  "kind": "mid",
+  "own": 0.045,
+  "len": 0.045,
+  "at": 51.008,
+  "after": "لحد",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 123,
+  "kind": "sentence",
+  "own": 0.459,
+  "len": 0.54,
+  "at": 51.295,
+  "after": "الكاريبي.",
+  "measured": 0.451,
+  "start": 51.38
+ },
+ {
+  "b": 124,
+  "kind": "mid",
+  "own": 0.09,
+  "len": 0.09,
+  "at": 52.287,
+  "after": "ساعتها",
+  "measured": 0.079,
+  "start": 52.295
+ },
+ {
+  "b": 128,
+  "kind": "mid",
+  "own": 0.062,
+  "len": 0.062,
+  "at": 53.06,
+  "after": "غير",
+  "measured": 0.05,
+  "start": 53.064
+ },
+ {
+  "b": 129,
+  "kind": "dots",
+  "own": 0.362,
+  "len": 0.34,
+  "at": 53.564,
+  "after": "التلغراف…",
+  "measured": 0.294,
+  "start": 53.609
+ },
+ {
+  "b": 130,
+  "kind": "mid",
+  "own": 0.142,
+  "len": 0.12,
+  "at": 54.453,
+  "after": "النهارده",
+  "measured": 0.101,
+  "start": 54.46
+ },
+ {
+  "b": 131,
+  "kind": "mid",
+  "own": 0.127,
+  "len": 0.12,
+  "at": 55.034,
+  "after": "حياتك",
+  "measured": 0.097,
+  "start": 55.053
+ },
+ {
+  "b": 134,
+  "kind": "mid",
+  "own": 0.06,
+  "len": 0.06,
+  "at": 55.942,
+  "after": "السلك",
+  "measured": 0.048,
+  "start": 55.955
+ },
+ {
+  "b": 135,
+  "kind": "sentence",
+  "own": 0.427,
+  "len": 0.49,
+  "at": 56.139,
+  "after": "ده.",
+  "measured": 0.452,
+  "start": 56.176
+ },
+ {
+  "b": 141,
+  "kind": "mid",
+  "own": 0.052,
+  "len": 0.052,
+  "at": 58.166,
+  "after": "لو",
+  "measured": 0.045,
+  "start": 58.174
+ },
+ {
+  "b": 142,
+  "kind": "mid",
+  "own": 0.047,
+  "len": 0.047,
+  "at": 58.565,
+  "after": "الكهربا",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 143,
+  "kind": "mid",
+  "own": 0.045,
+  "len": 0.045,
+  "at": 58.911,
+  "after": "قطعت",
+  "measured": 0.0,
+  "start": null
+ },
+ {
+  "b": 144,
+  "kind": "sentence",
+  "own": 0.439,
+  "len": 0.49,
+  "at": 59.298,
+  "after": "أسبوع؟",
+  "measured": 0.447,
+  "start": 59.34
+ },
+ {
+  "b": 146,
+  "kind": "mid",
+  "own": 0.085,
+  "len": 0.085,
+  "at": 60.564,
+  "after": "لصاحبك",
+  "measured": 0.069,
+  "start": 60.58
+ },
+ {
+  "b": 152,
+  "kind": "sentence",
+  "own": 0.429,
+  "len": 0.51,
+  "at": 62.28,
+  "after": "المية.",
+  "measured": 0.443,
+  "start": 62.341
+ },
+ {
+  "b": 153,
+  "kind": "mid",
+  "own": 0.13,
+  "len": 0.12,
+  "at": 63.428,
+  "after": "الفهمان",
+  "measured": 0.115,
+  "start": 63.432
+ }
+]
