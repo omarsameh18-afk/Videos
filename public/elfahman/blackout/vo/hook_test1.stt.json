@@ -1,0 +1,1 @@
+{"detail":{"type":"authentication_error","code":"invalid_api_key","message":"API key must start with 'sk_'.","status":"invalid_api_key_prefix","request_id":"617be1acb110597edc70a132a50e1ff5","param":"api_key"}}

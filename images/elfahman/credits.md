@@ -317,3 +317,22 @@ Reason: the first take misread words (e.g. "ولد", "مينامش"). Account be
 | **Episode 16 v2 total** | | | **1,590** |
 
 Account after (`account_get_usage`): **7,264 / 131,000 used -> 123,736 left** (moved by exactly 1,590). **Episode 16 total (v1 + v2): 3,105.**
+
+## Episode 17 — لو الكهربا قطعت عن الدنيا أسبوع (2026-11-28)
+
+Account before (2026-11-28, `account_get_usage`, before any generation): **9,037 / 131,000 used -> 121,963 left** (Creator plan, shared with
+another channel). Planned: hook test (64) + hook check transcript (~26) + ONE full take (estimate 1,333: the harakat count as characters) + 1 prop
+at 1K (~190) = ~1,613; stop line 1,700. Flow "Elfahman 17 blackout week" (`9MIfiQaBMp8TAG4xEn5Y`).
+
+| Item | Model / settings | Generation ID | Credits |
+|---|---|---|---|
+| Hook test 1: line 1 only, sent exactly `لَوْ الكَهْرَبا قِطْعِتْ عَنِ الدُّنْيا كُلَّها… أُسْبوع كامِلْ؟` (4.75 s) | eleven_v4, Fodoly | tixADR9M8zSzilIqxX4s | 64 |
+| Hook check: independent Scribe transcript of the hook as a plain audio file -> "لو الكهرباء قطعت عن الدنيا كلها أسبوع كامل" (all 8 words right; no 2nd hook test) | eleven_scribe_v1 | qClqPZ3XGO35avGFgtRE | 26 |
+| Voice: ONE full take of the VOICE TEXT, sent exactly as written (`series/elfahman/videos/17-blackout-week/voice.sent.txt`, tashkeel untouched, tags inline as in #16 v2, no extra instruction tag). **70.53 s raw** | eleven_v4, Fodoly | Mu9TqFzMIOCe4ek3sWGp | 1,333 |
+| Word timing: Scribe forced to the sent text (wired to the voice node) | eleven_scribe_v1 | sckszrqtBC07CdoXJZXB | 0 |
+| **Spent so far** | | | **1,423** |
+
+Account after (`account_get_usage`): **10,460 / 131,000 used -> 120,540 left** (moved by exactly 1,423).
+**STOPPED (duration rule):** the take is 70.53 s raw (52.5 s of sound). With every gap set to the shortest allowed value (sentence 0.35,
+comma 0.15, "…" 0.25, mystery 0.7, tail 0.4) the voice would still be ~66.8 s; at natural middle values ~69.2 s. Over 66 s, so per the brief
+nothing was sped up or cut. The prop picture (~190) and the independent full-take transcript (~375) were NOT generated.
