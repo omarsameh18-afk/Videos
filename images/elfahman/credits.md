@@ -336,3 +336,5 @@ Account after (`account_get_usage`): **10,460 / 131,000 used -> 120,540 left** (
 **STOPPED (duration rule):** the take is 70.53 s raw (52.5 s of sound). With every gap set to the shortest allowed value (sentence 0.35,
 comma 0.15, "…" 0.25, mystery 0.7, tail 0.4) the voice would still be ~66.8 s; at natural middle values ~69.2 s. Over 66 s, so per the brief
 nothing was sped up or cut. The prop picture (~190) and the independent full-take transcript (~375) were NOT generated.
+Omar's decision (2026-11-28): cut script line 7 out of the EXISTING take (no new recording). Edited voice 64.52 s. حمادة drawn in code (no picture
+generated). Account at the end: **10,460 / 131,000 used (unchanged)**. **Episode 17 total: 1,423.**
